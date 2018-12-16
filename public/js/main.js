@@ -16,6 +16,24 @@
 				firebase.auth().signOut();
 			});
 
+      // all tab click handlers
+      $('.home-tab').click(() => {
+        cleanupTabs();
+        transitionToTab('home');
+      });
+      $('.calendar-tab').click(() => {
+        cleanupTabs();
+        transitionToTab('calendar');
+      });
+      $('.appointments-tab').click(() => {
+        cleanupTabs();
+        transitionToTab('appointments');
+      });
+      $('.applicant-forms-tab').click(() => {
+        cleanupTabs();
+        transitionToTab('applicant-forms');
+      });
+
 			/**
 			 * The ID of the currently signed-in User. We keep track of this to detect Auth state change events that are just
 			 * programmatic token refresh but not a User status change.
@@ -56,9 +74,28 @@
 				$('.home-container').hide();
 			}
 
+      function cleanupTabs() {
+        hide($('.home'));
+        hide($('.calendar'));
+        hide($('.appointments'));
+        hide($('.applicant-forms'));
+      }
+
+      function hide(jQueryElement) {
+        jQueryElement.addClass('hidden');
+      }
+
+      function show(jQueryElement) {
+        jQueryElement.removeClass('hidden');
+      }
+
 			function transitionToScreen(className) {
 				$('.' + className).show();
 			}
+
+      function transitionToTab(tabName) {
+        show($('.'+tabName));
+      }
 
 			// handle page load
       document.addEventListener('DOMContentLoaded', function() {

@@ -127,16 +127,16 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li>
+                        <li class="home-tab">
                             <a><i class="fa fa-dashboard fa-fw"></i> Home</a>
                         </li>
-                        <li>
+                        <li class="appointments-tab">
                             <a><i class="fa fa-clock-o fa-fw"></i> Appointments</a>
                         </li>
-                        <li>
+                        <li class="calendar-tab">
                             <a><i class="fa fa-table fa-fw"></i> Calendar</a>
                         </li>
-                        <li>
+                        <li class="applicant-forms-tab">
                             <a><i class="fa fa-edit fa-fw"></i> Applicant Forms</a>
                         </li>
                     </ul>
@@ -192,9 +192,49 @@
             </div>
             <!-- /.row -->
             <div class="row">
-            </div>
-            <!-- /.row -->
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            DataTables Advanced Tables
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                  <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                      <div class="well">
+                          <p>Forms created by you for clients applying to your studio.</p>
+                      </div>
+                      <thead>
+                          <tr>
+                              <th>Form Name</th>
+                              <th>Date Created</th>
+                              <th>Submissions</th>
+                              <th>Edit</th>
+                              <th>Delete</th>
+                              <th>Share</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr class="odd gradeX">
+                              <td>Sample Form</td>
+                              <td>10-31-2018</td>
+                              <td>80</td>
+                              <td class="center"><a>Edit</a></td>
+                              <td class="center"><a>Delete</a></td>
+                              <td class="center"><a>Share</a></td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  <!-- /.table-responsive -->
+              </div>
+              <!-- /.panel-body -->
           </div>
+          <!-- /.panel -->
+      </div>
+      <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+</div>
+<!--applicant forms-->
         </div>
         <!-- /#page-wrapper -->
 
