@@ -3,7 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>By Appointment Only</title>
 
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/5.7.0/firebase-app.js"></script>
@@ -37,8 +40,33 @@
         body { border-top: 16px solid #ffa100; }
       }
 
-			.home-container { margin: 100px auto 16px; background: white; width: 600px; height: 500px; border-radius: 3px;}
+			.home-container {}
     </style>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- custom css for this app -->
+    <link href="./css/main.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
   </head>
   <body>
 			<!-- sign in -->
@@ -49,95 +77,144 @@
 			</div>
 
 			<!-- main screen -->
-			<div class="home-container">
-				<div class="menu-bar" />
-				<div class="home-content" />
-				<button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign Out</button>
-			</div>
+    <div id="wrapper" class="home-container">
 
-    <script>
-			// hide all components initially
-			cleanupUI();
-			transitionToScreen('sign-in');
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">By Appointment Only</a>
+            </div>
+            <!-- /.navbar-header -->
 
-			// authentication - sign in button
-			let signInButton = document.getElementById('sign-in-button');
-			signInButton.addEventListener('click', function() {
-				var provider = new firebase.auth.GoogleAuthProvider();
-				firebase.auth().signInWithPopup(provider);
-			});
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-question fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> Contact Us
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li  id="sign-out-button"><i class="fa fa-sign-out fa-fw"></i>
+                            Sign Out
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
 
-			// authentication - sign out button
-			let signOutButton = document.getElementById('sign-out-button');
-			signOutButton.addEventListener('click', function() {
-					firebase.auth().signOut();
-			});
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a><i class="fa fa-dashboard fa-fw"></i> Home</a>
+                        </li>
+                        <li>
+                            <a><i class="fa fa-clock-o fa-fw"></i> Appointments</a>
+                        </li>
+                        <li>
+                            <a><i class="fa fa-table fa-fw"></i> Calendar</a>
+                        </li>
+                        <li>
+                            <a><i class="fa fa-edit fa-fw"></i> Applicant Forms</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
 
-			/**
-			 * The ID of the currently signed-in User. We keep track of this to detect Auth state change events that are just
-			 * programmatic token refresh but not a User status change.
-			 */
-			var currentUID;
+        <div id="page-wrapper">
+          <div class="home">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Home</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+            </div>
+            <!-- /.row -->
+          </div>
+          <div class="appointments hidden">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Appointments</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+            </div>
+            <!-- /.row -->
+          </div>
+          <div class="calendar hidden">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Calendar</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+            </div>
+            <!-- /.row -->
+          </div>
+          <div class="applicant-forms hidden">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Applicant Forms</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+            </div>
+            <!-- /.row -->
+          </div>
+        </div>
+        <!-- /#page-wrapper -->
 
-			/**
-			 * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
-			 */
-			function onAuthStateChanged(user) {
-				// We ignore token refresh events.
-				if (user && currentUID === user.uid) {
-					return;
-				}
+    </div>
+    <!-- /#wrapper -->
 
-				if (user) {
-					currentUID = user.uid;
-					console.log("setting userid to " + user.uid);
-					//writeUserData(user.uid, user.displayName, user.email, user.photoURL);
-					//startDatabaseQueries();
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
-					// uesr has just signed in. redirect to home page.
-					cleanupUI();
-					transitionToScreen('home-container');
-				} else {
-					// Set currentUID to null.
-					currentUID = null;
-					console.log("setting userid to null");
-					cleanupUI();
-					transitionToScreen('sign-in');
-					// Display the splash page where you can sign-in.
-					// splashPage.style.display = '';
-				}
-			}
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
-			function cleanupUI() {
-				$('.sign-in').hide();		
-				$('.home-container').hide();
-			}
+    <!-- Morris Charts JavaScript -->
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+    <script src="../data/morris-data.js"></script>
 
-			function transitionToScreen(className) {
-				$('.' + className).show();
-			}
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
 
-			// handle page load
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-				// Listen for auth state changes
-				firebase.auth().onAuthStateChanged(onAuthStateChanged);
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
+    <script src="./js/main.js"></script>
   </body>
 </html>
