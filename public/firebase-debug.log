@@ -1,90 +1,41 @@
-[debug] [2018-12-21T21:26:04.926Z] ----------------------------------------------------------------------
-[debug] [2018-12-21T21:26:04.928Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
-[debug] [2018-12-21T21:26:04.928Z] CLI Version:   4.0.0
-[debug] [2018-12-21T21:26:04.928Z] Platform:      darwin
-[debug] [2018-12-21T21:26:04.928Z] Node Version:  v8.4.0
-[debug] [2018-12-21T21:26:04.929Z] Time:          Fri Dec 21 2018 14:26:04 GMT-0700 (MST)
-[debug] [2018-12-21T21:26:04.929Z] ----------------------------------------------------------------------
+[debug] [2018-12-22T04:43:51.873Z] ----------------------------------------------------------------------
+[debug] [2018-12-22T04:43:51.875Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2018-12-22T04:43:51.875Z] CLI Version:   4.0.0
+[debug] [2018-12-22T04:43:51.876Z] Platform:      darwin
+[debug] [2018-12-22T04:43:51.876Z] Node Version:  v8.4.0
+[debug] [2018-12-22T04:43:51.876Z] Time:          Fri Dec 21 2018 20:43:51 GMT-0800 (PST)
+[debug] [2018-12-22T04:43:51.876Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2018-12-21T21:26:04.940Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-12-21T21:26:04.940Z] > authorizing via signed-in user
-[debug] [2018-12-21T21:26:04.942Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/by-appointment-only  
-  
- Fri Dec 21 2018 14:26:04 GMT-0700 (MST)
-[debug] [2018-12-21T21:26:04.972Z] Error: getaddrinfo ENOTFOUND admin.firebase.com admin.firebase.com:443
-    at errnoException (dns.js:53:10)
-    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
-[error] 
-[error] Error: Server Error. getaddrinfo ENOTFOUND admin.firebase.com admin.firebase.com:443
-[debug] [2018-12-21T21:30:49.118Z] ----------------------------------------------------------------------
-[debug] [2018-12-21T21:30:49.120Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve --only hosting
-[debug] [2018-12-21T21:30:49.120Z] CLI Version:   4.0.0
-[debug] [2018-12-21T21:30:49.120Z] Platform:      darwin
-[debug] [2018-12-21T21:30:49.120Z] Node Version:  v8.4.0
-[debug] [2018-12-21T21:30:49.120Z] Time:          Fri Dec 21 2018 14:30:49 GMT-0700 (MST)
-[debug] [2018-12-21T21:30:49.120Z] ----------------------------------------------------------------------
-[debug] 
-[debug] [2018-12-21T21:30:49.132Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-12-21T21:30:49.132Z] > authorizing via signed-in user
-[debug] [2018-12-21T21:30:49.134Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/by-appointment-only  
-  
- Fri Dec 21 2018 14:30:49 GMT-0700 (MST)
-[debug] [2018-12-21T21:30:49.167Z] Error: getaddrinfo ENOTFOUND admin.firebase.com admin.firebase.com:443
-    at errnoException (dns.js:53:10)
-    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
-[error] 
-[error] Error: Server Error. getaddrinfo ENOTFOUND admin.firebase.com admin.firebase.com:443
-[debug] [2018-12-21T21:31:05.166Z] ----------------------------------------------------------------------
-[debug] [2018-12-21T21:31:05.168Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
-[debug] [2018-12-21T21:31:05.168Z] CLI Version:   4.0.0
-[debug] [2018-12-21T21:31:05.168Z] Platform:      darwin
-[debug] [2018-12-21T21:31:05.168Z] Node Version:  v8.4.0
-[debug] [2018-12-21T21:31:05.169Z] Time:          Fri Dec 21 2018 14:31:05 GMT-0700 (MST)
-[debug] [2018-12-21T21:31:05.169Z] ----------------------------------------------------------------------
-[debug] 
-[debug] [2018-12-21T21:31:05.181Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-12-21T21:31:05.181Z] > authorizing via signed-in user
-[debug] [2018-12-21T21:31:05.183Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/by-appointment-only  
-  
- Fri Dec 21 2018 14:31:05 GMT-0700 (MST)
-[debug] [2018-12-22T01:55:28.938Z] ----------------------------------------------------------------------
-[debug] [2018-12-22T01:55:28.940Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
-[debug] [2018-12-22T01:55:28.940Z] CLI Version:   4.0.0
-[debug] [2018-12-22T01:55:28.940Z] Platform:      darwin
-[debug] [2018-12-22T01:55:28.940Z] Node Version:  v8.4.0
-[debug] [2018-12-22T01:55:28.941Z] Time:          Fri Dec 21 2018 18:55:28 GMT-0700 (MST)
-[debug] [2018-12-22T01:55:28.941Z] ----------------------------------------------------------------------
-[debug] 
-[debug] [2018-12-22T01:55:28.954Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-12-22T01:55:28.954Z] > authorizing via signed-in user
-[debug] [2018-12-22T01:55:28.957Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2018-12-22T01:55:28.957Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+[debug] [2018-12-22T04:43:51.886Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-12-22T04:43:51.886Z] > authorizing via signed-in user
+[debug] [2018-12-22T04:43:51.888Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-12-22T04:43:51.888Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
  { refresh_token: '1/_yFDAXgxZMCgFydF2cyWXuy3tuTrHI5jzdDeuhs7WI59E2hvZRFTPqoWmwrMom8X',
   client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
   client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
   grant_type: 'refresh_token',
   scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
- Fri Dec 21 2018 18:55:28 GMT-0700 (MST)
-[debug] [2018-12-22T01:55:29.728Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-22T01:55:29.747Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/by-appointment-only  
+ Fri Dec 21 2018 20:43:51 GMT-0800 (PST)
+[debug] [2018-12-22T04:43:52.014Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-22T04:43:52.029Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/by-appointment-only  
   
- Fri Dec 21 2018 18:55:29 GMT-0700 (MST)
-[debug] [2018-12-22T01:55:30.857Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-22T01:55:30.858Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/by-appointment-only/tokens  
+ Fri Dec 21 2018 20:43:52 GMT-0800 (PST)
+[debug] [2018-12-22T04:43:52.499Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-22T04:43:52.500Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/by-appointment-only/tokens  
   
- Fri Dec 21 2018 18:55:30 GMT-0700 (MST)
-[debug] [2018-12-22T01:55:31.435Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-22T01:55:31.436Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ Fri Dec 21 2018 20:43:52 GMT-0800 (PST)
+[debug] [2018-12-22T04:43:52.844Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-22T04:43:52.845Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
   
- Fri Dec 21 2018 18:55:31 GMT-0700 (MST)
-[debug] [2018-12-22T01:55:32.523Z] <<< HTTP RESPONSE 200
+ Fri Dec 21 2018 20:43:52 GMT-0800 (PST)
+[debug] [2018-12-22T04:43:53.267Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
 [info] 
-[debug] [2018-12-22T01:55:32.526Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+[debug] [2018-12-22T04:43:53.269Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
   
- Fri Dec 21 2018 18:55:32 GMT-0700 (MST)
-[debug] [2018-12-22T01:55:33.962Z] <<< HTTP RESPONSE 200
+ Fri Dec 21 2018 20:43:53 GMT-0800 (PST)
+[debug] [2018-12-22T04:43:53.998Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000
 

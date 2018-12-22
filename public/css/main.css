@@ -7,3 +7,9 @@
   float: right;
   margin-bottom: 15px;
 }
+
+.create-form-header {
+	display: flex;
+	flex-direction: row;
+	/*justify-content: space-between;*/
+}

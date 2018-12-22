@@ -4,125 +4,141 @@ var ReactDOM = require('react-dom');
 // import { DragDropContext, Droppable, Draggable } from '../node_modules/react-beautiful-dnd';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-			// hide all components initially
-			cleanupUI();
-			transitionToScreen('home-container');
+// hide all components initially
+cleanupUI();
+transitionToScreen('home-container');
 
-			// authentication - sign in button
-			let signInButton = document.getElementById('sign-in-button');
-			signInButton.addEventListener('click', function() {
-				var provider = new firebase.auth.GoogleAuthProvider();
-				firebase.auth().signInWithPopup(provider);
-			});
+// authentication - sign in button
+let signInButton = document.getElementById('sign-in-button');
+signInButton.addEventListener('click', function() {
+	var provider = new firebase.auth.GoogleAuthProvider();
+	firebase.auth().signInWithPopup(provider);
+});
 
-			// authentication - sign out button
-			let signOutButton = document.getElementById('sign-out-button');
-			signOutButton.addEventListener('click', function() {
-				firebase.auth().signOut();
-			});
+// authentication - sign out button
+let signOutButton = document.getElementById('sign-out-button');
+signOutButton.addEventListener('click', function() {
+	firebase.auth().signOut();
+});
 
-      // all tab click handlers
-      $('.home-tab').click(() => {
-        cleanupTabs();
-        transitionToTab('home');
-      });
-      $('.calendar-tab').click(() => {
-        cleanupTabs();
-        transitionToTab('calendar');
-      });
-      $('.appointments-tab').click(() => {
-        cleanupTabs();
-        transitionToTab('appointments');
-      });
-      $('.applicant-forms-tab').click(() => {
-        cleanupTabs();
-        transitionToTab('applicant-forms');
-      });
+// new form button
+let newFormButton = $('.create-form-button');
+newFormButton.click(function() {
+	$('.applicant-forms-home').hide();
+	$('.applicant-forms-create-form').show();
+});
 
-			/**
-			 * The ID of the currently signed-in User. We keep track of this to detect Auth state change events that are just
-			 * programmatic token refresh but not a User status change.
-			 */
-			var currentUID;
+// cancel create new form
+let cancelNewForm = $('.create-form-cancel').click(function() {
+	$('.applicant-forms-create-form').hide();
+	$('.applicant-forms-home').show();
+})
 
-			/**
-			 * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
-			 */
-			function onAuthStateChanged(user) {
-				// We ignore token refresh events.
-				if (user && currentUID === user.uid) {
-					return;
-				}
+  // all tab click handlers
+  $('.home-tab').click(() => {
+    cleanupTabs();
+    transitionToTab('home');
+  });
+  $('.calendar-tab').click(() => {
+    cleanupTabs();
+    transitionToTab('calendar');
+  });
+  $('.appointments-tab').click(() => {
+    cleanupTabs();
+    transitionToTab('appointments');
+  });
+  $('.applicant-forms-tab').click(() => {
+    cleanupTabs();
+    transitionToTab('applicant-forms');
+  });
 
-				if (user) {
-					currentUID = user.uid;
-					console.log("setting userid to " + user.uid);
-					//writeUserData(user.uid, user.displayName, user.email, user.photoURL);
-					//startDatabaseQueries();
+/**
+ * The ID of the currently signed-in User. We keep track of this to detect Auth state change events that are just
+ * programmatic token refresh but not a User status change.
+ */
+var currentUID;
 
-					// uesr has just signed in. redirect to home page.
-					cleanupUI();
-					transitionToScreen('home-container');
-				} else {
-					// Set currentUID to null.
-					currentUID = null;
-					console.log("setting userid to null");
-					cleanupUI();
-					transitionToScreen('sign-in');
-					// Display the splash page where you can sign-in.
-					// splashPage.style.display = '';
-				}
-			}
+/**
+ * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
+ */
+function onAuthStateChanged(user) {
+	// We ignore token refresh events.
+	if (user && currentUID === user.uid) {
+		return;
+	}
 
-			function cleanupUI() {
-				$('.sign-in').hide();
-				$('.home-container').hide();
-			}
+	if (user) {
+		currentUID = user.uid;
+		console.log("setting userid to " + user.uid);
+		//writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+		//startDatabaseQueries();
 
-      function cleanupTabs() {
-        hide($('.home'));
-        hide($('.calendar'));
-        hide($('.appointments'));
-        hide($('.applicant-forms'));
-      }
+		// uesr has just signed in. redirect to home page.
+		cleanupUI();
+		transitionToScreen('home-container');
+	} else {
+		// Set currentUID to null.
+		currentUID = null;
+		console.log("setting userid to null");
+		cleanupUI();
+		transitionToScreen('sign-in');
+		// Display the splash page where you can sign-in.
+		// splashPage.style.display = '';
+	}
+}
 
-      function hide(jQueryElement) {
-        jQueryElement.addClass('hidden');
-      }
+function cleanupUI() {
+	$('.sign-in').hide();
+	$('.home-container').hide();
 
-      function show(jQueryElement) {
-        jQueryElement.removeClass('hidden');
-      }
+	// hide sections of tabs that shouldn't be shown
+	$('.applicant-forms-create-form').hide();
+}
 
-			function transitionToScreen(className) {
-				$('.' + className).show();
-			}
+  function cleanupTabs() {
+    hide($('.home'));
+    hide($('.calendar'));
+    hide($('.appointments'));
+    hide($('.applicant-forms'));
+  }
 
-      function transitionToTab(tabName) {
-        show($('.'+tabName));
-      }
+  function hide(jQueryElement) {
+    jQueryElement.addClass('hidden');
+  }
 
-			// handle page load
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-				// Listen for auth state changes
-				firebase.auth().onAuthStateChanged(onAuthStateChanged);
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  function show(jQueryElement) {
+    jQueryElement.removeClass('hidden');
+  }
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
+		function transitionToScreen(className) {
+			$('.' + className).show();
+		}
+
+  function transitionToTab(tabName) {
+    show($('.'+tabName));
+  }
+
+		// handle page load
+  document.addEventListener('DOMContentLoaded', function() {
+    // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    // // The Firebase SDK is initialized and available here!
+    //
+			// Listen for auth state changes
+			firebase.auth().onAuthStateChanged(onAuthStateChanged);
+    // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+    // firebase.messaging().requestPermission().then(() => { });
+    // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+    //
+    // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+
+    try {
+      let app = firebase.app();
+      let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+    } catch (e) {
+      console.error(e);
+      document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
+    }
+  });
 
 
 
@@ -135,7 +151,7 @@ const getItems = count =>
 class DragAndDropForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: getItems(10)};
+    this.state = { items: getItems(3)};
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
@@ -214,5 +230,5 @@ class DragAndDropForm extends React.Component {
   }
 }
 
-const domContainer = document.querySelector('.configure-new-form');
+const domContainer = document.querySelector('.create-form-input-area');
 ReactDOM.render(React.createElement(DragAndDropForm), domContainer);

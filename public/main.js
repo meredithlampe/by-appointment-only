@@ -29,6 +29,19 @@ signOutButton.addEventListener('click', function () {
   firebase.auth().signOut();
 });
 
+// new form button
+var newFormButton = $('.create-form-button');
+newFormButton.click(function () {
+  $('.applicant-forms-home').hide();
+  $('.applicant-forms-create-form').show();
+});
+
+// cancel create new form
+var cancelNewForm = $('.create-form-cancel').click(function () {
+  $('.applicant-forms-create-form').hide();
+  $('.applicant-forms-home').show();
+});
+
 // all tab click handlers
 $('.home-tab').click(function () {
   cleanupTabs();
@@ -85,6 +98,9 @@ function onAuthStateChanged(user) {
 function cleanupUI() {
   $('.sign-in').hide();
   $('.home-container').hide();
+
+  // hide sections of tabs that shouldn't be shown
+  $('.applicant-forms-create-form').hide();
 }
 
 function cleanupTabs() {
@@ -153,7 +169,7 @@ var DragAndDropForm = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (DragAndDropForm.__proto__ || Object.getPrototypeOf(DragAndDropForm)).call(this, props));
 
-    _this.state = { items: getItems(10) };
+    _this.state = { items: getItems(3) };
     _this.onDragEnd = _this.onDragEnd.bind(_this);
     return _this;
   }
@@ -246,5 +262,5 @@ var DragAndDropForm = function (_React$Component) {
   return DragAndDropForm;
 }(React.Component);
 
-var domContainer = document.querySelector('.configure-new-form');
+var domContainer = document.querySelector('.create-form-input-area');
 ReactDOM.render(React.createElement(DragAndDropForm), domContainer);
