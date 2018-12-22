@@ -1,7 +1,12 @@
+var React = require('react');
+var DND = require('react-beautiful-dnd');
+var ReactDOM = require('react-dom');
+// import { DragDropContext, Droppable, Draggable } from '../node_modules/react-beautiful-dnd';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 			// hide all components initially
 			cleanupUI();
-			transitionToScreen('sign-in');
+			transitionToScreen('home-container');
 
 			// authentication - sign in button
 			let signInButton = document.getElementById('sign-in-button');
@@ -118,3 +123,96 @@
           document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
         }
       });
+
+
+
+const getItems = count =>
+  Array.from({ length: count }, (v, k) => k).map(k => ({
+    id: `item-${k}`,
+    content: `item ${k}`,
+  }));
+
+class DragAndDropForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { items: getItems(10)};
+    this.onDragEnd = this.onDragEnd.bind(this);
+  }
+
+  onDragEnd() { console.log("on drag end"); }
+
+
+  render() {
+
+	const getItemStyle = (isDragging, draggableStyle) => ({
+	  // some basic styles to make the items look a bit nicer
+	  userSelect: 'none',
+	  padding: grid * 2,
+	  margin: `0 0 ${grid}px 0`,
+
+	  // change background colour if dragging
+	  background: isDragging ? 'lightgreen' : 'grey',
+
+	  // styles we need to apply on draggables
+	  ...draggableStyle,
+	});
+
+	const getListStyle = isDraggingOver => ({
+	  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+	  padding: grid,
+	  width: 250,
+	});	
+
+	const grid = 8;
+    // if (this.state.liked) {
+    //   return React.createElement(
+    //     'button', 
+    //     { onClick: () => this.setState({ liked: false }) }, 
+    //     'Liked'
+    //   );
+    // }
+
+    // console.log(DragDropContext);
+    // return React.createElement(
+    //   'DragAndDropContext',
+    //   { onClick: () => this.setState({ liked: true }) },
+    //   'Like'
+    // );
+
+    return (
+    	<DragDropContext onDragEnd={this.onDragEnd}>
+    	 <Droppable droppableId="droppable">
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              style={getListStyle(snapshot.isDraggingOver)}
+            >
+              {this.state.items.map((item, index) => (
+                <Draggable key={item.id} draggableId={item.id} index={index}>
+                  {(provided, snapshot) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      style={getItemStyle(
+                        snapshot.isDragging,
+                        provided.draggableProps.style
+                      )}
+                    >
+                      {item.content}
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+        </DragDropContext>
+    );
+
+  }
+}
+
+const domContainer = document.querySelector('.configure-new-form');
+ReactDOM.render(React.createElement(DragAndDropForm), domContainer);

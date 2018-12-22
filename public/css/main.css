@@ -2,3 +2,8 @@
 .hidden {
   display: none;
 }
+
+.create-form-button {
+  float: right;
+  margin-bottom: 15px;
+}

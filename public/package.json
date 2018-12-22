@@ -1,24 +1,33 @@
 {
-  "name": "startbootstrap-sb-admin-2",
-  "title": "SB Admin 2",
-  "version": "3.3.7+1",
-  "homepage": "http://startbootstrap.com/template-overviews/sb-admin-2",
-  "author": "Start Bootstrap",
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE"
+  "name": "by-appointment-only",
+  "version": "1.0.0",
+  "description": "appointment booking application",
+  "main": "./js/main.js",
+  "directories": {
+    "lib": "lib"
   },
-  "devDependencies": {
-    "browser-sync": "^2.13.0",
-    "gulp": "^3.9.1",
-    "gulp-clean-css": "^2.0.10",
-    "gulp-header": "^1.8.7",
-    "gulp-less": "^3.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.5.4"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/BlackrockDigital/startbootstrap-sb-admin-2.git"
+    "url": "git+https://github.com/meredithlampe/by-appointment-only.git"
+  },
+  "author": "mlampe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meredithlampe/by-appointment-only/issues"
+  },
+  "homepage": "https://github.com/meredithlampe/by-appointment-only#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
+    "react": "^16.7.0",
+    "react-beautiful-dnd": "^10.0.3",
+    "react-dom": "^16.7.0",
+    "webpack": "^4.28.1"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.2"
   }
 }
