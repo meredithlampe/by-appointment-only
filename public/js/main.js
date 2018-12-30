@@ -159,7 +159,33 @@ class DragAndDropForm extends React.Component {
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
-  onDragEnd() { console.log("on drag end"); }
+
+ onDragEnd(result) {
+    // dropped outside the list
+    if (!result.destination) {
+      return;
+    }
+
+    const items = this.reorder(
+      this.state.items,
+      result.source.index,
+      result.destination.index
+    );
+
+    this.setState({
+      items,
+    });
+  }
+
+
+	// a little function to help us with reordering the result
+	reorder(list, startIndex, endIndex) {
+	  const result = Array.from(list);
+	  const [removed] = result.splice(startIndex, 1);
+	  result.splice(endIndex, 0, removed);
+
+	  return result;
+	};
 
   render() {
 
@@ -175,26 +201,10 @@ class DragAndDropForm extends React.Component {
 	});
 
 	const getListStyle = isDraggingOver => ({
-	  padding: grid,
+	  padding: 8,
 	  width: 500,
 	  borderRadius: 30,
 	});	
-
-	const grid = 8;
-    // if (this.state.liked) {
-    //   return React.createElement(
-    //     'button', 
-    //     { onClick: () => this.setState({ liked: false }) }, 
-    //     'Liked'
-    //   );
-    // }
-
-    // console.log(DragDropContext);
-    // return React.createElement(
-    //   'DragAndDropContext',
-    //   { onClick: () => this.setState({ liked: true }) },
-    //   'Like'
-    // );
 
     return (
     	<DragDropContext onDragEnd={this.onDragEnd}>
@@ -206,11 +216,12 @@ class DragAndDropForm extends React.Component {
             >
               {this.state.items.map((item, index) => {
               	let input = null;
+              	let id = "input" + index;
               	if (item.inputType === "shortText") {
-					input = (<input disabled type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder={item.placeholder}/>);
+					input = (<input disabled type="email" class="form-control" id={id} aria-describedby="emailHelp" placeholder={item.placeholder}/>);
               	}
               	if (item.inputType === "longText") {
-              		input = (<textarea disabled class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder={item.placeholder}></textarea>);
+              		input = (<textarea disabled class="form-control" id={id} rows="3" placeholder={item.placeholder}></textarea>);
               	}
               	return(
 	                <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -224,7 +235,7 @@ class DragAndDropForm extends React.Component {
 	                        provided.draggableProps.style
 	                      )}
 	                    >
-					     <label for="exampleInputEmail1">{item.label}</label>
+					     <label for={id}>{item.label}</label>
 					     {input}
 	                   </div>
 	                  )}
