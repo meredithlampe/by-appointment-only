@@ -148,35 +148,36 @@ const getItems = count =>
     content: `item ${k}`,
   }));
 
+
+
+
+// drag and drop form creation for client forms
 class DragAndDropForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: getItems(3)};
+    this.state = { items: props.items };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
   onDragEnd() { console.log("on drag end"); }
-
 
   render() {
 
 	const getItemStyle = (isDragging, draggableStyle) => ({
 	  // some basic styles to make the items look a bit nicer
 	  userSelect: 'none',
-	  padding: grid * 2,
-	  margin: `0 0 ${grid}px 0`,
 
 	  // change background colour if dragging
-	  background: isDragging ? 'lightgreen' : 'grey',
+	  background: isDragging ? 'lightgrey' : 'white',
 
 	  // styles we need to apply on draggables
 	  ...draggableStyle,
 	});
 
 	const getListStyle = isDraggingOver => ({
-	  background: isDraggingOver ? 'lightblue' : 'lightgrey',
 	  padding: grid,
-	  width: 250,
+	  width: 500,
+	  borderRadius: 30,
 	});	
 
 	const grid = 8;
@@ -203,23 +204,33 @@ class DragAndDropForm extends React.Component {
               ref={provided.innerRef}
               style={getListStyle(snapshot.isDraggingOver)}
             >
-              {this.state.items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        provided.draggableProps.style
-                      )}
-                    >
-                      {item.content}
-                    </div>
-                  )}
-                </Draggable>
-              ))}
+              {this.state.items.map((item, index) => {
+              	let input = null;
+              	if (item.inputType === "shortText") {
+					input = (<input disabled type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder={item.placeholder}/>);
+              	}
+              	if (item.inputType === "longText") {
+              		input = (<textarea disabled class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder={item.placeholder}></textarea>);
+              	}
+              	return(
+	                <Draggable key={item.id} draggableId={item.id} index={index}>
+	                  {(provided, snapshot) => (
+	   					<div class="form-group"
+	                      ref={provided.innerRef}
+	                      {...provided.draggableProps}
+	                      {...provided.dragHandleProps}
+	                      style={getItemStyle(
+	                        snapshot.isDragging,
+	                        provided.draggableProps.style
+	                      )}
+	                    >
+					     <label for="exampleInputEmail1">{item.label}</label>
+					     {input}
+	                   </div>
+	                  )}
+	                </Draggable>
+	             );
+	         })}
               {provided.placeholder}
             </div>
           )}
@@ -230,5 +241,28 @@ class DragAndDropForm extends React.Component {
   }
 }
 
+let sampleFormItems = {
+	items: [
+		{
+			id: 0,
+			label: "Name",
+			placeholder: "Enter Name",
+			inputType: "shortText",
+		},
+		{
+			id: 1,
+			label: "Email",
+			placeholder: "Enter Email",
+			inputType: "shortText",
+		},
+		{
+			id: 2,
+			label: "Comments",
+			placeholder: "Provide any additional comments here",
+			inputType: "longText",
+		},
+	],
+};
+
 const domContainer = document.querySelector('.create-form-input-area');
-ReactDOM.render(React.createElement(DragAndDropForm), domContainer);
+ReactDOM.render(React.createElement(DragAndDropForm, sampleFormItems), domContainer);

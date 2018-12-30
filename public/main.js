@@ -161,6 +161,8 @@ var getItems = function getItems(count) {
   });
 };
 
+// drag and drop form creation for client forms
+
 var DragAndDropForm = function (_React$Component) {
   _inherits(DragAndDropForm, _React$Component);
 
@@ -169,7 +171,7 @@ var DragAndDropForm = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (DragAndDropForm.__proto__ || Object.getPrototypeOf(DragAndDropForm)).call(this, props));
 
-    _this.state = { items: getItems(3) };
+    _this.state = { items: props.items };
     _this.onDragEnd = _this.onDragEnd.bind(_this);
     return _this;
   }
@@ -188,20 +190,18 @@ var DragAndDropForm = function (_React$Component) {
         return Object.assign({
           // some basic styles to make the items look a bit nicer
           userSelect: 'none',
-          padding: grid * 2,
-          margin: '0 0 ' + grid + 'px 0',
 
           // change background colour if dragging
-          background: isDragging ? 'lightgreen' : 'grey'
+          background: isDragging ? 'lightgrey' : 'white'
 
         }, draggableStyle);
       };
 
       var getListStyle = function getListStyle(isDraggingOver) {
         return {
-          background: isDraggingOver ? 'lightblue' : 'lightgrey',
           padding: grid,
-          width: 250
+          width: 500,
+          borderRadius: 30
         };
       };
 
@@ -235,18 +235,30 @@ var DragAndDropForm = function (_React$Component) {
                 style: getListStyle(snapshot.isDraggingOver)
               },
               _this2.state.items.map(function (item, index) {
+                var input = null;
+                if (item.inputType === "shortText") {
+                  input = React.createElement('input', { disabled: true, type: 'email', 'class': 'form-control', id: 'exampleInputEmail1', 'aria-describedby': 'emailHelp', placeholder: item.placeholder });
+                }
+                if (item.inputType === "longText") {
+                  input = React.createElement('textarea', { disabled: true, 'class': 'form-control', id: 'exampleFormControlTextarea1', rows: '3', placeholder: item.placeholder });
+                }
                 return React.createElement(
                   Draggable,
                   { key: item.id, draggableId: item.id, index: index },
                   function (provided, snapshot) {
                     return React.createElement(
                       'div',
-                      Object.assign({
+                      Object.assign({ 'class': 'form-group',
                         ref: provided.innerRef
                       }, provided.draggableProps, provided.dragHandleProps, {
                         style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
                       }),
-                      item.content
+                      React.createElement(
+                        'label',
+                        { 'for': 'exampleInputEmail1' },
+                        item.label
+                      ),
+                      input
                     );
                   }
                 );
@@ -262,5 +274,24 @@ var DragAndDropForm = function (_React$Component) {
   return DragAndDropForm;
 }(React.Component);
 
+var sampleFormItems = {
+  items: [{
+    id: 0,
+    label: "Name",
+    placeholder: "Enter Name",
+    inputType: "shortText"
+  }, {
+    id: 1,
+    label: "Email",
+    placeholder: "Enter Email",
+    inputType: "shortText"
+  }, {
+    id: 2,
+    label: "Comments",
+    placeholder: "Provide any additional comments here",
+    inputType: "longText"
+  }]
+};
+
 var domContainer = document.querySelector('.create-form-input-area');
-ReactDOM.render(React.createElement(DragAndDropForm), domContainer);
+ReactDOM.render(React.createElement(DragAndDropForm, sampleFormItems), domContainer);
