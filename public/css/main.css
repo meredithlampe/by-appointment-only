@@ -13,3 +13,7 @@
 	flex-direction: row;
 	/*justify-content: space-between;*/
 }
+
+.create-form-input-area {
+	display: flex;
+}

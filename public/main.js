@@ -133,29 +133,45 @@ document.addEventListener('DOMContentLoaded', function () {
 		var features = ['auth', 'database', 'messaging', 'storage'].filter(function (feature) {
 			return typeof app[feature] === 'function';
 		});
-		var domContainer = document.querySelector('.create-form-input-area');
-
-		var sampleFormItems = {
-			items: [{
-				id: 0,
-				label: "Name",
-				placeholder: "Enter Name",
-				inputType: "shortText"
-			}, {
-				id: 1,
-				label: "Email",
-				placeholder: "Enter Email",
-				inputType: "shortText"
-			}, {
-				id: 2,
-				label: "Comments",
-				placeholder: "Provide any additional comments here",
-				inputType: "longText"
-			}]
-		};
-		ReactDOM.render(React.createElement(DragAndDropForm, sampleFormItems), domContainer);
 	} catch (e) {
 		console.error(e);
-		document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
 	}
 });
+var domContainer = document.querySelector('.create-form-input-area');
+
+var sampleFormItems = {
+	items: [{
+		id: 0,
+		label: "Name",
+		placeholder: "Enter Name",
+		inputType: "shortText"
+	}, {
+		id: 1,
+		label: "Email",
+		placeholder: "Enter Email",
+		inputType: "shortText"
+	}, {
+		id: 2,
+		label: "Comments",
+		placeholder: "Provide any additional comments here",
+		inputType: "longText"
+	}]
+};
+
+var componentLibrary = {
+	items: [{
+		inputType: 'shortText',
+		label: 'Short Text',
+		placeholder: 'Placeholder text'
+	}, {
+		inputType: 'longText',
+		label: 'Long Text',
+		placeholder: 'Placeholder text'
+	}]
+};
+
+var props = {
+	formItems: sampleFormItems,
+	componentLibrary: componentLibrary
+};
+ReactDOM.render(React.createElement(DragAndDropForm, props), domContainer);

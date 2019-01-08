@@ -131,6 +131,11 @@ function cleanupUI() {
     try {
       let app = firebase.app();
       let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+
+    } catch (e) {
+      console.error(e);
+    }
+  });
       const domContainer = document.querySelector('.create-form-input-area');
 
 	let sampleFormItems = {
@@ -155,9 +160,24 @@ function cleanupUI() {
 			},
 		],
 	};
-	ReactDOM.render(React.createElement(DragAndDropForm, sampleFormItems), domContainer);
-    } catch (e) {
-      console.error(e);
-      document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-    }
-  });
+
+	let componentLibrary = {
+		items: [ 
+			{
+				inputType: 'shortText',
+				label: 'Short Text',
+				placeholder: 'Placeholder text',
+			},
+			{
+				inputType: 'longText',
+				label: 'Long Text',
+				placeholder: 'Placeholder text',
+			},
+		],
+	};
+
+	let props = {
+		formItems: sampleFormItems,
+		componentLibrary: componentLibrary,
+	};
+	ReactDOM.render(React.createElement(DragAndDropForm, props), domContainer);

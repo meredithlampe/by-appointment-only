@@ -31,7 +31,7 @@ export var DragAndDropForm = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (DragAndDropForm.__proto__ || Object.getPrototypeOf(DragAndDropForm)).call(this, props));
 
-    _this.state = { items: props.items };
+    _this.state = { items: props.formItems.items, componentLibrary: props.componentLibrary.items };
     _this.onDragEnd = _this.onDragEnd.bind(_this);
     return _this;
   }
@@ -43,16 +43,55 @@ export var DragAndDropForm = function (_React$Component) {
       if (!result.destination) {
         return;
       }
+      console.log(result);
 
-      var items = this.reorder(this.state.items, result.source.index, result.destination.index);
+      if (result.source.droppableId === 'component-library') {
+        if (result.destination.droppableId === 'component-library') {
+          // user is trying to reorder component library? idk. do nothing.
+          return;
+        }
+        if (result.destination.droppableId === 'form') {
+          // user is dragging component library element into form    		
+          // create new item formed like this:
+          // 	{
+          //		id: 1,
+          //		label: "Email",
+          //		placeholder: "Enter Email",
+          //		inputType: "shortText",
+          //	},
+          var inputTypeMatch = result.draggableId.match(/component-library-(.*)/);
+          if (inputTypeMatch && inputTypeMatch.length > 1) {
+            var newFormItem = {
+              id: 5, // FIXME
+              label: 'New Input',
+              placeholder: 'Placeholder',
+              inputType: inputTypeMatch[1]
+            };
+            console.log("dropping element with input type " + newFormItem.inputType);
+            var newItems = this.insert(this.state.items, newFormItem, result.destination.index);
+            this.setState({ items: newItems });
+          } else {
+            //show error
+          }
+        }
+      }
 
-      this.setState({
-        items: items
-      });
+      if (result.source.droppableId === 'form') {
+        if (result.destination.droppableId === 'form') {
+          var items = this.reorder(this.state.items, result.source.index, result.destination.index);
+          this.setState({
+            items: items
+          });
+        }
+      }
     }
-
-    // a little function to help us with reordering the result
-
+  }, {
+    key: 'insert',
+    value: function insert(list, newItem, destinationIndex) {
+      var result = Array.from(list);
+      result.splice(destinationIndex, 0, newItem);
+      return result;
+    }
   }, {
     key: 'reorder',
     value: function reorder(list, startIndex, endIndex) {
@@ -70,6 +109,8 @@ export var DragAndDropForm = function (_React$Component) {
     key: 'render',
     value: function render() {
       var _this2 = this;
+
+      console.log(this.state);
 
       var getItemStyle = function getItemStyle(isDragging, draggableStyle) {
         return Object.assign({
@@ -95,7 +136,51 @@ export var DragAndDropForm = function (_React$Component) {
         { onDragEnd: this.onDragEnd },
         React.createElement(
           Droppable,
-          { droppableId: 'droppable' },
+          { droppableId: 'component-library' },
+          function (provided, snapshot) {
+            return React.createElement(
+              'div',
+              {
+                ref: provided.innerRef,
+                style: getListStyle(snapshot.isDraggingOver)
+              },
+              _this2.state.componentLibrary.map(function (item, index) {
+                var input = null;
+                var id = "component-library-" + item.inputType;
+                if (item.inputType === "shortText") {
+                  input = React.createElement('input', { disabled: true, type: 'email', 'class': 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: item.placeholder });
+                }
+                if (item.inputType === "longText") {
+                  input = React.createElement('textarea', { disabled: true, 'class': 'form-control', id: id, rows: '3', placeholder: item.placeholder });
+                }
+                return React.createElement(
+                  Draggable,
+                  { key: item.id, draggableId: id, index: index },
+                  function (provided, snapshot) {
+                    return React.createElement(
+                      'div',
+                      Object.assign({ 'class': 'form-group',
+                        ref: provided.innerRef
+                      }, provided.draggableProps, provided.dragHandleProps, {
+                        style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
+                      }),
+                      React.createElement(
+                        'label',
+                        { 'for': id },
+                        item.label
+                      ),
+                      input
+                    );
+                  }
+                );
+              }),
+              provided.placeholder
+            );
+          }
+        ),
+        React.createElement(
+          Droppable,
+          { droppableId: 'form' },
           function (provided, snapshot) {
             return React.createElement(
               'div',
