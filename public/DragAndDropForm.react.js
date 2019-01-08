@@ -12,219 +12,223 @@ var React = require('react');
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 var getItems = function getItems(count) {
-  return Array.from({ length: count }, function (v, k) {
-    return k;
-  }).map(function (k) {
-    return {
-      id: 'item-' + k,
-      content: 'item ' + k
-    };
-  });
+		return Array.from({ length: count }, function (v, k) {
+				return k;
+		}).map(function (k) {
+				return {
+						id: 'item-' + k,
+						content: 'item ' + k
+				};
+		});
 };
 
 // drag and drop form creation for client forms
 export var DragAndDropForm = function (_React$Component) {
-  _inherits(DragAndDropForm, _React$Component);
+		_inherits(DragAndDropForm, _React$Component);
 
-  function DragAndDropForm(props) {
-    _classCallCheck(this, DragAndDropForm);
+		function DragAndDropForm(props) {
+				_classCallCheck(this, DragAndDropForm);
 
-    var _this = _possibleConstructorReturn(this, (DragAndDropForm.__proto__ || Object.getPrototypeOf(DragAndDropForm)).call(this, props));
+				var _this = _possibleConstructorReturn(this, (DragAndDropForm.__proto__ || Object.getPrototypeOf(DragAndDropForm)).call(this, props));
 
-    _this.state = { items: props.formItems.items, componentLibrary: props.componentLibrary.items };
-    _this.onDragEnd = _this.onDragEnd.bind(_this);
-    return _this;
-  }
+				_this.state = { items: props.formItems.items, componentLibrary: props.componentLibrary.items };
+				_this.onDragEnd = _this.onDragEnd.bind(_this);
+				return _this;
+		}
 
-  _createClass(DragAndDropForm, [{
-    key: 'onDragEnd',
-    value: function onDragEnd(result) {
-      // dropped outside the list
-      if (!result.destination) {
-        return;
-      }
-      console.log(result);
+		_createClass(DragAndDropForm, [{
+				key: 'onDragEnd',
+				value: function onDragEnd(result) {
+						// dropped outside the list
+						if (!result.destination) {
+								return;
+						}
+						console.log(result);
 
-      if (result.source.droppableId === 'component-library') {
-        if (result.destination.droppableId === 'component-library') {
-          // user is trying to reorder component library? idk. do nothing.
-          return;
-        }
-        if (result.destination.droppableId === 'form') {
-          // user is dragging component library element into form    		
-          // create new item formed like this:
-          // 	{
-          //		id: 1,
-          //		label: "Email",
-          //		placeholder: "Enter Email",
-          //		inputType: "shortText",
-          //	},
-          var inputTypeMatch = result.draggableId.match(/component-library-(.*)/);
-          if (inputTypeMatch && inputTypeMatch.length > 1) {
-            var newFormItem = {
-              id: 5, // FIXME
-              label: 'New Input',
-              placeholder: 'Placeholder',
-              inputType: inputTypeMatch[1]
-            };
-            console.log("dropping element with input type " + newFormItem.inputType);
-            var newItems = this.insert(this.state.items, newFormItem, result.destination.index);
-            this.setState({ items: newItems });
-          } else {
-            //show error
-          }
-        }
-      }
+						if (result.source.droppableId === 'component-library') {
+								if (result.destination.droppableId === 'component-library') {
+										// user is trying to reorder component library? idk. do nothing.
+										return;
+								}
+								if (result.destination.droppableId === 'form') {
+										// user is dragging component library element into form    		
+										// create new item formed like this:
+										// 	{
+										//		id: 1,
+										//		label: "Email",
+										//		placeholder: "Enter Email",
+										//		inputType: "shortText",
+										//	},
+										var inputTypeMatch = result.draggableId.match(/component-library-(.*)/);
+										if (inputTypeMatch && inputTypeMatch.length > 1) {
+												var newFormItem = {
+														id: 5, // FIXME
+														label: 'New Input',
+														placeholder: 'Placeholder',
+														inputType: inputTypeMatch[1]
+												};
+												console.log("dropping element with input type " + newFormItem.inputType);
+												var newItems = this.insert(this.state.items, newFormItem, result.destination.index);
+												this.setState({ items: newItems });
+										} else {
+												//show error
+										}
+								}
+						}
 
-      if (result.source.droppableId === 'form') {
-        if (result.destination.droppableId === 'form') {
-          var items = this.reorder(this.state.items, result.source.index, result.destination.index);
-          this.setState({
-            items: items
-          });
-        }
-      }
-    }
-  }, {
-    key: 'insert',
-    value: function insert(list, newItem, destinationIndex) {
-      var result = Array.from(list);
-      result.splice(destinationIndex, 0, newItem);
-      return result;
-    }
-  }, {
-    key: 'reorder',
-    value: function reorder(list, startIndex, endIndex) {
-      var result = Array.from(list);
+						if (result.source.droppableId === 'form') {
+								if (result.destination.droppableId === 'form') {
+										var items = this.reorder(this.state.items, result.source.index, result.destination.index);
+										this.setState({
+												items: items
+										});
+								}
+						}
+				}
+		}, {
+				key: 'insert',
+				value: function insert(list, newItem, destinationIndex) {
+						var result = Array.from(list);
+						result.splice(destinationIndex, 0, newItem);
+						return result;
+				}
+		}, {
+				key: 'reorder',
+				value: function reorder(list, startIndex, endIndex) {
+						var result = Array.from(list);
 
-      var _result$splice = result.splice(startIndex, 1),
-          _result$splice2 = _slicedToArray(_result$splice, 1),
-          removed = _result$splice2[0];
+						var _result$splice = result.splice(startIndex, 1),
+						    _result$splice2 = _slicedToArray(_result$splice, 1),
+						    removed = _result$splice2[0];
 
-      result.splice(endIndex, 0, removed);
+						result.splice(endIndex, 0, removed);
 
-      return result;
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
+						return result;
+				}
+		}, {
+				key: 'render',
+				value: function render() {
+						var _this2 = this;
 
-      console.log(this.state);
+						console.log(this.state);
 
-      var getItemStyle = function getItemStyle(isDragging, draggableStyle) {
-        return Object.assign({
-          // some basic styles to make the items look a bit nicer
-          userSelect: 'none',
+						var getItemStyle = function getItemStyle(isDragging, draggableStyle) {
+								return Object.assign({
+										// some basic styles to make the items look a bit nicer
+										userSelect: 'none',
 
-          // change background colour if dragging
-          background: isDragging ? 'lightgrey' : 'white'
+										// change background colour if dragging
+										background: isDragging ? 'lightgrey' : 'white'
 
-        }, draggableStyle);
-      };
+								}, draggableStyle);
+						};
 
-      var getListStyle = function getListStyle(isDraggingOver) {
-        return {
-          padding: 8,
-          width: 500,
-          borderRadius: 30
-        };
-      };
+						var getListStyle = function getListStyle(isDraggingOver) {
+								return {
+										width: 500,
+										borderRadius: 30
+								};
+						};
 
-      return React.createElement(
-        DragDropContext,
-        { onDragEnd: this.onDragEnd },
-        React.createElement(
-          Droppable,
-          { droppableId: 'component-library' },
-          function (provided, snapshot) {
-            return React.createElement(
-              'div',
-              {
-                ref: provided.innerRef,
-                style: getListStyle(snapshot.isDraggingOver)
-              },
-              _this2.state.componentLibrary.map(function (item, index) {
-                var input = null;
-                var id = "component-library-" + item.inputType;
-                if (item.inputType === "shortText") {
-                  input = React.createElement('input', { disabled: true, type: 'email', 'class': 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: item.placeholder });
-                }
-                if (item.inputType === "longText") {
-                  input = React.createElement('textarea', { disabled: true, 'class': 'form-control', id: id, rows: '3', placeholder: item.placeholder });
-                }
-                return React.createElement(
-                  Draggable,
-                  { key: item.id, draggableId: id, index: index },
-                  function (provided, snapshot) {
-                    return React.createElement(
-                      'div',
-                      Object.assign({ 'class': 'form-group',
-                        ref: provided.innerRef
-                      }, provided.draggableProps, provided.dragHandleProps, {
-                        style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
-                      }),
-                      React.createElement(
-                        'label',
-                        { 'for': id },
-                        item.label
-                      ),
-                      input
-                    );
-                  }
-                );
-              }),
-              provided.placeholder
-            );
-          }
-        ),
-        React.createElement(
-          Droppable,
-          { droppableId: 'form' },
-          function (provided, snapshot) {
-            return React.createElement(
-              'div',
-              {
-                ref: provided.innerRef,
-                style: getListStyle(snapshot.isDraggingOver)
-              },
-              _this2.state.items.map(function (item, index) {
-                var input = null;
-                var id = "input" + index;
-                if (item.inputType === "shortText") {
-                  input = React.createElement('input', { disabled: true, type: 'email', 'class': 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: item.placeholder });
-                }
-                if (item.inputType === "longText") {
-                  input = React.createElement('textarea', { disabled: true, 'class': 'form-control', id: id, rows: '3', placeholder: item.placeholder });
-                }
-                return React.createElement(
-                  Draggable,
-                  { key: item.id, draggableId: id, index: index },
-                  function (provided, snapshot) {
-                    return React.createElement(
-                      'div',
-                      Object.assign({ 'class': 'form-group',
-                        ref: provided.innerRef
-                      }, provided.draggableProps, provided.dragHandleProps, {
-                        style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
-                      }),
-                      React.createElement(
-                        'label',
-                        { 'for': id },
-                        item.label
-                      ),
-                      input
-                    );
-                  }
-                );
-              }),
-              provided.placeholder
-            );
-          }
-        )
-      );
-    }
-  }]);
+						return React.createElement(
+								DragDropContext,
+								{ onDragEnd: this.onDragEnd },
+								React.createElement(
+										Droppable,
+										{ droppableId: 'component-library' },
+										function (provided, snapshot) {
+												return React.createElement(
+														'div',
+														{
+																ref: provided.innerRef,
+																style: getListStyle(snapshot.isDraggingOver)
+														},
+														_this2.state.componentLibrary.map(function (item, index) {
+																var input = null;
+																var id = "component-library-" + item.inputType;
+																if (item.inputType === "shortText") {
+																		input = React.createElement('input', { disabled: true, type: 'email', 'class': 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: item.placeholder });
+																}
+																if (item.inputType === "longText") {
+																		input = React.createElement('textarea', { disabled: true, 'class': 'form-control', id: id, rows: '3', placeholder: item.placeholder });
+																}
+																return React.createElement(
+																		Draggable,
+																		{ key: item.id, draggableId: id, index: index },
+																		function (provided, snapshot) {
+																				return React.createElement(
+																						'div',
+																						Object.assign({ 'class': 'form-group',
+																								ref: provided.innerRef
+																						}, provided.draggableProps, provided.dragHandleProps, {
+																								style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
+																						}),
+																						React.createElement(
+																								'label',
+																								{ 'for': id },
+																								item.label
+																						),
+																						input
+																				);
+																		}
+																);
+														}),
+														provided.placeholder
+												);
+										}
+								),
+								React.createElement(
+										Droppable,
+										{ droppableId: 'form' },
+										function (provided, snapshot) {
+												return React.createElement(
+														'div',
+														{ className: 'panel panel-default', style: { marginLeft: 20 } },
+														React.createElement(
+																'div',
+																{
+																		className: 'panel-body',
+																		ref: provided.innerRef,
+																		style: getListStyle(snapshot.isDraggingOver)
+																},
+																_this2.state.items.map(function (item, index) {
+																		var input = null;
+																		var id = "input" + index;
+																		if (item.inputType === "shortText") {
+																				input = React.createElement('input', { disabled: true, type: 'email', 'class': 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: item.placeholder });
+																		}
+																		if (item.inputType === "longText") {
+																				input = React.createElement('textarea', { disabled: true, 'class': 'form-control', id: id, rows: '3', placeholder: item.placeholder });
+																		}
+																		return React.createElement(
+																				Draggable,
+																				{ key: item.id, draggableId: id, index: index },
+																				function (provided, snapshot) {
+																						return React.createElement(
+																								'div',
+																								Object.assign({ 'class': 'form-group',
+																										ref: provided.innerRef
+																								}, provided.draggableProps, provided.dragHandleProps, {
+																										style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
+																								}),
+																								React.createElement(
+																										'label',
+																										{ 'for': id },
+																										item.label
+																								),
+																								input
+																						);
+																				}
+																		);
+																}),
+																provided.placeholder
+														)
+												);
+										}
+								)
+						);
+				}
+		}]);
 
-  return DragAndDropForm;
+		return DragAndDropForm;
 }(React.Component);

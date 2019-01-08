@@ -98,7 +98,6 @@ export class DragAndDropForm extends React.Component {
 	});
 
 	const getListStyle = isDraggingOver => ({
-	  padding: 8,
 	  width: 500,
 	  borderRadius: 30,
 	});	
@@ -147,40 +146,43 @@ export class DragAndDropForm extends React.Component {
     	 </Droppable>
     	 <Droppable droppableId="form">
           {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-              {this.state.items.map((item, index) => {
-              	let input = null;
-              	let id = "input" + index;
-              	if (item.inputType === "shortText") {
-					input = (<input disabled type="email" class="form-control" id={id} aria-describedby="emailHelp" placeholder={item.placeholder}/>);
-              	}
-              	if (item.inputType === "longText") {
-              		input = (<textarea disabled class="form-control" id={id} rows="3" placeholder={item.placeholder}></textarea>);
-              	}
-              	return(
-	                <Draggable key={item.id} draggableId={id} index={index}>
-	                  {(provided, snapshot) => (
-	   					<div class="form-group"
-	                      ref={provided.innerRef}
-	                      {...provided.draggableProps}
-	                      {...provided.dragHandleProps}
-	                      style={getItemStyle(
-	                        snapshot.isDragging,
-	                        provided.draggableProps.style
-	                      )}
-	                    >
-					     <label for={id}>{item.label}</label>
-					     {input}
-	                   </div>
-	                  )}
-	                </Draggable>
-	             );
-	         })}
-              {provided.placeholder}
-            </div>
+          	<div className="panel panel-default" style={{marginLeft: 20}}>
+	            <div
+	            className="panel-body"
+	              ref={provided.innerRef}
+	              style={getListStyle(snapshot.isDraggingOver)}
+	            >
+	              {this.state.items.map((item, index) => {
+	              	let input = null;
+	              	let id = "input" + index;
+	              	if (item.inputType === "shortText") {
+						input = (<input disabled type="email" class="form-control" id={id} aria-describedby="emailHelp" placeholder={item.placeholder}/>);
+	              	}
+	              	if (item.inputType === "longText") {
+	              		input = (<textarea disabled class="form-control" id={id} rows="3" placeholder={item.placeholder}></textarea>);
+	              	}
+	              	return(
+		                <Draggable key={item.id} draggableId={id} index={index}>
+		                  {(provided, snapshot) => (
+		   					<div class="form-group"
+		                      ref={provided.innerRef}
+		                      {...provided.draggableProps}
+		                      {...provided.dragHandleProps}
+		                      style={getItemStyle(
+		                        snapshot.isDragging,
+		                        provided.draggableProps.style
+		                      )}
+		                    >
+						     <label for={id}>{item.label}</label>
+						     {input}
+		                   </div>
+		                  )}
+		                </Draggable>
+		             );
+		         })}
+	              {provided.placeholder}
+	            </div>
+	         </div>
           )}
         </Droppable>
         </DragDropContext>
