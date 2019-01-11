@@ -11,7 +11,12 @@ const getItems = count =>
 export class DragAndDropForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: props.formItems.items, componentLibrary: props.componentLibrary.items};
+    this.state = { 
+    	items: props.formItems.items, 
+    	componentLibrary: props.componentLibrary.items,
+    	name: props.formName,
+    	lastUnusedId: props.lastUnusedId,
+    };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
@@ -40,14 +45,13 @@ export class DragAndDropForm extends React.Component {
 			let inputTypeMatch = result.draggableId.match(/component-library-(.*)/);
 			if (inputTypeMatch && inputTypeMatch.length > 1) {
 	    		let newFormItem = {
-	    			id: 5, // FIXME
+	    			id: this.state.lastUnusedId, // FIXME
 	    			label: 'New Input',
 	    			placeholder: 'Placeholder',
 	    			inputType: inputTypeMatch[1],
 	    		};
-	    		console.log("dropping element with input type " + newFormItem.inputType);
 	    		let newItems = this.insert(this.state.items, newFormItem, result.destination.index);				
-	    		this.setState({items: newItems})
+	    		this.setState({items: newItems, lastUnusedId: this.state.lastUnusedId + 1,})
 			} else {
 				//show error
 			}
@@ -82,6 +86,8 @@ export class DragAndDropForm extends React.Component {
 	  return result;
 	};
 
+	onclick() {console.log("click");}
+
   render() {
 
   	console.log(this.state);
@@ -90,68 +96,104 @@ export class DragAndDropForm extends React.Component {
 	  // some basic styles to make the items look a bit nicer
 	  userSelect: 'none',
 
-	  // change background colour if dragging
-	  background: isDragging ? 'lightgrey' : 'white',
-
 	  // styles we need to apply on draggables
 	  ...draggableStyle,
 	});
 
 	const getListStyle = isDraggingOver => ({
-	  width: 500,
+	  width: 300,
 	  borderRadius: 30,
 	});	
+	 // const getRenameFormModal = () => {
 
-
+  //    	return (
+		// <div class="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	 //        <div class="modal-dialog">
+	 //            <div class="modal-content">
+	 //                <div class="modal-header">
+	 //                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	 //                    <h4 class="modal-title" id="myModalLabel">Create New Form</h4>
+	 //                </div>
+	 //                <div class="modal-body">
+	 //                  <form role="form">
+	 //                      <div class="form-group">
+	 //                          <label>Name</label>
+	 //                          <input class="form-control" placeholder="e.g. December Bookings"></input>
+	 //                          <p class="help-block">Only you will see the form name</p>
+	 //                      </div>
+	 //                      <div class="form-group">
+	 //                          <label>Form Content</label>
+	 //                          <p class="help-block">Configure how the form will appear for your applicants</p>
+	 //                      </div>
+	 //                  </form>
+	 //                </div>
+	 //                <div class="modal-footer">
+	 //                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	 //                    <button type="button" class="btn btn-primary">Create Form</button>
+	 //                </div>
+	 //            </div>
+	 //        </div>
+	 //     </div>
+	 //    );
+  //    }
 
     return (
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              style={getListStyle(snapshot.isDraggingOver)}
-            >
-            {this.state.componentLibrary.map((item, index) => {
-              	let input = null;
-              	let id = "component-library-" + item.inputType;
-              	if (item.inputType === "shortText") {
-					input = (<input disabled type="email" class="form-control" id={id} aria-describedby="emailHelp" placeholder={item.placeholder}/>);
-              	}
-              	if (item.inputType === "longText") {
-              		input = (<textarea disabled class="form-control" id={id} rows="3" placeholder={item.placeholder}></textarea>);
-              	}
-              	return(
-	                <Draggable key={item.id} draggableId={id} index={index}>
-	                  {(provided, snapshot) => (
-	   					<div class="form-group"
-	                      ref={provided.innerRef}
-	                      {...provided.draggableProps}
-	                      {...provided.dragHandleProps}
-	                      style={getItemStyle(
-	                        snapshot.isDragging,
-	                        provided.draggableProps.style
-	                      )}
-	                    >
-					     <label for={id}>{item.label}</label>
-					     {input}
-	                   </div>
-	                  )}
-	                </Draggable>
-	             );
-	         })}
-              {provided.placeholder}
+    	  	<div className="well">
+	    	  	<p class="lead">Form Element Library</p>
+	            <div
+	              ref={provided.innerRef}
+	              style={{
+					  width: 300,
+					  borderRadius: 30,
+					}}
+	            >
+	            {this.state.componentLibrary.map((item, index) => {
+	              	let input = null;
+	              	let id = "component-library-" + item.inputType;
+	              	if (item.inputType === "shortText") {
+						input = (<input disabled type="email" class="form-control" id={id} aria-describedby="emailHelp" placeholder={item.placeholder}/>);
+	              	}
+	              	if (item.inputType === "longText") {
+	              		input = (<textarea disabled class="form-control" id={id} rows="3" placeholder={item.placeholder}></textarea>);
+	              	}
+	              	return(
+		                <Draggable key={item.id} draggableId={id} index={index}>
+		                  {(provided, snapshot) => (
+		   					<div class="form-group"
+		                      ref={provided.innerRef}
+		                      {...provided.draggableProps}
+		                      {...provided.dragHandleProps}
+		                      style={getItemStyle(
+		                        snapshot.isDragging,
+		                        provided.draggableProps.style
+		                      )}
+		                    >
+						     <label for={id}>{item.label}<i style={{marginLeft: 5}} className="fa fa-arrows fa-fw"></i></label>
+						     {input}
+		                   </div>
+		                  )}
+		                </Draggable>
+		             );
+		         })}
+	              {provided.placeholder}
+	            </div>
             </div>
             )}
-    	 </Droppable>
+    	 </Droppable>    
     	 <Droppable droppableId="form">
           {(provided, snapshot) => (
-          	<div className="panel panel-default" style={{marginLeft: 20}}>
+          	<div className="panel panel-default" style={{marginLeft: 40}}>
+          		 <h3 data-toggle="modal" data-target="#myModal" style={{marginLeft: 10}}>{this.state.name}<small style={{marginLeft: 20}}><a href="#">Rename</a></small></h3>
 	            <div
 	            className="panel-body"
 	              ref={provided.innerRef}
-	              style={getListStyle(snapshot.isDraggingOver)}
-	            >
+	              style={{
+					  width: 500,
+					  borderRadius: 30,
+					}}>
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "input" + index;
@@ -173,7 +215,17 @@ export class DragAndDropForm extends React.Component {
 		                        provided.draggableProps.style
 		                      )}
 		                    >
-						     <label for={id}>{item.label}</label>
+		                    <div style={{display: "flex", flexDirection: "row"}}>
+			                    <div>
+								     <label for={id}>{item.label}</label>
+								     <div style={{display: "inline"}}><a style={{marginLeft: 10}}>Edit</a></div>
+								   	<div style={{display: "inline", marginLeft: 10}}><a>Delete</a></div>
+							    </div>
+							    <div style={{flexGrow: 1}} />
+							    <div>
+								     <i style={{marginLeft: 5}} className="fa fa-arrows fa-fw"></i>
+							    </div>
+						     </div>
 						     {input}
 		                   </div>
 		                  )}

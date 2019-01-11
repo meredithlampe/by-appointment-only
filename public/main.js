@@ -172,6 +172,8 @@ var componentLibrary = {
 
 var props = {
 	formItems: sampleFormItems,
-	componentLibrary: componentLibrary
+	componentLibrary: componentLibrary,
+	formName: 'My New Form',
+	lastUnusedId: 4
 };
 ReactDOM.render(React.createElement(DragAndDropForm, props), domContainer);
