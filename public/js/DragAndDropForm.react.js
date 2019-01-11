@@ -86,6 +86,55 @@ export class DragAndDropForm extends React.Component {
 	  return result;
 	};
 
+	getInputElementForType(type, id, placeholder) {
+		let input = null;
+      	if (type === "shortText") {
+			input = (<input disabled type="email" class="form-control" id={id} aria-describedby="emailHelp" placeholder={placeholder}/>);
+      	}
+      	if (type === "longText") {
+      		input = (<textarea disabled class="form-control" id={id} rows="3" placeholder={placeholder}></textarea>);
+      	}
+      	if (type === "fileInput") {
+            input = (<input disabled id={id} type="file"/>);
+      	}
+      	if (type === "staticText") {
+      		input = (<p className="text-muted" id={id}>{placeholder}</p>)
+      	}
+      	if (type === "checkboxes") {
+      		input = (
+      			<div id={id}>
+	                <div class="checkbox">
+	                    <label>
+	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 1</div>
+	                    </label>
+	                </div>
+	                <div class="checkbox">
+	                    <label>
+	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 2</div>
+	                    </label>
+	                </div>
+	                <div class="checkbox">
+	                    <label>
+	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 3</div>
+	                    </label>
+	                </div>
+	             </div>
+            );
+      	}
+      	if (type === 'selects') {
+      		input = (                                         
+      			<select id={id} class="form-control">
+	                <option>1</option>
+	                <option>2</option>
+	                <option>3</option>
+	                <option>4</option>
+	                <option>5</option>
+                </select>
+            );
+      	}
+      	return input;
+	}
+
 	onclick() {console.log("click");}
 
   render() {
@@ -95,6 +144,7 @@ export class DragAndDropForm extends React.Component {
 	const getItemStyle = (isDragging, draggableStyle) => ({
 	  // some basic styles to make the items look a bit nicer
 	  userSelect: 'none',
+	  marginTop: 20,
 
 	  // styles we need to apply on draggables
 	  ...draggableStyle,
@@ -153,12 +203,7 @@ export class DragAndDropForm extends React.Component {
 	            {this.state.componentLibrary.map((item, index) => {
 	              	let input = null;
 	              	let id = "component-library-" + item.inputType;
-	              	if (item.inputType === "shortText") {
-						input = (<input disabled type="email" class="form-control" id={id} aria-describedby="emailHelp" placeholder={item.placeholder}/>);
-	              	}
-	              	if (item.inputType === "longText") {
-	              		input = (<textarea disabled class="form-control" id={id} rows="3" placeholder={item.placeholder}></textarea>);
-	              	}
+	              	input = this.getInputElementForType(item.inputType, id, item.placeholder);
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (
@@ -186,23 +231,18 @@ export class DragAndDropForm extends React.Component {
     	 <Droppable droppableId="form">
           {(provided, snapshot) => (
           	<div className="panel panel-default" style={{marginLeft: 40}}>
-          		 <h3 data-toggle="modal" data-target="#myModal" style={{marginLeft: 10}}>{this.state.name}<small style={{marginLeft: 20}}><a href="#">Rename</a></small></h3>
 	            <div
-	            className="panel-body"
+	            className="panel-body new-form-panel-body"
 	              ref={provided.innerRef}
 	              style={{
 					  width: 500,
 					  borderRadius: 30,
 					}}>
+					<p className="lead" data-toggle="modal" data-target="#myModal">{this.state.name}<small style={{marginLeft: 20}}><a href="#">Rename</a></small></p>
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "input" + index;
-	              	if (item.inputType === "shortText") {
-						input = (<input disabled type="email" class="form-control" id={id} aria-describedby="emailHelp" placeholder={item.placeholder}/>);
-	              	}
-	              	if (item.inputType === "longText") {
-	              		input = (<textarea disabled class="form-control" id={id} rows="3" placeholder={item.placeholder}></textarea>);
-	              	}
+	              	input = this.getInputElementForType(item.inputType, id, item.placeholder);
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (

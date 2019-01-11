@@ -17,3 +17,7 @@
 .create-form-input-area {
 	display: flex;
 }
+
+.new-form-panel-body {
+	padding: 19px !important;
+}

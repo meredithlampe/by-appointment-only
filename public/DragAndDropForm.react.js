@@ -110,6 +110,107 @@ export var DragAndDropForm = function (_React$Component) {
 			return result;
 		}
 	}, {
+		key: 'getInputElementForType',
+		value: function getInputElementForType(type, id, placeholder) {
+			var input = null;
+			if (type === "shortText") {
+				input = React.createElement('input', { disabled: true, type: 'email', 'class': 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: placeholder });
+			}
+			if (type === "longText") {
+				input = React.createElement('textarea', { disabled: true, 'class': 'form-control', id: id, rows: '3', placeholder: placeholder });
+			}
+			if (type === "fileInput") {
+				input = React.createElement('input', { disabled: true, id: id, type: 'file' });
+			}
+			if (type === "staticText") {
+				input = React.createElement(
+					'p',
+					{ className: 'text-muted', id: id },
+					placeholder
+				);
+			}
+			if (type === "checkboxes") {
+				input = React.createElement(
+					'div',
+					{ id: id },
+					React.createElement(
+						'div',
+						{ 'class': 'checkbox' },
+						React.createElement(
+							'label',
+							null,
+							React.createElement('input', { type: 'checkbox', value: '' }),
+							React.createElement(
+								'div',
+								{ className: 'text-muted' },
+								'Checkbox 1'
+							)
+						)
+					),
+					React.createElement(
+						'div',
+						{ 'class': 'checkbox' },
+						React.createElement(
+							'label',
+							null,
+							React.createElement('input', { type: 'checkbox', value: '' }),
+							React.createElement(
+								'div',
+								{ className: 'text-muted' },
+								'Checkbox 2'
+							)
+						)
+					),
+					React.createElement(
+						'div',
+						{ 'class': 'checkbox' },
+						React.createElement(
+							'label',
+							null,
+							React.createElement('input', { type: 'checkbox', value: '' }),
+							React.createElement(
+								'div',
+								{ className: 'text-muted' },
+								'Checkbox 3'
+							)
+						)
+					)
+				);
+			}
+			if (type === 'selects') {
+				input = React.createElement(
+					'select',
+					{ id: id, 'class': 'form-control' },
+					React.createElement(
+						'option',
+						null,
+						'1'
+					),
+					React.createElement(
+						'option',
+						null,
+						'2'
+					),
+					React.createElement(
+						'option',
+						null,
+						'3'
+					),
+					React.createElement(
+						'option',
+						null,
+						'4'
+					),
+					React.createElement(
+						'option',
+						null,
+						'5'
+					)
+				);
+			}
+			return input;
+		}
+	}, {
 		key: 'onclick',
 		value: function onclick() {
 			console.log("click");
@@ -124,7 +225,8 @@ export var DragAndDropForm = function (_React$Component) {
 			var getItemStyle = function getItemStyle(isDragging, draggableStyle) {
 				return Object.assign({
 					// some basic styles to make the items look a bit nicer
-					userSelect: 'none'
+					userSelect: 'none',
+					marginTop: 20
 
 				}, draggableStyle);
 			};
@@ -195,12 +297,7 @@ export var DragAndDropForm = function (_React$Component) {
 								_this2.state.componentLibrary.map(function (item, index) {
 									var input = null;
 									var id = "component-library-" + item.inputType;
-									if (item.inputType === "shortText") {
-										input = React.createElement('input', { disabled: true, type: 'email', 'class': 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: item.placeholder });
-									}
-									if (item.inputType === "longText") {
-										input = React.createElement('textarea', { disabled: true, 'class': 'form-control', id: id, rows: '3', placeholder: item.placeholder });
-									}
+									input = _this2.getInputElementForType(item.inputType, id, item.placeholder);
 									return React.createElement(
 										Draggable,
 										{ key: item.id, draggableId: id, index: index },
@@ -236,37 +333,32 @@ export var DragAndDropForm = function (_React$Component) {
 							'div',
 							{ className: 'panel panel-default', style: { marginLeft: 40 } },
 							React.createElement(
-								'h3',
-								{ 'data-toggle': 'modal', 'data-target': '#myModal', style: { marginLeft: 10 } },
-								_this2.state.name,
-								React.createElement(
-									'small',
-									{ style: { marginLeft: 20 } },
-									React.createElement(
-										'a',
-										{ href: '#' },
-										'Rename'
-									)
-								)
-							),
-							React.createElement(
 								'div',
 								{
-									className: 'panel-body',
+									className: 'panel-body new-form-panel-body',
 									ref: provided.innerRef,
 									style: {
 										width: 500,
 										borderRadius: 30
 									} },
+								React.createElement(
+									'p',
+									{ className: 'lead', 'data-toggle': 'modal', 'data-target': '#myModal' },
+									_this2.state.name,
+									React.createElement(
+										'small',
+										{ style: { marginLeft: 20 } },
+										React.createElement(
+											'a',
+											{ href: '#' },
+											'Rename'
+										)
+									)
+								),
 								_this2.state.items.map(function (item, index) {
 									var input = null;
 									var id = "input" + index;
-									if (item.inputType === "shortText") {
-										input = React.createElement('input', { disabled: true, type: 'email', 'class': 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: item.placeholder });
-									}
-									if (item.inputType === "longText") {
-										input = React.createElement('textarea', { disabled: true, 'class': 'form-control', id: id, rows: '3', placeholder: item.placeholder });
-									}
+									input = _this2.getInputElementForType(item.inputType, id, item.placeholder);
 									return React.createElement(
 										Draggable,
 										{ key: item.id, draggableId: id, index: index },

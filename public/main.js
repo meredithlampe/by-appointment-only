@@ -167,6 +167,22 @@ var componentLibrary = {
 		inputType: 'longText',
 		label: 'Long Text',
 		placeholder: 'Placeholder text'
+	}, {
+		inputType: 'fileInput',
+		label: 'File Input',
+		placeholder: ''
+	}, {
+		inputType: 'staticText',
+		label: 'Static Text',
+		placeholder: 'Sample text containing instructions for filling out the form, disclaimer, etc.'
+	}, {
+		inputType: 'checkboxes',
+		label: 'Checkboxes',
+		placeholder: 'Description of checkboxes'
+	}, {
+		inputType: 'selects',
+		label: 'Dropdown Selector',
+		placehodler: ''
 	}]
 };
 
