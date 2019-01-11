@@ -236,7 +236,17 @@ export class DragAndDropForm extends React.Component {
 					  background: snapshot.isDraggingOver ? '#eaf7ed' : 'white',
 					}
 					}>
-					<p className="lead" data-toggle="modal" data-target="#myModal">{this.state.name}<small style={{marginLeft: 20}}><a href="#">Rename</a></small></p>
+					<p className="lead" data-toggle="modal" data-target="#myModal">
+						{this.state.name}
+						<small style={{marginLeft: 20}}>
+							<a href="#">Rename</a>
+						</small>
+						<button 
+							className="preview-form-link btn btn-outline btn-default" 
+							style={{display: "inline", marginLeft: 15, float: "right"}}>
+								Preview
+						</button>
+					</p>
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "input" + index;

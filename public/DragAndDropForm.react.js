@@ -346,6 +346,13 @@ export var DragAndDropForm = function (_React$Component) {
 											{ href: '#' },
 											'Rename'
 										)
+									),
+									React.createElement(
+										'button',
+										{
+											className: 'preview-form-link btn btn-outline btn-default',
+											style: { display: "inline", marginLeft: 15, float: "right" } },
+										'Preview'
 									)
 								),
 								_this2.state.items.map(function (item, index) {

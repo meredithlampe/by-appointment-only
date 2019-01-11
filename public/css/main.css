@@ -25,3 +25,7 @@
 .test {
 	background: lightgreen;
 }
+
+.save-form-button {
+	margin-left: 20px;
+}

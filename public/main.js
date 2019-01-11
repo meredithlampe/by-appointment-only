@@ -36,6 +36,12 @@ var cancelNewForm = $('.create-form-cancel').click(function () {
 	$('.applicant-forms-home').show();
 });
 
+var previewFormLink = $('.preview-form-link');
+previewFormLink.click(function () {
+	$('.applicant-forms-create-form').hide();
+	$('.applicant-forms-preview-form').show();
+});
+
 // all tab click handlers
 $('.home-tab').click(function () {
 	cleanupTabs();
@@ -95,6 +101,7 @@ function cleanupUI() {
 
 	// hide sections of tabs that shouldn't be shown
 	$('.applicant-forms-create-form').hide();
+	$('.applicant-forms-preview-form').hide();
 }
 
 function cleanupTabs() {
