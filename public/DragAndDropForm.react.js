@@ -48,6 +48,7 @@ export var DragAndDropForm = function (_React$Component) {
 			if (!result.destination) {
 				return;
 			}
+
 			console.log(result);
 
 			if (result.source.droppableId === 'component-library') {
@@ -211,20 +212,12 @@ export var DragAndDropForm = function (_React$Component) {
 			return input;
 		}
 	}, {
-		key: 'onclick',
-		value: function onclick() {
-			console.log("click");
-		}
-	}, {
 		key: 'render',
 		value: function render() {
 			var _this2 = this;
 
-			console.log(this.state);
-
 			var getItemStyle = function getItemStyle(isDragging, draggableStyle) {
 				return Object.assign({
-					// some basic styles to make the items look a bit nicer
 					userSelect: 'none',
 					marginTop: 20
 
@@ -331,7 +324,7 @@ export var DragAndDropForm = function (_React$Component) {
 					function (provided, snapshot) {
 						return React.createElement(
 							'div',
-							{ className: 'panel panel-default', style: { marginLeft: 40 } },
+							{ className: 'panel panel-default', style: { marginLeft: 40, height: "fit-content" } },
 							React.createElement(
 								'div',
 								{
@@ -339,7 +332,7 @@ export var DragAndDropForm = function (_React$Component) {
 									ref: provided.innerRef,
 									style: {
 										width: 500,
-										borderRadius: 30
+										background: snapshot.isDraggingOver ? '#eaf7ed' : 'white'
 									} },
 								React.createElement(
 									'p',

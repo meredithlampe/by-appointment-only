@@ -26,6 +26,7 @@ export class DragAndDropForm extends React.Component {
     if (!result.destination) {
       return;
     }
+
     console.log(result);
 
     if (result.source.droppableId === 'component-library') {
@@ -135,14 +136,9 @@ export class DragAndDropForm extends React.Component {
       	return input;
 	}
 
-	onclick() {console.log("click");}
-
   render() {
 
-  	console.log(this.state);
-
 	const getItemStyle = (isDragging, draggableStyle) => ({
-	  // some basic styles to make the items look a bit nicer
 	  userSelect: 'none',
 	  marginTop: 20,
 
@@ -230,14 +226,16 @@ export class DragAndDropForm extends React.Component {
     	 </Droppable>    
     	 <Droppable droppableId="form">
           {(provided, snapshot) => (
-          	<div className="panel panel-default" style={{marginLeft: 40}}>
+          	<div className="panel panel-default" style={{marginLeft: 40, height: "fit-content"}}>
 	            <div
 	            className="panel-body new-form-panel-body"
 	              ref={provided.innerRef}
-	              style={{
+	              style={
+	              	{
 					  width: 500,
-					  borderRadius: 30,
-					}}>
+					  background: snapshot.isDraggingOver ? '#eaf7ed' : 'white',
+					}
+					}>
 					<p className="lead" data-toggle="modal" data-target="#myModal">{this.state.name}<small style={{marginLeft: 20}}><a href="#">Rename</a></small></p>
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
