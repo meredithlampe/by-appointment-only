@@ -29,3 +29,11 @@
 .save-form-button {
 	margin-left: 20px;
 }
+
+.form-component-label {
+	cursor: grabbing;
+}
+
+.form-component-link {
+	cursor: default;
+}

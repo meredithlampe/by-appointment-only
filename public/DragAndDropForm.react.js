@@ -10,6 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var React = require('react');
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import ModalEditFormComponent from './Modal.react.js';
 
 var getItems = function getItems(count) {
 	return Array.from({ length: count }, function (v, k) {
@@ -35,9 +36,12 @@ export var DragAndDropForm = function (_React$Component) {
 			items: props.formItems.items,
 			componentLibrary: props.componentLibrary.items,
 			name: props.formName,
-			lastUnusedId: props.lastUnusedId
+			lastUnusedId: props.lastUnusedId,
+			showModalEditComponent: false
 		};
 		_this.onDragEnd = _this.onDragEnd.bind(_this);
+		_this.openModalEditComponent = _this.openModalEditComponent.bind(_this);
+		_this.hideModalEditComponent = _this.hideModalEditComponent.bind(_this);
 		return _this;
 	}
 
@@ -48,8 +52,6 @@ export var DragAndDropForm = function (_React$Component) {
 			if (!result.destination) {
 				return;
 			}
-
-			console.log(result);
 
 			if (result.source.droppableId === 'component-library') {
 				if (result.destination.droppableId === 'component-library') {
@@ -109,6 +111,16 @@ export var DragAndDropForm = function (_React$Component) {
 			result.splice(endIndex, 0, removed);
 
 			return result;
+		}
+	}, {
+		key: 'openModalEditComponent',
+		value: function openModalEditComponent() {
+			this.setState({ showModalEditComponent: true });
+		}
+	}, {
+		key: 'hideModalEditComponent',
+		value: function hideModalEditComponent() {
+			this.setState({ showModalEditComponent: false });
 		}
 	}, {
 		key: 'getInputElementForType',
@@ -264,158 +276,168 @@ export var DragAndDropForm = function (_React$Component) {
 			//    }
 
 			return React.createElement(
-				DragDropContext,
-				{ onDragEnd: this.onDragEnd },
+				'div',
+				{ style: { display: "flex" } },
 				React.createElement(
-					Droppable,
-					{ droppableId: 'component-library' },
-					function (provided, snapshot) {
-						return React.createElement(
-							'div',
-							{ className: 'well' },
-							React.createElement(
-								'p',
-								{ 'class': 'lead' },
-								'Form Element Library'
-							),
-							React.createElement(
-								'div',
-								{
-									ref: provided.innerRef,
-									style: {
-										width: 300,
-										borderRadius: 30
-									}
-								},
-								_this2.state.componentLibrary.map(function (item, index) {
-									var input = null;
-									var id = "component-library-" + item.inputType;
-									input = _this2.getInputElementForType(item.inputType, id, item.placeholder);
-									return React.createElement(
-										Draggable,
-										{ key: item.id, draggableId: id, index: index },
-										function (provided, snapshot) {
-											return React.createElement(
-												'div',
-												Object.assign({ 'class': 'form-group',
-													ref: provided.innerRef
-												}, provided.draggableProps, provided.dragHandleProps, {
-													style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
-												}),
-												React.createElement(
-													'label',
-													{ 'for': id },
-													item.label,
-													React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrows fa-fw' })
-												),
-												input
-											);
-										}
-									);
-								}),
-								provided.placeholder
-							)
-						);
-					}
+					ModalEditFormComponent,
+					{ show: this.state.showModalEditComponent,
+						onClose: this.hideModalEditComponent },
+					'Modal content'
 				),
 				React.createElement(
-					Droppable,
-					{ droppableId: 'form' },
-					function (provided, snapshot) {
-						return React.createElement(
-							'div',
-							{ className: 'panel panel-default', style: { marginLeft: 40, height: "fit-content" } },
-							React.createElement(
+					DragDropContext,
+					{ onDragEnd: this.onDragEnd },
+					React.createElement(
+						Droppable,
+						{ droppableId: 'component-library' },
+						function (provided, snapshot) {
+							return React.createElement(
 								'div',
-								{
-									className: 'panel-body new-form-panel-body',
-									ref: provided.innerRef,
-									style: {
-										width: 500,
-										background: snapshot.isDraggingOver ? '#eaf7ed' : 'white'
-									} },
+								{ className: 'well' },
 								React.createElement(
 									'p',
-									{ className: 'lead', 'data-toggle': 'modal', 'data-target': '#myModal' },
-									_this2.state.name,
+									{ 'class': 'lead' },
+									'Form Element Library'
+								),
+								React.createElement(
+									'div',
+									{
+										ref: provided.innerRef,
+										style: {
+											width: 300,
+											borderRadius: 30
+										}
+									},
+									_this2.state.componentLibrary.map(function (item, index) {
+										var input = null;
+										var id = "component-library-" + item.inputType;
+										input = _this2.getInputElementForType(item.inputType, id, item.placeholder);
+										return React.createElement(
+											Draggable,
+											{ key: item.id, draggableId: id, index: index },
+											function (provided, snapshot) {
+												return React.createElement(
+													'div',
+													Object.assign({ 'class': 'form-group',
+														ref: provided.innerRef
+													}, provided.draggableProps, provided.dragHandleProps, {
+														style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
+													}),
+													React.createElement(
+														'label',
+														{ 'class': 'form-component-label', 'for': id },
+														item.label,
+														React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrows fa-fw' })
+													),
+													input
+												);
+											}
+										);
+									}),
+									provided.placeholder
+								)
+							);
+						}
+					),
+					React.createElement(
+						Droppable,
+						{ droppableId: 'form' },
+						function (provided, snapshot) {
+							return React.createElement(
+								'div',
+								{ className: 'panel panel-default', style: { marginLeft: 40, height: "fit-content" } },
+								React.createElement(
+									'div',
+									{
+										className: 'panel-body new-form-panel-body',
+										ref: provided.innerRef,
+										style: {
+											width: 500,
+											background: snapshot.isDraggingOver ? '#eaf7ed' : 'white'
+										} },
 									React.createElement(
-										'small',
-										{ style: { marginLeft: 20 } },
+										'p',
+										{ className: 'lead', 'data-toggle': 'modal', 'data-target': '#myModal' },
+										_this2.state.name,
 										React.createElement(
-											'a',
-											{ href: '#' },
-											'Rename'
+											'small',
+											{ style: { marginLeft: 20 } },
+											React.createElement(
+												'a',
+												{ href: '#' },
+												'Rename'
+											)
+										),
+										React.createElement(
+											'button',
+											{
+												className: 'preview-form-link btn btn-outline btn-default',
+												style: { display: "inline", marginLeft: 15, float: "right" } },
+											'Preview'
 										)
 									),
-									React.createElement(
-										'button',
-										{
-											className: 'preview-form-link btn btn-outline btn-default',
-											style: { display: "inline", marginLeft: 15, float: "right" } },
-										'Preview'
-									)
-								),
-								_this2.state.items.map(function (item, index) {
-									var input = null;
-									var id = "input" + index;
-									input = _this2.getInputElementForType(item.inputType, id, item.placeholder);
-									return React.createElement(
-										Draggable,
-										{ key: item.id, draggableId: id, index: index },
-										function (provided, snapshot) {
-											return React.createElement(
-												'div',
-												Object.assign({ 'class': 'form-group',
-													ref: provided.innerRef
-												}, provided.draggableProps, provided.dragHandleProps, {
-													style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
-												}),
-												React.createElement(
+									_this2.state.items.map(function (item, index) {
+										var input = null;
+										var id = "input" + index;
+										input = _this2.getInputElementForType(item.inputType, id, item.placeholder);
+										return React.createElement(
+											Draggable,
+											{ key: item.id, draggableId: id, index: index },
+											function (provided, snapshot) {
+												return React.createElement(
 													'div',
-													{ style: { display: "flex", flexDirection: "row" } },
+													Object.assign({ 'class': 'form-group',
+														ref: provided.innerRef
+													}, provided.draggableProps, provided.dragHandleProps, {
+														style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
+													}),
 													React.createElement(
 														'div',
-														null,
-														React.createElement(
-															'label',
-															{ 'for': id },
-															item.label
-														),
+														{ style: { display: "flex", flexDirection: "row" } },
 														React.createElement(
 															'div',
-															{ style: { display: "inline" } },
+															null,
 															React.createElement(
-																'a',
-																{ style: { marginLeft: 10 } },
-																'Edit'
+																'label',
+																{ 'class': 'form-component-label', 'for': id },
+																item.label
+															),
+															React.createElement(
+																'div',
+																{ 'class': 'form-component-link', 'data-toggle': 'modal', 'data-target': '#exampleModal', onClick: _this2.openModalEditComponent, style: { display: "inline", marginLeft: 10 } },
+																React.createElement(
+																	'a',
+																	null,
+																	'Edit'
+																)
+															),
+															React.createElement(
+																'div',
+																{ 'class': 'form-component-link', style: { display: "inline", marginLeft: 10 } },
+																React.createElement(
+																	'a',
+																	null,
+																	'Delete'
+																)
 															)
 														),
+														React.createElement('div', { style: { flexGrow: 1 } }),
 														React.createElement(
 															'div',
-															{ style: { display: "inline", marginLeft: 10 } },
-															React.createElement(
-																'a',
-																null,
-																'Delete'
-															)
+															null,
+															React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrows fa-fw' })
 														)
 													),
-													React.createElement('div', { style: { flexGrow: 1 } }),
-													React.createElement(
-														'div',
-														null,
-														React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrows fa-fw' })
-													)
-												),
-												input
-											);
-										}
-									);
-								}),
-								provided.placeholder
-							)
-						);
-					}
+													input
+												);
+											}
+										);
+									}),
+									provided.placeholder
+								)
+							);
+						}
+					)
 				)
 			);
 		}

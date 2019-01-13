@@ -1,0 +1,41 @@
+[debug] [2019-01-13T01:37:06.451Z] ----------------------------------------------------------------------
+[debug] [2019-01-13T01:37:06.453Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-01-13T01:37:06.453Z] CLI Version:   4.0.0
+[debug] [2019-01-13T01:37:06.453Z] Platform:      darwin
+[debug] [2019-01-13T01:37:06.453Z] Node Version:  v8.4.0
+[debug] [2019-01-13T01:37:06.453Z] Time:          Sat Jan 12 2019 17:37:06 GMT-0800 (PST)
+[debug] [2019-01-13T01:37:06.453Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-01-13T01:37:06.468Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-01-13T01:37:06.468Z] > authorizing via signed-in user
+[debug] [2019-01-13T01:37:06.470Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-01-13T01:37:06.470Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/_yFDAXgxZMCgFydF2cyWXuy3tuTrHI5jzdDeuhs7WI59E2hvZRFTPqoWmwrMom8X',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Sat Jan 12 2019 17:37:06 GMT-0800 (PST)
+[debug] [2019-01-13T01:37:07.770Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-13T01:37:07.777Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/by-appointment-only  
+  
+ Sat Jan 12 2019 17:37:07 GMT-0800 (PST)
+[debug] [2019-01-13T01:37:09.308Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-13T01:37:09.309Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/by-appointment-only/tokens  
+  
+ Sat Jan 12 2019 17:37:09 GMT-0800 (PST)
+[debug] [2019-01-13T01:37:10.515Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-13T01:37:10.516Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+  
+ Sat Jan 12 2019 17:37:10 GMT-0800 (PST)
+[debug] [2019-01-13T01:37:11.227Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-01-13T01:37:11.228Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+  
+ Sat Jan 12 2019 17:37:11 GMT-0800 (PST)
+[debug] [2019-01-13T01:37:12.298Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+

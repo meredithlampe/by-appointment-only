@@ -1,5 +1,6 @@
 var React = require('react');
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import ModalEditFormComponent from './Modal.react.js';
 
 const getItems = count =>
   Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -16,8 +17,11 @@ export class DragAndDropForm extends React.Component {
     	componentLibrary: props.componentLibrary.items,
     	name: props.formName,
     	lastUnusedId: props.lastUnusedId,
+    	showModalEditComponent: false,
     };
     this.onDragEnd = this.onDragEnd.bind(this);
+    this.openModalEditComponent = this.openModalEditComponent.bind(this);
+    this.hideModalEditComponent = this.hideModalEditComponent.bind(this);
   }
 
 
@@ -26,8 +30,6 @@ export class DragAndDropForm extends React.Component {
     if (!result.destination) {
       return;
     }
-
-    console.log(result);
 
     if (result.source.droppableId === 'component-library') {
     	if (result.destination.droppableId === 'component-library') {
@@ -86,6 +88,13 @@ export class DragAndDropForm extends React.Component {
 
 	  return result;
 	};
+
+	openModalEditComponent() {
+		this.setState({showModalEditComponent: true});
+	}
+	hideModalEditComponent() {
+		this.setState({showModalEditComponent: false});
+	}
 
 	getInputElementForType(type, id, placeholder) {
 		let input = null;
@@ -184,6 +193,11 @@ export class DragAndDropForm extends React.Component {
   //    }
 
     return (
+    	<div style={{display: "flex"}}>
+    	  	<ModalEditFormComponent show={this.state.showModalEditComponent}
+	          onClose={this.hideModalEditComponent}>
+	          Modal content
+        	</ModalEditFormComponent>
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (
@@ -212,7 +226,7 @@ export class DragAndDropForm extends React.Component {
 		                        provided.draggableProps.style
 		                      )}
 		                    >
-						     <label for={id}>{item.label}<i style={{marginLeft: 5}} className="fa fa-arrows fa-fw"></i></label>
+						     <label class="form-component-label" for={id}>{item.label}<i style={{marginLeft: 5}} className="fa fa-arrows fa-fw"></i></label>
 						     {input}
 		                   </div>
 		                  )}
@@ -265,9 +279,9 @@ export class DragAndDropForm extends React.Component {
 		                    >
 		                    <div style={{display: "flex", flexDirection: "row"}}>
 			                    <div>
-								     <label for={id}>{item.label}</label>
-								     <div style={{display: "inline"}}><a style={{marginLeft: 10}}>Edit</a></div>
-								   	<div style={{display: "inline", marginLeft: 10}}><a>Delete</a></div>
+								     <label class="form-component-label" for={id}>{item.label}</label>
+								     <div class="form-component-link" data-toggle="modal" data-target="#exampleModal" onClick={this.openModalEditComponent} style={{display: "inline", marginLeft: 10}}><a>Edit</a></div>
+								   	<div class="form-component-link" style={{display: "inline", marginLeft: 10}}><a>Delete</a></div>
 							    </div>
 							    <div style={{flexGrow: 1}} />
 							    <div>
@@ -286,6 +300,7 @@ export class DragAndDropForm extends React.Component {
           )}
         </Droppable>
         </DragDropContext>
+        </div>
     );
 
   }
