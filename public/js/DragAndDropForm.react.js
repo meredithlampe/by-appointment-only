@@ -99,10 +99,10 @@ export class DragAndDropForm extends React.Component {
 	getInputElementForType(type, id, placeholder) {
 		let input = null;
       	if (type === "shortText") {
-			input = (<input disabled type="email" class="form-control" id={id} aria-describedby="emailHelp" placeholder={placeholder}/>);
+			input = (<input disabled type="email" className="form-control" id={id} aria-describedby="emailHelp" placeholder={placeholder}/>);
       	}
       	if (type === "longText") {
-      		input = (<textarea disabled class="form-control" id={id} rows="3" placeholder={placeholder}></textarea>);
+      		input = (<textarea disabled className="form-control" id={id} rows="3" placeholder={placeholder}></textarea>);
       	}
       	if (type === "fileInput") {
             input = (<input disabled id={id} type="file"/>);
@@ -113,17 +113,17 @@ export class DragAndDropForm extends React.Component {
       	if (type === "checkboxes") {
       		input = (
       			<div id={id}>
-	                <div class="checkbox">
+	                <div className="checkbox">
 	                    <label>
 	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 1</div>
 	                    </label>
 	                </div>
-	                <div class="checkbox">
+	                <div className="checkbox">
 	                    <label>
 	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 2</div>
 	                    </label>
 	                </div>
-	                <div class="checkbox">
+	                <div className="checkbox">
 	                    <label>
 	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 3</div>
 	                    </label>
@@ -133,7 +133,7 @@ export class DragAndDropForm extends React.Component {
       	}
       	if (type === 'selects') {
       		input = (                                         
-      			<select id={id} class="form-control">
+      			<select id={id} className="form-control">
 	                <option>1</option>
 	                <option>2</option>
 	                <option>3</option>
@@ -162,29 +162,29 @@ export class DragAndDropForm extends React.Component {
 	 // const getRenameFormModal = () => {
 
   //    	return (
-		// <div class="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	 //        <div class="modal-dialog">
-	 //            <div class="modal-content">
-	 //                <div class="modal-header">
-	 //                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	 //                    <h4 class="modal-title" id="myModalLabel">Create New Form</h4>
+		// <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	 //        <div className="modal-dialog">
+	 //            <div className="modal-content">
+	 //                <div className="modal-header">
+	 //                    <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	 //                    <h4 className="modal-title" id="myModalLabel">Create New Form</h4>
 	 //                </div>
-	 //                <div class="modal-body">
+	 //                <div className="modal-body">
 	 //                  <form role="form">
-	 //                      <div class="form-group">
+	 //                      <div className="form-group">
 	 //                          <label>Name</label>
-	 //                          <input class="form-control" placeholder="e.g. December Bookings"></input>
-	 //                          <p class="help-block">Only you will see the form name</p>
+	 //                          <input className="form-control" placeholder="e.g. December Bookings"></input>
+	 //                          <p className="help-block">Only you will see the form name</p>
 	 //                      </div>
-	 //                      <div class="form-group">
+	 //                      <div className="form-group">
 	 //                          <label>Form Content</label>
-	 //                          <p class="help-block">Configure how the form will appear for your applicants</p>
+	 //                          <p className="help-block">Configure how the form will appear for your applicants</p>
 	 //                      </div>
 	 //                  </form>
 	 //                </div>
-	 //                <div class="modal-footer">
-	 //                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	 //                    <button type="button" class="btn btn-primary">Create Form</button>
+	 //                <div className="modal-footer">
+	 //                    <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+	 //                    <button type="button" className="btn btn-primary">Create Form</button>
 	 //                </div>
 	 //            </div>
 	 //        </div>
@@ -202,7 +202,7 @@ export class DragAndDropForm extends React.Component {
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (
     	  	<div className="well">
-	    	  	<p class="lead">Form Element Library</p>
+	    	  	<p className="lead">Form Element Library</p>
 	            <div
 	              ref={provided.innerRef}
 	              style={{
@@ -217,7 +217,7 @@ export class DragAndDropForm extends React.Component {
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (
-		   					<div class="form-group"
+		   					<div className="form-group"
 		                      ref={provided.innerRef}
 		                      {...provided.draggableProps}
 		                      {...provided.dragHandleProps}
@@ -226,7 +226,7 @@ export class DragAndDropForm extends React.Component {
 		                        provided.draggableProps.style
 		                      )}
 		                    >
-						     <label class="form-component-label" for={id}>{item.label}<i style={{marginLeft: 5}} className="fa fa-arrows fa-fw"></i></label>
+						     <label className="form-component-label" htmlFor={id}>{item.label}<i style={{marginLeft: 5}} className="fa fa-arrows fa-fw"></i></label>
 						     {input}
 		                   </div>
 		                  )}
@@ -268,7 +268,7 @@ export class DragAndDropForm extends React.Component {
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (
-		   					<div class="form-group"
+		   					<div className="form-group"
 		                      ref={provided.innerRef}
 		                      {...provided.draggableProps}
 		                      {...provided.dragHandleProps}
@@ -279,9 +279,9 @@ export class DragAndDropForm extends React.Component {
 		                    >
 		                    <div style={{display: "flex", flexDirection: "row"}}>
 			                    <div>
-								     <label class="form-component-label" for={id}>{item.label}</label>
-								     <div class="form-component-link" data-toggle="modal" data-target="#exampleModal" onClick={this.openModalEditComponent} style={{display: "inline", marginLeft: 10}}><a>Edit</a></div>
-								   	<div class="form-component-link" style={{display: "inline", marginLeft: 10}}><a>Delete</a></div>
+								     <label className="form-component-label" htmlFor={id}>{item.label}</label>
+								     <div className="form-component-link" data-toggle="modal" data-target="#exampleModal" onClick={this.openModalEditComponent} style={{display: "inline", marginLeft: 10}}><a>Edit</a></div>
+								   	<div className="form-component-link" style={{display: "inline", marginLeft: 10}}><a>Delete</a></div>
 							    </div>
 							    <div style={{flexGrow: 1}} />
 							    <div>

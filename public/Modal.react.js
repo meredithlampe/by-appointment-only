@@ -23,24 +23,24 @@ var Modal = function (_React$Component) {
     value: function render() {
       return React.createElement(
         'div',
-        { 'class': 'modal fade', id: 'exampleModal', tabindex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
+        { className: 'modal fade', id: 'exampleModal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
         React.createElement(
           'div',
-          { 'class': 'modal-dialog', role: 'document' },
+          { className: 'modal-dialog', role: 'document' },
           React.createElement(
             'div',
-            { 'class': 'modal-content' },
+            { className: 'modal-content' },
             React.createElement(
               'div',
-              { 'class': 'modal-header' },
+              { className: 'modal-header' },
               React.createElement(
                 'h5',
-                { 'class': 'modal-title', id: 'exampleModalLabel' },
+                { className: 'modal-title', id: 'exampleModalLabel' },
                 this.props.title
               ),
               React.createElement(
                 'button',
-                { type: 'button', 'class': 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
+                { type: 'button', className: 'close', 'data-dismiss': 'modal', 'aria-label': 'Close' },
                 React.createElement(
                   'span',
                   { 'aria-hidden': 'true' },
@@ -50,20 +50,20 @@ var Modal = function (_React$Component) {
             ),
             React.createElement(
               'div',
-              { 'class': 'modal-body' },
+              { className: 'modal-body' },
               this.props.children
             ),
             React.createElement(
               'div',
-              { 'class': 'modal-footer' },
+              { className: 'modal-footer' },
               React.createElement(
                 'button',
-                { type: 'button', 'class': 'btn btn-secondary', 'data-dismiss': 'modal' },
+                { type: 'button', className: 'btn btn-secondary', 'data-dismiss': 'modal' },
                 'Close'
               ),
               React.createElement(
                 'button',
-                { type: 'button', 'class': 'btn btn-primary' },
+                { type: 'button', className: 'btn btn-primary' },
                 'Save changes'
               )
             )

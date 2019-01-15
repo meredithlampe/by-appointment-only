@@ -127,10 +127,10 @@ export var DragAndDropForm = function (_React$Component) {
 		value: function getInputElementForType(type, id, placeholder) {
 			var input = null;
 			if (type === "shortText") {
-				input = React.createElement('input', { disabled: true, type: 'email', 'class': 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: placeholder });
+				input = React.createElement('input', { disabled: true, type: 'email', className: 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: placeholder });
 			}
 			if (type === "longText") {
-				input = React.createElement('textarea', { disabled: true, 'class': 'form-control', id: id, rows: '3', placeholder: placeholder });
+				input = React.createElement('textarea', { disabled: true, className: 'form-control', id: id, rows: '3', placeholder: placeholder });
 			}
 			if (type === "fileInput") {
 				input = React.createElement('input', { disabled: true, id: id, type: 'file' });
@@ -148,7 +148,7 @@ export var DragAndDropForm = function (_React$Component) {
 					{ id: id },
 					React.createElement(
 						'div',
-						{ 'class': 'checkbox' },
+						{ className: 'checkbox' },
 						React.createElement(
 							'label',
 							null,
@@ -162,7 +162,7 @@ export var DragAndDropForm = function (_React$Component) {
 					),
 					React.createElement(
 						'div',
-						{ 'class': 'checkbox' },
+						{ className: 'checkbox' },
 						React.createElement(
 							'label',
 							null,
@@ -176,7 +176,7 @@ export var DragAndDropForm = function (_React$Component) {
 					),
 					React.createElement(
 						'div',
-						{ 'class': 'checkbox' },
+						{ className: 'checkbox' },
 						React.createElement(
 							'label',
 							null,
@@ -193,7 +193,7 @@ export var DragAndDropForm = function (_React$Component) {
 			if (type === 'selects') {
 				input = React.createElement(
 					'select',
-					{ id: id, 'class': 'form-control' },
+					{ id: id, className: 'form-control' },
 					React.createElement(
 						'option',
 						null,
@@ -245,29 +245,29 @@ export var DragAndDropForm = function (_React$Component) {
 			// const getRenameFormModal = () => {
 
 			//    	return (
-			// <div class="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			//        <div class="modal-dialog">
-			//            <div class="modal-content">
-			//                <div class="modal-header">
-			//                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			//                    <h4 class="modal-title" id="myModalLabel">Create New Form</h4>
+			// <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			//        <div className="modal-dialog">
+			//            <div className="modal-content">
+			//                <div className="modal-header">
+			//                    <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			//                    <h4 className="modal-title" id="myModalLabel">Create New Form</h4>
 			//                </div>
-			//                <div class="modal-body">
+			//                <div className="modal-body">
 			//                  <form role="form">
-			//                      <div class="form-group">
+			//                      <div className="form-group">
 			//                          <label>Name</label>
-			//                          <input class="form-control" placeholder="e.g. December Bookings"></input>
-			//                          <p class="help-block">Only you will see the form name</p>
+			//                          <input className="form-control" placeholder="e.g. December Bookings"></input>
+			//                          <p className="help-block">Only you will see the form name</p>
 			//                      </div>
-			//                      <div class="form-group">
+			//                      <div className="form-group">
 			//                          <label>Form Content</label>
-			//                          <p class="help-block">Configure how the form will appear for your applicants</p>
+			//                          <p className="help-block">Configure how the form will appear for your applicants</p>
 			//                      </div>
 			//                  </form>
 			//                </div>
-			//                <div class="modal-footer">
-			//                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-			//                    <button type="button" class="btn btn-primary">Create Form</button>
+			//                <div className="modal-footer">
+			//                    <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
+			//                    <button type="button" className="btn btn-primary">Create Form</button>
 			//                </div>
 			//            </div>
 			//        </div>
@@ -296,7 +296,7 @@ export var DragAndDropForm = function (_React$Component) {
 								{ className: 'well' },
 								React.createElement(
 									'p',
-									{ 'class': 'lead' },
+									{ className: 'lead' },
 									'Form Element Library'
 								),
 								React.createElement(
@@ -318,14 +318,14 @@ export var DragAndDropForm = function (_React$Component) {
 											function (provided, snapshot) {
 												return React.createElement(
 													'div',
-													Object.assign({ 'class': 'form-group',
+													Object.assign({ className: 'form-group',
 														ref: provided.innerRef
 													}, provided.draggableProps, provided.dragHandleProps, {
 														style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
 													}),
 													React.createElement(
 														'label',
-														{ 'class': 'form-component-label', 'for': id },
+														{ className: 'form-component-label', htmlFor: id },
 														item.label,
 														React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrows fa-fw' })
 													),
@@ -386,7 +386,7 @@ export var DragAndDropForm = function (_React$Component) {
 											function (provided, snapshot) {
 												return React.createElement(
 													'div',
-													Object.assign({ 'class': 'form-group',
+													Object.assign({ className: 'form-group',
 														ref: provided.innerRef
 													}, provided.draggableProps, provided.dragHandleProps, {
 														style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
@@ -399,12 +399,12 @@ export var DragAndDropForm = function (_React$Component) {
 															null,
 															React.createElement(
 																'label',
-																{ 'class': 'form-component-label', 'for': id },
+																{ className: 'form-component-label', htmlFor: id },
 																item.label
 															),
 															React.createElement(
 																'div',
-																{ 'class': 'form-component-link', 'data-toggle': 'modal', 'data-target': '#exampleModal', onClick: _this2.openModalEditComponent, style: { display: "inline", marginLeft: 10 } },
+																{ className: 'form-component-link', 'data-toggle': 'modal', 'data-target': '#exampleModal', onClick: _this2.openModalEditComponent, style: { display: "inline", marginLeft: 10 } },
 																React.createElement(
 																	'a',
 																	null,
@@ -413,7 +413,7 @@ export var DragAndDropForm = function (_React$Component) {
 															),
 															React.createElement(
 																'div',
-																{ 'class': 'form-component-link', style: { display: "inline", marginLeft: 10 } },
+																{ className: 'form-component-link', style: { display: "inline", marginLeft: 10 } },
 																React.createElement(
 																	'a',
 																	null,
