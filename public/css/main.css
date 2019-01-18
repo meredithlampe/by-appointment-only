@@ -34,6 +34,14 @@
 	cursor: grabbing;
 }
 
+.edit-form-component-field-label {
+	margin-top: 10px;
+}
+
 .form-component-link {
 	cursor: default;
+}
+
+.edit-modal-input-preview {
+	padding: 30px;
 }

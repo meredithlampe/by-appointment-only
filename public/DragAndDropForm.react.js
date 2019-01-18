@@ -13,6 +13,7 @@ var React = require('react');
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ModalEditFormComponent from './Modal.react.js';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
+import COMPONENT_LIBRARY from './componentLibrary.js';
 
 var getItems = function getItems(count) {
 	return Array.from({ length: count }, function (v, k) {
@@ -36,7 +37,6 @@ export var DragAndDropForm = function (_React$Component) {
 
 		_this.state = {
 			items: props.formItems.items,
-			componentLibrary: props.componentLibrary.items,
 			name: props.formName,
 			lastUnusedId: props.lastUnusedId,
 			showModalEditComponent: false,
@@ -142,8 +142,8 @@ export var DragAndDropForm = function (_React$Component) {
 	}, {
 		key: 'getLabelForInputElementType',
 		value: function getLabelForInputElementType(type) {
-			for (var vv = 0; vv < this.props.componentLibrary.items.length; vv++) {
-				var component = this.props.componentLibrary.items[vv];
+			for (var vv = 0; vv < COMPONENT_LIBRARY.length; vv++) {
+				var component = COMPONENT_LIBRARY[vv];
 				if (component.inputType === type) {
 					return component.label;
 				}
@@ -178,16 +178,11 @@ export var DragAndDropForm = function (_React$Component) {
 			return React.createElement(
 				'div',
 				{ style: { display: "flex" } },
-				editingItem ? React.createElement(
-					ModalEditFormComponent,
-					{
-						title: 'Edit ' + this.getLabelForInputElementType(editingItem.inputType),
-						show: this.state.showModalEditComponent,
-						onClose: this.hideModalEditComponent },
-					'item=',
-					editingItem,
-					DragAndDropFormUtils.getInputElementForType(editingItem.inputType, 100, editingItem.placeholder)
-				) : null,
+				editingItem ? React.createElement(ModalEditFormComponent, {
+					title: 'Edit ' + this.getLabelForInputElementType(editingItem.inputType),
+					show: this.state.showModalEditComponent,
+					onClose: this.hideModalEditComponent,
+					item: editingItem }) : null,
 				React.createElement(
 					DragDropContext,
 					{ onDragEnd: this.onDragEnd },
@@ -212,7 +207,7 @@ export var DragAndDropForm = function (_React$Component) {
 											borderRadius: 30
 										}
 									},
-									_this2.state.componentLibrary.map(function (item, index) {
+									COMPONENT_LIBRARY.map(function (item, index) {
 										var input = null;
 										var id = "component-library-" + item.inputType;
 										input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);

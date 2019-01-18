@@ -1,4 +1,5 @@
 import React from 'react';
+import COMPONENT_LIBRARY from './componentLibrary.js';
 
 export default class DragAndDropFormUtils {
 	static getInputElementForType(type, id, placeholder) {
@@ -48,5 +49,12 @@ export default class DragAndDropFormUtils {
             );
       	}
       	return input;
+	}
+
+	static getEditableFieldsForInputType(inputType) {
+		let found = COMPONENT_LIBRARY.find(function(item) {
+			return item.inputType === inputType;
+		});
+		return found.editable;
 	}
 }	

@@ -5,7 +5,6 @@ var ReactDOM = require('react-dom');
 import { DragAndDropForm } from './DragAndDropForm.react.js';
 // import { DragDropContext, Droppable, Draggable } from '../node_modules/react-beautiful-dnd';
 
-
 // hide all components initially
 cleanupUI();
 transitionToScreen('home-container');
@@ -168,48 +167,8 @@ var sampleFormItems = {
 	}]
 };
 
-var componentLibrary = {
-	items: [{
-		inputType: 'shortText',
-		label: 'Short Text',
-		placeholder: 'Placeholder text',
-		editable: ['placeholder', 'label']
-	}, {
-		inputType: 'longText',
-		label: 'Long Text',
-		placeholder: 'Placeholder text',
-		editable: ['placeholder', 'label']
-	}, {
-		inputType: 'fileInput',
-		label: 'File Input',
-		placeholder: '',
-		editable: ['label']
-	}, {
-		inputType: 'staticText',
-		label: 'Static Text',
-		placeholder: '',
-		content: 'Sample text containing instructions for filling out the form, disclaimer, etc.',
-		editable: ['content', 'label']
-	}, {
-		inputType: 'checkboxes',
-		label: 'Checkboxes',
-		placeholder: '',
-		content: 'Description of checkboxes',
-		options: [],
-		editable: ['content', 'label', 'options']
-	}, {
-		inputType: 'selects',
-		label: 'Dropdown Selector',
-		placeholder: '',
-		content: 'Description of checkboxes',
-		options: [],
-		editable: ['content', 'label', 'options']
-	}]
-};
-
 var props = {
 	formItems: sampleFormItems,
-	componentLibrary: componentLibrary,
 	formName: 'My New Form',
 	lastUnusedId: 4
 };

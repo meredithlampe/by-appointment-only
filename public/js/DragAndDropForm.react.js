@@ -3,6 +3,7 @@ var React = require('react');
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ModalEditFormComponent from './Modal.react.js';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
+import COMPONENT_LIBRARY from './componentLibrary.js';
 
 
 const getItems = count =>
@@ -17,7 +18,6 @@ export class DragAndDropForm extends React.Component {
     super(props);
     this.state = { 
     	items: props.formItems.items, 
-    	componentLibrary: props.componentLibrary.items,
     	name: props.formName,
     	lastUnusedId: props.lastUnusedId,
     	showModalEditComponent: false,
@@ -114,8 +114,8 @@ export class DragAndDropForm extends React.Component {
 	}
 
 	getLabelForInputElementType(type) {
-		for(let vv = 0; vv < this.props.componentLibrary.items.length; vv++) {
-			let component = this.props.componentLibrary.items[vv];
+		for(let vv = 0; vv < COMPONENT_LIBRARY.length; vv++) {
+			let component = COMPONENT_LIBRARY[vv];
 			if (component.inputType === type) {
 				return component.label;
 			}
@@ -149,9 +149,8 @@ export class DragAndDropForm extends React.Component {
     	  	<ModalEditFormComponent 
     	  		title={'Edit ' + this.getLabelForInputElementType(editingItem.inputType)}
     	  		show={this.state.showModalEditComponent}
-	          	onClose={this.hideModalEditComponent}>
-	          	item={editingItem}
-	          	{DragAndDropFormUtils.getInputElementForType(editingItem.inputType, 100, editingItem.placeholder)}
+	          	onClose={this.hideModalEditComponent}
+	          	item={editingItem}>
         	</ModalEditFormComponent>
         	: null}
     	<DragDropContext onDragEnd={this.onDragEnd}>
@@ -166,7 +165,7 @@ export class DragAndDropForm extends React.Component {
 					  borderRadius: 30,
 					}}
 	            >
-	            {this.state.componentLibrary.map((item, index) => {
+	            {COMPONENT_LIBRARY.map((item, index) => {
 	              	let input = null;
 	              	let id = "component-library-" + item.inputType;
 	              	input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);

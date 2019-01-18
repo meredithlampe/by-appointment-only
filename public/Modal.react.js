@@ -8,20 +8,30 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import DragAndDropFormUtils from './DragAndDropFormUtils.js';
+import FIELD_METADATA from './componentFieldMetadata.js';
 
 var Modal = function (_React$Component) {
   _inherits(Modal, _React$Component);
 
-  function Modal() {
+  function Modal(props) {
     _classCallCheck(this, Modal);
 
-    return _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
+
+    _this.state = {
+      item: props.item
+    };
+    return _this;
   }
 
   _createClass(Modal, [{
     key: 'render',
     value: function render() {
-      console.log(this.props);
+      var _this2 = this;
+
+      console.log(FIELD_METADATA);
+      var item = this.state.item;
       return React.createElement(
         'div',
         { className: 'modal fade', id: 'exampleModal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
@@ -52,7 +62,47 @@ var Modal = function (_React$Component) {
             React.createElement(
               'div',
               { className: 'modal-body' },
-              this.props.children
+              React.createElement(
+                'div',
+                { className: 'edit-modal-input-preview' },
+                React.createElement(
+                  'label',
+                  { className: 'form-component-label' },
+                  item.label
+                ),
+                DragAndDropFormUtils.getInputElementForType(item.inputType, 100, item.placeholder)
+              ),
+              React.createElement('hr', null),
+              React.createElement(
+                'div',
+                { style: { margin: 20 } },
+                React.createElement(
+                  'p',
+                  { 'class': 'text-muted' },
+                  'Change the fields below to see how the form element will look above.'
+                ),
+                DragAndDropFormUtils.getEditableFieldsForInputType(this.props.item.inputType).map(function (editableField) {
+                  return React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                      'label',
+                      { className: 'form-component-label edit-form-component-field-label' },
+                      FIELD_METADATA[editableField].label
+                    ),
+                    React.createElement('input', {
+                      className: 'form-control',
+                      value: item[editableField],
+                      onChange: function onChange(event) {
+                        console.log(event.nativeEvent.target.value);
+                        var newValue = event.nativeEvent.target.value;
+                        var newItem = _this2.state.item;
+                        newItem[editableField] = newValue;
+                        _this2.setState({ item: newItem });
+                      } })
+                  );
+                })
+              )
             ),
             React.createElement(
               'div',
