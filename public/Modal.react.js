@@ -21,6 +21,7 @@ var Modal = function (_React$Component) {
   _createClass(Modal, [{
     key: 'render',
     value: function render() {
+      console.log(this.props);
       return React.createElement(
         'div',
         { className: 'modal fade', id: 'exampleModal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
@@ -35,7 +36,7 @@ var Modal = function (_React$Component) {
               { className: 'modal-header' },
               React.createElement(
                 'h5',
-                { className: 'modal-title', id: 'exampleModalLabel' },
+                { className: 'modal-title', style: { display: "inline" }, id: 'exampleModalLabel' },
                 this.props.title
               ),
               React.createElement(
@@ -79,7 +80,15 @@ var Modal = function (_React$Component) {
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node,
-  title: PropTypes.string
+  title: PropTypes.string,
+  item: PropTypes.shape({
+    inputType: PropTypes.string,
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    content: PropTypes.string,
+    options: PropTypes.array,
+    editable: PropTypes.array
+  })
 };
 
 export default Modal;

@@ -9,8 +9,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
+
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ModalEditFormComponent from './Modal.react.js';
+import DragAndDropFormUtils from './DragAndDropFormUtils.js';
 
 var getItems = function getItems(count) {
 	return Array.from({ length: count }, function (v, k) {
@@ -37,7 +39,8 @@ export var DragAndDropForm = function (_React$Component) {
 			componentLibrary: props.componentLibrary.items,
 			name: props.formName,
 			lastUnusedId: props.lastUnusedId,
-			showModalEditComponent: false
+			showModalEditComponent: false,
+			editingItem: null
 		};
 		_this.onDragEnd = _this.onDragEnd.bind(_this);
 		_this.openModalEditComponent = _this.openModalEditComponent.bind(_this);
@@ -70,7 +73,8 @@ export var DragAndDropForm = function (_React$Component) {
 					var inputTypeMatch = result.draggableId.match(/component-library-(.*)/);
 					if (inputTypeMatch && inputTypeMatch.length > 1) {
 						var newFormItem = {
-							id: this.state.lastUnusedId, // FIXME
+							id: this.state.lastUnusedId,
+							idCopy: this.state.lastUnusedId,
 							label: 'New Input',
 							placeholder: 'Placeholder',
 							inputType: inputTypeMatch[1]
@@ -114,8 +118,10 @@ export var DragAndDropForm = function (_React$Component) {
 		}
 	}, {
 		key: 'openModalEditComponent',
-		value: function openModalEditComponent() {
-			this.setState({ showModalEditComponent: true });
+		value: function openModalEditComponent(itemId) {
+			var id = itemId.match(/edit-(.*)/);
+			var editingItem = this.getItemForId(parseInt(id[1]));
+			this.setState({ showModalEditComponent: true, editingItem: editingItem });
 		}
 	}, {
 		key: 'hideModalEditComponent',
@@ -123,105 +129,26 @@ export var DragAndDropForm = function (_React$Component) {
 			this.setState({ showModalEditComponent: false });
 		}
 	}, {
-		key: 'getInputElementForType',
-		value: function getInputElementForType(type, id, placeholder) {
-			var input = null;
-			if (type === "shortText") {
-				input = React.createElement('input', { disabled: true, type: 'email', className: 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: placeholder });
+		key: 'getItemForId',
+		value: function getItemForId(id) {
+			for (var ii = 0; ii < this.state.items.length; ii++) {
+				var item = this.state.items[ii];
+				if (item.id === id) {
+					return item;
+				}
 			}
-			if (type === "longText") {
-				input = React.createElement('textarea', { disabled: true, className: 'form-control', id: id, rows: '3', placeholder: placeholder });
+			return null;
+		}
+	}, {
+		key: 'getLabelForInputElementType',
+		value: function getLabelForInputElementType(type) {
+			for (var vv = 0; vv < this.props.componentLibrary.items.length; vv++) {
+				var component = this.props.componentLibrary.items[vv];
+				if (component.inputType === type) {
+					return component.label;
+				}
 			}
-			if (type === "fileInput") {
-				input = React.createElement('input', { disabled: true, id: id, type: 'file' });
-			}
-			if (type === "staticText") {
-				input = React.createElement(
-					'p',
-					{ className: 'text-muted', id: id },
-					placeholder
-				);
-			}
-			if (type === "checkboxes") {
-				input = React.createElement(
-					'div',
-					{ id: id },
-					React.createElement(
-						'div',
-						{ className: 'checkbox' },
-						React.createElement(
-							'label',
-							null,
-							React.createElement('input', { type: 'checkbox', value: '' }),
-							React.createElement(
-								'div',
-								{ className: 'text-muted' },
-								'Checkbox 1'
-							)
-						)
-					),
-					React.createElement(
-						'div',
-						{ className: 'checkbox' },
-						React.createElement(
-							'label',
-							null,
-							React.createElement('input', { type: 'checkbox', value: '' }),
-							React.createElement(
-								'div',
-								{ className: 'text-muted' },
-								'Checkbox 2'
-							)
-						)
-					),
-					React.createElement(
-						'div',
-						{ className: 'checkbox' },
-						React.createElement(
-							'label',
-							null,
-							React.createElement('input', { type: 'checkbox', value: '' }),
-							React.createElement(
-								'div',
-								{ className: 'text-muted' },
-								'Checkbox 3'
-							)
-						)
-					)
-				);
-			}
-			if (type === 'selects') {
-				input = React.createElement(
-					'select',
-					{ id: id, className: 'form-control' },
-					React.createElement(
-						'option',
-						null,
-						'1'
-					),
-					React.createElement(
-						'option',
-						null,
-						'2'
-					),
-					React.createElement(
-						'option',
-						null,
-						'3'
-					),
-					React.createElement(
-						'option',
-						null,
-						'4'
-					),
-					React.createElement(
-						'option',
-						null,
-						'5'
-					)
-				);
-			}
-			return input;
+			return null;
 		}
 	}, {
 		key: 'render',
@@ -242,48 +169,25 @@ export var DragAndDropForm = function (_React$Component) {
 					borderRadius: 30
 				};
 			};
-			// const getRenameFormModal = () => {
 
-			//    	return (
-			// <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			//        <div className="modal-dialog">
-			//            <div className="modal-content">
-			//                <div className="modal-header">
-			//                    <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			//                    <h4 className="modal-title" id="myModalLabel">Create New Form</h4>
-			//                </div>
-			//                <div className="modal-body">
-			//                  <form role="form">
-			//                      <div className="form-group">
-			//                          <label>Name</label>
-			//                          <input className="form-control" placeholder="e.g. December Bookings"></input>
-			//                          <p className="help-block">Only you will see the form name</p>
-			//                      </div>
-			//                      <div className="form-group">
-			//                          <label>Form Content</label>
-			//                          <p className="help-block">Configure how the form will appear for your applicants</p>
-			//                      </div>
-			//                  </form>
-			//                </div>
-			//                <div className="modal-footer">
-			//                    <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-			//                    <button type="button" className="btn btn-primary">Create Form</button>
-			//                </div>
-			//            </div>
-			//        </div>
-			//     </div>
-			//    );
-			//    }
+			console.log("editingItem:");
+			console.log(this.state.editingItem);
+
+			var editingItem = this.state.editingItem;
 
 			return React.createElement(
 				'div',
 				{ style: { display: "flex" } },
-				React.createElement(
+				editingItem ? React.createElement(
 					ModalEditFormComponent,
-					{ show: this.state.showModalEditComponent,
+					{
+						title: 'Edit ' + this.getLabelForInputElementType(editingItem.inputType),
+						show: this.state.showModalEditComponent,
 						onClose: this.hideModalEditComponent },
-					'Modal content'
-				),
+					'item=',
+					editingItem,
+					DragAndDropFormUtils.getInputElementForType(editingItem.inputType, 100, editingItem.placeholder)
+				) : null,
 				React.createElement(
 					DragDropContext,
 					{ onDragEnd: this.onDragEnd },
@@ -311,7 +215,7 @@ export var DragAndDropForm = function (_React$Component) {
 									_this2.state.componentLibrary.map(function (item, index) {
 										var input = null;
 										var id = "component-library-" + item.inputType;
-										input = _this2.getInputElementForType(item.inputType, id, item.placeholder);
+										input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);
 										return React.createElement(
 											Draggable,
 											{ key: item.id, draggableId: id, index: index },
@@ -379,7 +283,8 @@ export var DragAndDropForm = function (_React$Component) {
 									_this2.state.items.map(function (item, index) {
 										var input = null;
 										var id = "input" + index;
-										input = _this2.getInputElementForType(item.inputType, id, item.placeholder);
+										input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);
+										console.log(item);
 										return React.createElement(
 											Draggable,
 											{ key: item.id, draggableId: id, index: index },
@@ -404,10 +309,17 @@ export var DragAndDropForm = function (_React$Component) {
 															),
 															React.createElement(
 																'div',
-																{ className: 'form-component-link', 'data-toggle': 'modal', 'data-target': '#exampleModal', onClick: _this2.openModalEditComponent, style: { display: "inline", marginLeft: 10 } },
+																{
+																	className: 'form-component-link',
+																	'data-toggle': 'modal',
+																	'data-target': '#exampleModal',
+																	onClick: function onClick(target) {
+																		_this2.openModalEditComponent(target.nativeEvent.target.id);
+																	},
+																	style: { display: "inline", marginLeft: 10 } },
 																React.createElement(
 																	'a',
-																	null,
+																	{ id: 'edit-' + item.id },
 																	'Edit'
 																)
 															),

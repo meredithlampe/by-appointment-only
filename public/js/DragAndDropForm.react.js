@@ -1,6 +1,9 @@
 var React = require('react');
+
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ModalEditFormComponent from './Modal.react.js';
+import DragAndDropFormUtils from './DragAndDropFormUtils.js';
+
 
 const getItems = count =>
   Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -18,6 +21,7 @@ export class DragAndDropForm extends React.Component {
     	name: props.formName,
     	lastUnusedId: props.lastUnusedId,
     	showModalEditComponent: false,
+    	editingItem: null,
     };
     this.onDragEnd = this.onDragEnd.bind(this);
     this.openModalEditComponent = this.openModalEditComponent.bind(this);
@@ -48,7 +52,8 @@ export class DragAndDropForm extends React.Component {
 			let inputTypeMatch = result.draggableId.match(/component-library-(.*)/);
 			if (inputTypeMatch && inputTypeMatch.length > 1) {
 	    		let newFormItem = {
-	    			id: this.state.lastUnusedId, // FIXME
+	    			id: this.state.lastUnusedId,
+	    			idCopy: this.state.lastUnusedId,
 	    			label: 'New Input',
 	    			placeholder: 'Placeholder',
 	    			inputType: inputTypeMatch[1],
@@ -89,60 +94,33 @@ export class DragAndDropForm extends React.Component {
 	  return result;
 	};
 
-	openModalEditComponent() {
-		this.setState({showModalEditComponent: true});
+	openModalEditComponent(itemId) {
+		let id = itemId.match(/edit-(.*)/);
+		let editingItem = this.getItemForId(parseInt(id[1]));
+		this.setState({showModalEditComponent: true, editingItem: editingItem});
 	}
 	hideModalEditComponent() {
 		this.setState({showModalEditComponent: false});
 	}
 
-	getInputElementForType(type, id, placeholder) {
-		let input = null;
-      	if (type === "shortText") {
-			input = (<input disabled type="email" className="form-control" id={id} aria-describedby="emailHelp" placeholder={placeholder}/>);
-      	}
-      	if (type === "longText") {
-      		input = (<textarea disabled className="form-control" id={id} rows="3" placeholder={placeholder}></textarea>);
-      	}
-      	if (type === "fileInput") {
-            input = (<input disabled id={id} type="file"/>);
-      	}
-      	if (type === "staticText") {
-      		input = (<p className="text-muted" id={id}>{placeholder}</p>)
-      	}
-      	if (type === "checkboxes") {
-      		input = (
-      			<div id={id}>
-	                <div className="checkbox">
-	                    <label>
-	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 1</div>
-	                    </label>
-	                </div>
-	                <div className="checkbox">
-	                    <label>
-	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 2</div>
-	                    </label>
-	                </div>
-	                <div className="checkbox">
-	                    <label>
-	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 3</div>
-	                    </label>
-	                </div>
-	             </div>
-            );
-      	}
-      	if (type === 'selects') {
-      		input = (                                         
-      			<select id={id} className="form-control">
-	                <option>1</option>
-	                <option>2</option>
-	                <option>3</option>
-	                <option>4</option>
-	                <option>5</option>
-                </select>
-            );
-      	}
-      	return input;
+	getItemForId(id) {
+		for(let ii = 0; ii < this.state.items.length; ii++) {
+			let item = this.state.items[ii];
+			if (item.id === id) {
+				return item;
+			}
+		}
+		return null;
+	}
+
+	getLabelForInputElementType(type) {
+		for(let vv = 0; vv < this.props.componentLibrary.items.length; vv++) {
+			let component = this.props.componentLibrary.items[vv];
+			if (component.inputType === type) {
+				return component.label;
+			}
+		}
+		return null;
 	}
 
   render() {
@@ -159,45 +137,23 @@ export class DragAndDropForm extends React.Component {
 	  width: 300,
 	  borderRadius: 30,
 	});	
-	 // const getRenameFormModal = () => {
 
-  //    	return (
-		// <div className="modal fade" id="myModal" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	 //        <div className="modal-dialog">
-	 //            <div className="modal-content">
-	 //                <div className="modal-header">
-	 //                    <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	 //                    <h4 className="modal-title" id="myModalLabel">Create New Form</h4>
-	 //                </div>
-	 //                <div className="modal-body">
-	 //                  <form role="form">
-	 //                      <div className="form-group">
-	 //                          <label>Name</label>
-	 //                          <input className="form-control" placeholder="e.g. December Bookings"></input>
-	 //                          <p className="help-block">Only you will see the form name</p>
-	 //                      </div>
-	 //                      <div className="form-group">
-	 //                          <label>Form Content</label>
-	 //                          <p className="help-block">Configure how the form will appear for your applicants</p>
-	 //                      </div>
-	 //                  </form>
-	 //                </div>
-	 //                <div className="modal-footer">
-	 //                    <button type="button" className="btn btn-default" data-dismiss="modal">Cancel</button>
-	 //                    <button type="button" className="btn btn-primary">Create Form</button>
-	 //                </div>
-	 //            </div>
-	 //        </div>
-	 //     </div>
-	 //    );
-  //    }
+	console.log("editingItem:");
+	console.log(this.state.editingItem);
+
+	let editingItem = this.state.editingItem;
 
     return (
     	<div style={{display: "flex"}}>
-    	  	<ModalEditFormComponent show={this.state.showModalEditComponent}
-	          onClose={this.hideModalEditComponent}>
-	          Modal content
+    	{editingItem ?
+    	  	<ModalEditFormComponent 
+    	  		title={'Edit ' + this.getLabelForInputElementType(editingItem.inputType)}
+    	  		show={this.state.showModalEditComponent}
+	          	onClose={this.hideModalEditComponent}>
+	          	item={editingItem}
+	          	{DragAndDropFormUtils.getInputElementForType(editingItem.inputType, 100, editingItem.placeholder)}
         	</ModalEditFormComponent>
+        	: null}
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (
@@ -213,7 +169,7 @@ export class DragAndDropForm extends React.Component {
 	            {this.state.componentLibrary.map((item, index) => {
 	              	let input = null;
 	              	let id = "component-library-" + item.inputType;
-	              	input = this.getInputElementForType(item.inputType, id, item.placeholder);
+	              	input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (
@@ -264,7 +220,8 @@ export class DragAndDropForm extends React.Component {
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "input" + index;
-	              	input = this.getInputElementForType(item.inputType, id, item.placeholder);
+	              	input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);
+	              	console.log(item);
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (
@@ -280,7 +237,14 @@ export class DragAndDropForm extends React.Component {
 		                    <div style={{display: "flex", flexDirection: "row"}}>
 			                    <div>
 								     <label className="form-component-label" htmlFor={id}>{item.label}</label>
-								     <div className="form-component-link" data-toggle="modal" data-target="#exampleModal" onClick={this.openModalEditComponent} style={{display: "inline", marginLeft: 10}}><a>Edit</a></div>
+								     <div 
+								     	className="form-component-link" 
+								     	data-toggle="modal" 
+								     	data-target="#exampleModal" 
+								     	onClick={(target) => {
+								     		this.openModalEditComponent(target.nativeEvent.target.id);
+								     	}} 
+								     	style={{display: "inline", marginLeft: 10}}><a id={'edit-' + item.id}>Edit</a></div>
 								   	<div className="form-component-link" style={{display: "inline", marginLeft: 10}}><a>Delete</a></div>
 							    </div>
 							    <div style={{flexGrow: 1}} />

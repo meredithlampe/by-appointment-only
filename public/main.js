@@ -149,16 +149,19 @@ var domContainer = document.querySelector('.create-form-input-area');
 var sampleFormItems = {
 	items: [{
 		id: 0,
+		idCopy: 0,
 		label: "Name",
 		placeholder: "Enter Name",
 		inputType: "shortText"
 	}, {
 		id: 1,
+		idCopy: 1,
 		label: "Email",
 		placeholder: "Enter Email",
 		inputType: "shortText"
 	}, {
 		id: 2,
+		idCopy: 3,
 		label: "Comments",
 		placeholder: "Provide any additional comments here",
 		inputType: "longText"
@@ -169,27 +172,38 @@ var componentLibrary = {
 	items: [{
 		inputType: 'shortText',
 		label: 'Short Text',
-		placeholder: 'Placeholder text'
+		placeholder: 'Placeholder text',
+		editable: ['placeholder', 'label']
 	}, {
 		inputType: 'longText',
 		label: 'Long Text',
-		placeholder: 'Placeholder text'
+		placeholder: 'Placeholder text',
+		editable: ['placeholder', 'label']
 	}, {
 		inputType: 'fileInput',
 		label: 'File Input',
-		placeholder: ''
+		placeholder: '',
+		editable: ['label']
 	}, {
 		inputType: 'staticText',
 		label: 'Static Text',
-		placeholder: 'Sample text containing instructions for filling out the form, disclaimer, etc.'
+		placeholder: '',
+		content: 'Sample text containing instructions for filling out the form, disclaimer, etc.',
+		editable: ['content', 'label']
 	}, {
 		inputType: 'checkboxes',
 		label: 'Checkboxes',
-		placeholder: 'Description of checkboxes'
+		placeholder: '',
+		content: 'Description of checkboxes',
+		options: [],
+		editable: ['content', 'label', 'options']
 	}, {
 		inputType: 'selects',
 		label: 'Dropdown Selector',
-		placehodler: ''
+		placeholder: '',
+		content: 'Description of checkboxes',
+		options: [],
+		editable: ['content', 'label', 'options']
 	}]
 };
 
