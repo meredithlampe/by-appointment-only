@@ -4,15 +4,20 @@ import DragAndDropFormUtils from './DragAndDropFormUtils.js';
 import FIELD_METADATA from './componentFieldMetadata.js';
 
 class Modal extends React.Component {
-    constructor(props) {
+  constructor(props) {
     super(props);
+    console.log("item in props");
+    console.log(props.itemID);
+    let item = props.item;
     this.state = { 
       item: props.item, 
     };
   }
+
   render() {
-    console.log(FIELD_METADATA);
+    console.log("item in modal");
     let item = this.state.item;
+    console.log(this.props.itemID);
     return (
       <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog" role="document">
@@ -73,6 +78,7 @@ Modal.propTypes = {
         options: PropTypes.array,
         editable: PropTypes.array,
   }),
+  itemID: PropTypes.string,
 };
 
 export default Modal;

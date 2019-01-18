@@ -19,6 +19,9 @@ var Modal = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Modal.__proto__ || Object.getPrototypeOf(Modal)).call(this, props));
 
+    console.log("item in props");
+    console.log(props.itemID);
+    var item = props.item;
     _this.state = {
       item: props.item
     };
@@ -30,8 +33,9 @@ var Modal = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(FIELD_METADATA);
+      console.log("item in modal");
       var item = this.state.item;
+      console.log(this.props.itemID);
       return React.createElement(
         'div',
         { className: 'modal fade', id: 'exampleModal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
@@ -138,7 +142,8 @@ Modal.propTypes = {
     content: PropTypes.string,
     options: PropTypes.array,
     editable: PropTypes.array
-  })
+  }),
+  itemID: PropTypes.string
 };
 
 export default Modal;

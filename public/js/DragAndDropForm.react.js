@@ -100,7 +100,7 @@ export class DragAndDropForm extends React.Component {
 		this.setState({showModalEditComponent: true, editingItem: editingItem});
 	}
 	hideModalEditComponent() {
-		this.setState({showModalEditComponent: false});
+		this.setState({showModalEditComponent: false, editingItem: null});
 	}
 
 	getItemForId(id) {
@@ -139,18 +139,20 @@ export class DragAndDropForm extends React.Component {
 	});	
 
 	console.log("editingItem:");
-	console.log(this.state.editingItem);
+	console.log(this.state.editingItem ? this.state.editingItem.id : null);
 
 	let editingItem = this.state.editingItem;
 
     return (
     	<div style={{display: "flex"}}>
-    	{editingItem ?
+    	{this.state.showModalEditComponent ?
     	  	<ModalEditFormComponent 
     	  		title={'Edit ' + this.getLabelForInputElementType(editingItem.inputType)}
     	  		show={this.state.showModalEditComponent}
 	          	onClose={this.hideModalEditComponent}
+	          	itemID={editingItem.id}
 	          	item={editingItem}>
+	          	key={editingItem.id}
         	</ModalEditFormComponent>
         	: null}
     	<DragDropContext onDragEnd={this.onDragEnd}>
@@ -220,7 +222,6 @@ export class DragAndDropForm extends React.Component {
 	              	let input = null;
 	              	let id = "input" + index;
 	              	input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);
-	              	console.log(item);
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (

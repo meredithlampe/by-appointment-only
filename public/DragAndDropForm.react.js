@@ -126,7 +126,7 @@ export var DragAndDropForm = function (_React$Component) {
 	}, {
 		key: 'hideModalEditComponent',
 		value: function hideModalEditComponent() {
-			this.setState({ showModalEditComponent: false });
+			this.setState({ showModalEditComponent: false, editingItem: null });
 		}
 	}, {
 		key: 'getItemForId',
@@ -171,18 +171,24 @@ export var DragAndDropForm = function (_React$Component) {
 			};
 
 			console.log("editingItem:");
-			console.log(this.state.editingItem);
+			console.log(this.state.editingItem ? this.state.editingItem.id : null);
 
 			var editingItem = this.state.editingItem;
 
 			return React.createElement(
 				'div',
 				{ style: { display: "flex" } },
-				editingItem ? React.createElement(ModalEditFormComponent, {
-					title: 'Edit ' + this.getLabelForInputElementType(editingItem.inputType),
-					show: this.state.showModalEditComponent,
-					onClose: this.hideModalEditComponent,
-					item: editingItem }) : null,
+				this.state.showModalEditComponent ? React.createElement(
+					ModalEditFormComponent,
+					{
+						title: 'Edit ' + this.getLabelForInputElementType(editingItem.inputType),
+						show: this.state.showModalEditComponent,
+						onClose: this.hideModalEditComponent,
+						itemID: editingItem.id,
+						item: editingItem },
+					'key=',
+					editingItem.id
+				) : null,
 				React.createElement(
 					DragDropContext,
 					{ onDragEnd: this.onDragEnd },
@@ -279,7 +285,6 @@ export var DragAndDropForm = function (_React$Component) {
 										var input = null;
 										var id = "input" + index;
 										input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);
-										console.log(item);
 										return React.createElement(
 											Draggable,
 											{ key: item.id, draggableId: id, index: index },
