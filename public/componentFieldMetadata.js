@@ -6,9 +6,9 @@ export default {
 		label: 'Label'
 	},
 	'content': {
-		content: 'Content'
+		label: 'Content'
 	},
 	'options': {
-		options: 'Options'
+		label: 'Options'
 	}
 };

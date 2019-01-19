@@ -130,7 +130,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var reac
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n\t'placeholder': {\n\t\tlabel: 'Placeholder'\n\t},\n\t'label': {\n\t\tlabel: 'Label'\n\t},\n\t'content': {\n\t\tcontent: 'Content'\n\t},\n\t'options': {\n\t\toptions: 'Options'\n\t}\n});\n\n//# sourceURL=webpack:///./componentFieldMetadata.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n\t'placeholder': {\n\t\tlabel: 'Placeholder'\n\t},\n\t'label': {\n\t\tlabel: 'Label'\n\t},\n\t'content': {\n\t\tlabel: 'Content'\n\t},\n\t'options': {\n\t\tlabel: 'Options'\n\t}\n});\n\n//# sourceURL=webpack:///./componentFieldMetadata.js?");
 
 /***/ }),
 
