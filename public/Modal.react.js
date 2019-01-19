@@ -21,8 +21,6 @@ var EditModal = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (EditModal.__proto__ || Object.getPrototypeOf(EditModal)).call(this, props));
 
-    console.log("item in props");
-    console.log(props.item);
     var item = props.item;
     _this.state = {
       item: props.item
@@ -38,7 +36,7 @@ var EditModal = function (_React$Component) {
       var editingItem = this.state.item;
       return React.createElement(
         Modal,
-        { show: this.props.show, onHide: this.hideModalEditComponent },
+        { show: this.props.show, onClose: this.props.onClose },
         React.createElement(
           Modal.Header,
           null,
@@ -71,13 +69,13 @@ var EditModal = function (_React$Component) {
             { style: { margin: 20 } },
             React.createElement(
               'p',
-              { 'class': 'text-muted' },
+              { className: 'text-muted' },
               'Change the fields below to see how the form element will look above.'
             ),
             editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(function (editableField) {
               return React.createElement(
                 'div',
-                null,
+                { key: editableField },
                 React.createElement(
                   'label',
                   { className: 'form-component-label edit-form-component-field-label' },
