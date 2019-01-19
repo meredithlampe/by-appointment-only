@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
-import FIELD_METADATA from './componentFieldMetadata.js';
 
 class Modal extends React.Component {
   constructor(props) {
@@ -15,11 +14,9 @@ class Modal extends React.Component {
   }
 
   render() {
-    console.log("item in modal");
     let item = this.state.item;
-    console.log(this.props.itemID);
     return (
-      <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div key={this.props.itemID} className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">

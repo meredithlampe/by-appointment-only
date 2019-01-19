@@ -1,9 +1,12 @@
-var React = require('react');
+var React = require('react');	
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import ModalEditFormComponent from './Modal.react.js';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
 import COMPONENT_LIBRARY from './componentLibrary.js';
+import FIELD_METADATA from './componentFieldMetadata.js';
+import Modal from 'react-bootstrap/lib/Modal';
+import Button from 'react-bootstrap/lib/Button';
 
 
 const getItems = count =>
@@ -138,23 +141,47 @@ export class DragAndDropForm extends React.Component {
 	  borderRadius: 30,
 	});	
 
-	console.log("editingItem:");
-	console.log(this.state.editingItem ? this.state.editingItem.id : null);
-
 	let editingItem = this.state.editingItem;
 
     return (
     	<div style={{display: "flex"}}>
-    	{this.state.showModalEditComponent ?
-    	  	<ModalEditFormComponent 
-    	  		title={'Edit ' + this.getLabelForInputElementType(editingItem.inputType)}
-    	  		show={this.state.showModalEditComponent}
-	          	onClose={this.hideModalEditComponent}
-	          	itemID={editingItem.id}
-	          	item={editingItem}>
-	          	key={editingItem.id}
-        	</ModalEditFormComponent>
-        	: null}
+	  	  <Modal show={this.state.showModalEditComponent} onHide={this.hideModalEditComponent}>
+		    <Modal.Header>
+		      <Modal.Title>Modal title</Modal.Title>
+		    </Modal.Header>
+		    <Modal.Body>
+			    <div className="modal-body">
+			    	<div className="edit-modal-input-preview">
+				        <label className="form-component-label">{editingItem ? editingItem.label : null}</label>
+		                {editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem.inputType, 100, editingItem.placeholder) : null}
+	                </div>
+	            </div>
+	            <hr/>
+              <div style={{margin: 20}}>
+                <p class="text-muted">Change the fields below to see how the form element will look above.</p>
+                {editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(editableField => {
+                  return (
+                    <div>
+                      <label className="form-component-label edit-form-component-field-label">{FIELD_METADATA[editableField].label}</label>
+                      <input 
+                        className="form-control" 
+                        value={editingItem[editableField]}
+                        onChange={event => {
+                          let newValue = event.nativeEvent.target.value;
+                          let newItem = JSON.parse(JSON.stringify(this.state.editingItem));
+                          newItem[editableField] = newValue;
+                          this.setState({editingItem: newItem});
+                        }} />
+                    </div>
+                    );
+                }) : null}
+              </div>
+		    </Modal.Body>
+		    <Modal.Footer>
+		      <Button onClick={this.hideModalEditComponent}>Close</Button>
+		      <Button bsStyle="primary">Save changes</Button>
+		    </Modal.Footer>
+		  </Modal>
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (

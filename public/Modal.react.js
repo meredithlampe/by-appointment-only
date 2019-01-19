@@ -9,7 +9,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import React from 'react';
 import PropTypes from 'prop-types';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
-import FIELD_METADATA from './componentFieldMetadata.js';
 
 var Modal = function (_React$Component) {
   _inherits(Modal, _React$Component);
@@ -33,12 +32,10 @@ var Modal = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log("item in modal");
       var item = this.state.item;
-      console.log(this.props.itemID);
       return React.createElement(
         'div',
-        { className: 'modal fade', id: 'exampleModal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
+        { key: this.props.itemID, className: 'modal fade', id: 'exampleModal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
         React.createElement(
           'div',
           { className: 'modal-dialog', role: 'document' },
