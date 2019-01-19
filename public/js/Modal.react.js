@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
+import FIELD_METADATA from './componentFieldMetadata.js';
+import Modal from 'react-bootstrap/lib/Modal';
+import Button from 'react-bootstrap/lib/Button';
 
-class Modal extends React.Component {
+class EditModal extends React.Component {
   constructor(props) {
     super(props);
     console.log("item in props");
-    console.log(props.itemID);
+    console.log(props.item);
     let item = props.item;
     this.state = { 
       item: props.item, 
@@ -14,51 +17,45 @@ class Modal extends React.Component {
   }
 
   render() {
-    let item = this.state.item;
+    let editingItem = this.state.item;
     return (
-      <div key={this.props.itemID} className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" style={{display: "inline"}} id="exampleModalLabel">{this.props.title}</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <div className="edit-modal-input-preview">
-                <label className="form-component-label">{item.label}</label>
-                {DragAndDropFormUtils.getInputElementForType(item.inputType, 100, item.placeholder)}
+      <Modal show={this.props.show} onHide={this.hideModalEditComponent}>
+        <Modal.Header>
+          <Modal.Title>Modal title</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="modal-body">
+            <div className="edit-modal-input-preview">
+                <label className="form-component-label">{editingItem ? editingItem.label : null}</label>
+                    {editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem.inputType, 100, editingItem.placeholder) : null}
+                  </div>
               </div>
               <hr/>
               <div style={{margin: 20}}>
                 <p class="text-muted">Change the fields below to see how the form element will look above.</p>
-                {DragAndDropFormUtils.getEditableFieldsForInputType(this.props.item.inputType).map(editableField => {
+                {editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(editableField => {
                   return (
                     <div>
                       <label className="form-component-label edit-form-component-field-label">{FIELD_METADATA[editableField].label}</label>
                       <input 
                         className="form-control" 
-                        value={item[editableField]}
+                        value={editingItem[editableField]}
                         onChange={event => {
-                          console.log(event.nativeEvent.target.value);
                           let newValue = event.nativeEvent.target.value;
-                          let newItem = this.state.item;
+                          let newItem = JSON.parse(JSON.stringify(this.state.item));
                           newItem[editableField] = newValue;
                           this.setState({item: newItem});
                         }} />
                     </div>
                     );
-                })}
+                }) : null}
               </div>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={this.props.onClose}>Close</Button>
+          <Button bsStyle="primary">Save changes</Button>
+        </Modal.Footer>
+      </Modal>
     );
   }
 }
@@ -78,4 +75,4 @@ Modal.propTypes = {
   itemID: PropTypes.string,
 };
 
-export default Modal;
+export default EditModal;
