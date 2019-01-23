@@ -138,8 +138,19 @@ var currentUID;
 
 function startFormsLiveUpdaters() {
 	window.firebaseHelper.setOnFormAdded(function (formData) {
-		console.log("displaying form:");
 		console.log(formData);
+		var formTable = $('.applicant-forms-table-body');
+		var tableRow = $(document.createElement('tr'));
+		tableRow.addClass('odd gradeX');
+
+		// replace data below with actual form data
+		tableRow.append("<td>Sample Form</td>");
+		tableRow.append("<td>Date</td>");
+		tableRow.append("<td>80</td>");
+		tableRow.append("<td class=\"center\"><a>Edit</a></td>");
+		tableRow.append("<td class=\"center\"><a>Delete</a></td>");
+		tableRow.append("<td class=\"center\"><a>Share</a></td>");
+		formTable.append(tableRow);
 	});
 }
 
