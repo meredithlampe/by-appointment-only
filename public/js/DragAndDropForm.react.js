@@ -16,6 +16,9 @@ const getItems = count =>
 export class DragAndDropForm extends React.Component {
   constructor(props) {
     super(props);
+    this.firebaseHelper = props.firebaseHelper;
+    console.log("saving firebase helper");
+    console.log(props.firebaseHelper);
     this.state = { 
     	items: props.formItems.items, 
     	name: props.formName,
@@ -26,6 +29,7 @@ export class DragAndDropForm extends React.Component {
     this.onDragEnd = this.onDragEnd.bind(this);
     this.openModalEditComponent = this.openModalEditComponent.bind(this);
     this.hideModalEditComponent = this.hideModalEditComponent.bind(this);
+    this.saveForm = this.saveForm.bind(this);
   }
 
 
@@ -51,12 +55,17 @@ export class DragAndDropForm extends React.Component {
 			//	},
 			let inputTypeMatch = result.draggableId.match(/component-library-(.*)/);
 			if (inputTypeMatch && inputTypeMatch.length > 1) {
+				let inputType = inputTypeMatch[1];
+				let componentNeedsOptions = inputType === 'checkboxes' || inputType === 'selects';
+				let componentNeedsContent = inputType === 'checkboxes' || inputType=== 'selects' || inputType === 'staticText';
 	    		let newFormItem = {
 	    			id: this.state.lastUnusedId,
 	    			idCopy: this.state.lastUnusedId,
 	    			label: 'New Input',
 	    			placeholder: 'Placeholder',
-	    			inputType: inputTypeMatch[1],
+	    			inputType: inputType,
+	    			options: componentNeedsOptions ? ['Option1', 'Option2', 'Option3'] : null,
+	    			content: componentNeedsContent ? 'Description of this field' : null,
 	    		};
 	    		let newItems = this.insert(this.state.items, newFormItem, result.destination.index);				
 	    		this.setState({items: newItems, lastUnusedId: this.state.lastUnusedId + 1,})
@@ -113,14 +122,8 @@ export class DragAndDropForm extends React.Component {
 		return null;
 	}
 
-	getLabelForInputElementType(type) {
-		for(let vv = 0; vv < COMPONENT_LIBRARY.length; vv++) {
-			let component = COMPONENT_LIBRARY[vv];
-			if (component.inputType === type) {
-				return component.label;
-			}
-		}
-		return null;
+	saveForm() {
+		this.firebaseHelper.saveForm(this.state.name, this.state.items);
 	}
 
   render() {
@@ -164,7 +167,7 @@ export class DragAndDropForm extends React.Component {
 	            {COMPONENT_LIBRARY.map((item, index) => {
 	              	let input = null;
 	              	let id = "component-library-" + item.inputType;
-	              	input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);
+	              	input = DragAndDropFormUtils.getInputElementForType(item, id);
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (
@@ -206,16 +209,19 @@ export class DragAndDropForm extends React.Component {
 						<small style={{marginLeft: 20}}>
 							<a href="#">Rename</a>
 						</small>
-						<button 
-							className="preview-form-link btn btn-outline btn-default" 
-							style={{display: "inline", marginLeft: 15, float: "right"}}>
-								Preview
-						</button>
+						<div style={{float: "right"}}>
+							<button 
+								className="preview-form-link btn btn-outline btn-default" 
+								style={{display: "inline", marginLeft: 15}}>
+									Preview
+							</button>
+							<button onClick={this.saveForm} type="button" class="save-form-button btn btn-primary">Save</button>
+						</div>
 					</p>
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "input" + index;
-	              	input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);
+	              	input = DragAndDropFormUtils.getInputElementForType(item, id);
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (

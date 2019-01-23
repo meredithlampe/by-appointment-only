@@ -29,6 +29,23 @@ var EditModal = function (_React$Component) {
   }
 
   _createClass(EditModal, [{
+    key: 'getHelpTextForField',
+    value: function getHelpTextForField(field) {
+      if (field === 'options') {
+        return 'Input options as comma-separated list. Ex: \'Monday, Tuesday, Wednesday\'';
+      }
+      return null;
+    }
+  }, {
+    key: 'parseInputForField',
+    value: function parseInputForField(fieldContent, field) {
+      if (field === 'options') {
+        var options = fieldContent.explode(',');
+        return options;
+      }
+      return fieldContent;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -60,7 +77,7 @@ var EditModal = function (_React$Component) {
                 { className: 'form-component-label' },
                 editingItem ? editingItem.label : null
               ),
-              editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem.inputType, 100, editingItem.placeholder) : null
+              editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem, 100) : null
             )
           ),
           React.createElement('hr', null),
@@ -73,6 +90,7 @@ var EditModal = function (_React$Component) {
               'Change the fields below to see how the form element will look above.'
             ),
             editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(function (editableField) {
+              var helpText = _this2.getHelpTextForField(editableField);
               return React.createElement(
                 'div',
                 { key: editableField },

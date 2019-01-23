@@ -1,9 +1,79 @@
 var React = require('react');
 var DND = require('react-beautiful-dnd');
 var ReactDOM = require('react-dom');
-// var DragAndDropForm = require('DragAndDropForm');
 import { DragAndDropForm } from './DragAndDropForm.react.js';
-// import { DragDropContext, Droppable, Draggable } from '../node_modules/react-beautiful-dnd';
+import FirebaseHelper from './FirebaseHelper';
+
+// handle page load
+document.addEventListener('DOMContentLoaded', function () {
+
+	//TODO: move this to file on server
+	var config = {
+		apiKey: "AIzaSyBH3LE6nJ46M3HymCqBZx5PKO2LBNbbU_0",
+		authDomain: "by-appointment-only.firebaseapp.com",
+		databaseURL: "https://by-appointment-only.firebaseio.com",
+		projectId: "by-appointment-only",
+		storageBucket: "by-appointment-only.appspot.com",
+		messagingSenderId: "885970159577"
+	};
+
+	// Configure Firebase.	
+	// firebase.initializeApp(config);
+
+	// Make firebase reachable through the console.
+	window.firebase = firebase;
+
+	var firebaseHelper = new FirebaseHelper(firebase);
+	window.firebaseHelper = firebaseHelper;
+	firebaseHelper.setOnAuthStateChanged(onAuthStateChanged);
+
+	// firebase.database().ref('/path/to/ref').on('value', snapshot => { });
+	// firebase.messaging().requestPermission().then(() => { });
+	// firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+
+	// configure forms UI
+	var domContainer = document.querySelector('.create-form-input-area');
+
+	var sampleFormItems = {
+		items: [{
+			id: 0,
+			idCopy: 0,
+			label: "Name",
+			placeholder: "Enter Name",
+			inputType: "shortText"
+		}, {
+			id: 1,
+			idCopy: 1,
+			label: "Email",
+			placeholder: "Enter Email",
+			inputType: "shortText"
+		}, {
+			id: 2,
+			idCopy: 3,
+			label: "Comments",
+			placeholder: "Provide any additional comments here",
+			inputType: "longText"
+		}]
+	};
+
+	var props = {
+		formItems: sampleFormItems,
+		formName: 'My New Form',
+		lastUnusedId: 4,
+		firebaseHelper: firebaseHelper
+	};
+	console.log("creating drag and drop form");
+	ReactDOM.render(React.createElement(DragAndDropForm, props), domContainer);
+
+	try {
+		var app = firebase.app();
+		var features = ['auth', 'database', 'messaging', 'storage'].filter(function (feature) {
+			return typeof app[feature] === 'function';
+		});
+	} catch (e) {
+		console.error(e);
+	}
+});
 
 // hide all components initially
 cleanupUI();
@@ -53,6 +123,7 @@ $('.calendar-tab').click(function () {
 $('.appointments-tab').click(function () {
 	cleanupTabs();
 	transitionToTab('appointments');
+	renderAppointments();
 });
 $('.applicant-forms-tab').click(function () {
 	cleanupTabs();
@@ -64,6 +135,13 @@ $('.applicant-forms-tab').click(function () {
  * programmatic token refresh but not a User status change.
  */
 var currentUID;
+
+function startFormsLiveUpdaters() {
+	window.firebaseHelper.setOnFormAdded(function (formData) {
+		console.log("new form:");
+		console.log(formData);
+	});
+}
 
 /**
  * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
@@ -83,6 +161,9 @@ function onAuthStateChanged(user) {
 		// uesr has just signed in. redirect to home page.
 		cleanupUI();
 		transitionToScreen('home-container');
+
+		// listen for create/delete to user's forms
+		startFormsLiveUpdaters();
 	} else {
 		// Set currentUID to null.
 		currentUID = null;
@@ -126,50 +207,9 @@ function transitionToTab(tabName) {
 	show($('.' + tabName));
 }
 
-// handle page load
-document.addEventListener('DOMContentLoaded', function () {
-	// Listen for auth state changes
-	firebase.auth().onAuthStateChanged(onAuthStateChanged);
-	// firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-	// firebase.messaging().requestPermission().then(() => { });
-	// firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
+function renderAppointments() {
+	// get appointments from database
 
-	try {
-		var app = firebase.app();
-		var features = ['auth', 'database', 'messaging', 'storage'].filter(function (feature) {
-			return typeof app[feature] === 'function';
-		});
-	} catch (e) {
-		console.error(e);
-	}
-});
-var domContainer = document.querySelector('.create-form-input-area');
 
-var sampleFormItems = {
-	items: [{
-		id: 0,
-		idCopy: 0,
-		label: "Name",
-		placeholder: "Enter Name",
-		inputType: "shortText"
-	}, {
-		id: 1,
-		idCopy: 1,
-		label: "Email",
-		placeholder: "Enter Email",
-		inputType: "shortText"
-	}, {
-		id: 2,
-		idCopy: 3,
-		label: "Comments",
-		placeholder: "Provide any additional comments here",
-		inputType: "longText"
-	}]
-};
-
-var props = {
-	formItems: sampleFormItems,
-	formName: 'My New Form',
-	lastUnusedId: 4
-};
-ReactDOM.render(React.createElement(DragAndDropForm, props), domContainer);
+	// render in table
+}

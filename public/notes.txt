@@ -1,0 +1,2 @@
+ npx babel --watch js --out-dir . --presets react-app/prod 
+  webpack -w main.js --debug

@@ -2,7 +2,21 @@ import React from 'react';
 import COMPONENT_LIBRARY from './componentLibrary.js';
 
 export default class DragAndDropFormUtils {
-	static getInputElementForType(type, id, placeholder) {
+	
+	static 	getLabelForInputElementType(type) {
+		for(let vv = 0; vv < COMPONENT_LIBRARY.length; vv++) {
+			let component = COMPONENT_LIBRARY[vv];
+			if (component.inputType === type) {
+				return component.label;
+			}
+		}
+		return null;
+	}
+
+	static getInputElementForType(item, inputId) {
+		let type = item.inputType;
+		let placeholder = item.placeholder;
+		let id = inputId;
 		let input = null;
       	if (type === "shortText") {
 			input = (<input disabled type="email" className="form-control" id={id} aria-describedby="emailHelp" placeholder={placeholder}/>);
@@ -14,28 +28,24 @@ export default class DragAndDropFormUtils {
             input = (<input disabled id={id} type="file"/>);
       	}
       	if (type === "staticText") {
-      		input = (<p className="text-muted" id={id}>{placeholder}</p>)
+      		input = (<p className="text-muted" id={id}>{item.content}</p>)
       	}
       	if (type === "checkboxes") {
       		input = (
       			<div id={id}>
-	                <div className="checkbox">
-	                    <label>
-	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 1</div>
-	                    </label>
-	                </div>
-	                <div className="checkbox">
-	                    <label>
-	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 2</div>
-	                    </label>
-	                </div>
-	                <div className="checkbox">
-	                    <label>
-	                        <input type="checkbox" value=""/><div className="text-muted">Checkbox 3</div>
-	                    </label>
-	                </div>
-	             </div>
-            );
+      				{
+      				item.options.map(option => {
+      					return (
+			        		<div className="checkbox">
+			                    <label>
+			                        <input type="checkbox" value=""/><div className="text-muted">{option}</div>
+			                    </label>
+			                </div>
+			             );
+			         })
+			     }
+			   </div>
+			  );
       	}
       	if (type === 'selects') {
       		input = (                                         

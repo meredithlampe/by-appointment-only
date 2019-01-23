@@ -36,6 +36,9 @@ export var DragAndDropForm = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (DragAndDropForm.__proto__ || Object.getPrototypeOf(DragAndDropForm)).call(this, props));
 
+		_this.firebaseHelper = props.firebaseHelper;
+		console.log("saving firebase helper");
+		console.log(props.firebaseHelper);
 		_this.state = {
 			items: props.formItems.items,
 			name: props.formName,
@@ -46,6 +49,7 @@ export var DragAndDropForm = function (_React$Component) {
 		_this.onDragEnd = _this.onDragEnd.bind(_this);
 		_this.openModalEditComponent = _this.openModalEditComponent.bind(_this);
 		_this.hideModalEditComponent = _this.hideModalEditComponent.bind(_this);
+		_this.saveForm = _this.saveForm.bind(_this);
 		return _this;
 	}
 
@@ -73,12 +77,17 @@ export var DragAndDropForm = function (_React$Component) {
 					//	},
 					var inputTypeMatch = result.draggableId.match(/component-library-(.*)/);
 					if (inputTypeMatch && inputTypeMatch.length > 1) {
+						var inputType = inputTypeMatch[1];
+						var componentNeedsOptions = inputType === 'checkboxes' || inputType === 'selects';
+						var componentNeedsContent = inputType === 'checkboxes' || inputType === 'selects' || inputType === 'staticText';
 						var newFormItem = {
 							id: this.state.lastUnusedId,
 							idCopy: this.state.lastUnusedId,
 							label: 'New Input',
 							placeholder: 'Placeholder',
-							inputType: inputTypeMatch[1]
+							inputType: inputType,
+							options: componentNeedsOptions ? ['Option1', 'Option2', 'Option3'] : null,
+							content: componentNeedsContent ? 'Description of this field' : null
 						};
 						var newItems = this.insert(this.state.items, newFormItem, result.destination.index);
 						this.setState({ items: newItems, lastUnusedId: this.state.lastUnusedId + 1 });
@@ -141,15 +150,9 @@ export var DragAndDropForm = function (_React$Component) {
 			return null;
 		}
 	}, {
-		key: 'getLabelForInputElementType',
-		value: function getLabelForInputElementType(type) {
-			for (var vv = 0; vv < COMPONENT_LIBRARY.length; vv++) {
-				var component = COMPONENT_LIBRARY[vv];
-				if (component.inputType === type) {
-					return component.label;
-				}
-			}
-			return null;
+		key: 'saveForm',
+		value: function saveForm() {
+			this.firebaseHelper.saveForm(this.state.name, this.state.items);
 		}
 	}, {
 		key: 'render',
@@ -208,7 +211,7 @@ export var DragAndDropForm = function (_React$Component) {
 									COMPONENT_LIBRARY.map(function (item, index) {
 										var input = null;
 										var id = "component-library-" + item.inputType;
-										input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);
+										input = DragAndDropFormUtils.getInputElementForType(item, id);
 										return React.createElement(
 											Draggable,
 											{ key: item.id, draggableId: id, index: index },
@@ -266,17 +269,26 @@ export var DragAndDropForm = function (_React$Component) {
 											)
 										),
 										React.createElement(
-											'button',
-											{
-												className: 'preview-form-link btn btn-outline btn-default',
-												style: { display: "inline", marginLeft: 15, float: "right" } },
-											'Preview'
+											'div',
+											{ style: { float: "right" } },
+											React.createElement(
+												'button',
+												{
+													className: 'preview-form-link btn btn-outline btn-default',
+													style: { display: "inline", marginLeft: 15 } },
+												'Preview'
+											),
+											React.createElement(
+												'button',
+												{ onClick: _this2.saveForm, type: 'button', 'class': 'save-form-button btn btn-primary' },
+												'Save'
+											)
 										)
 									),
 									_this2.state.items.map(function (item, index) {
 										var input = null;
 										var id = "input" + index;
-										input = DragAndDropFormUtils.getInputElementForType(item.inputType, id, item.placeholder);
+										input = DragAndDropFormUtils.getInputElementForType(item, id);
 										return React.createElement(
 											Draggable,
 											{ key: item.id, draggableId: id, index: index },

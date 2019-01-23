@@ -14,6 +14,21 @@ class EditModal extends React.Component {
     };
   }
 
+  getHelpTextForField(field) {
+    if (field === 'options') {
+      return 'Input options as comma-separated list. Ex: \'Monday, Tuesday, Wednesday\'';
+    }
+    return null;
+  }
+
+  parseInputForField(fieldContent, field) {
+    if (field === 'options') {
+      let options = fieldContent.explode(',');
+      return options;
+    }
+    return fieldContent;
+  }
+
   render() {
     let editingItem = this.state.item;
     return (
@@ -25,13 +40,14 @@ class EditModal extends React.Component {
           <div className="modal-body">
             <div className="edit-modal-input-preview">
                 <label className="form-component-label">{editingItem ? editingItem.label : null}</label>
-                    {editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem.inputType, 100, editingItem.placeholder) : null}
+                    {editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem, 100) : null}
                   </div>
               </div>
               <hr/>
               <div style={{margin: 20}}>
                 <p className="text-muted">Change the fields below to see how the form element will look above.</p>
                 {editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(editableField => {
+                  let helpText = this.getHelpTextForField(editableField);
                   return (
                     <div key={editableField}>
                       <label className="form-component-label edit-form-component-field-label">{FIELD_METADATA[editableField].label}</label>

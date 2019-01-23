@@ -24,13 +24,13 @@ export default [{
 	label: 'Checkboxes',
 	placeholder: '',
 	content: 'Description of checkboxes',
-	options: [],
+	options: ['Option1', 'Option2', 'Option3'],
 	editable: ['content', 'label', 'options']
 }, {
 	inputType: 'selects',
 	label: 'Dropdown Selector',
 	placeholder: '',
-	content: 'Description of checkboxes',
+	content: 'Description of selects',
 	options: [],
 	editable: ['content', 'label', 'options']
 }];
