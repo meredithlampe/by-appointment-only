@@ -123,6 +123,7 @@ export class DragAndDropForm extends React.Component {
 	}
 
 	saveForm() {
+		console.log("saving form");
 		this.firebaseHelper.saveForm(this.state.name, this.state.items);
 	}
 

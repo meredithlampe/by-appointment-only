@@ -18,7 +18,7 @@ export default class FirebaseHelper {
   }
 
   saveForm(name, items) {
-	return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).push(items);
+	return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).set(items);
   }
 
   setOnFormAdded(onFormAdded) {

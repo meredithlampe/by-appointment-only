@@ -27,7 +27,7 @@ var FirebaseHelper = function () {
   }, {
     key: 'saveForm',
     value: function saveForm(name, items) {
-      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).push(items);
+      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).set(items);
     }
   }, {
     key: 'setOnFormAdded',

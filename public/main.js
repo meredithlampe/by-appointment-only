@@ -138,7 +138,7 @@ var currentUID;
 
 function startFormsLiveUpdaters() {
 	window.firebaseHelper.setOnFormAdded(function (formData) {
-		console.log("new form:");
+		console.log("displaying form:");
 		console.log(formData);
 	});
 }

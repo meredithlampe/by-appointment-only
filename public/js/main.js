@@ -141,7 +141,7 @@ var currentUID;
 
 function startFormsLiveUpdaters() {
 	window.firebaseHelper.setOnFormAdded(formData => {
-		console.log("new form:");
+		console.log("displaying form:");
 		console.log(formData);
 	});
 }
@@ -164,7 +164,7 @@ function onAuthStateChanged(user) {
 		// uesr has just signed in. redirect to home page.
 		cleanupUI();
 		transitionToScreen('home-container');
-		
+
 	    // listen for create/delete to user's forms
 	    startFormsLiveUpdaters();
 	} else {
