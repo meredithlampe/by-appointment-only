@@ -2,7 +2,7 @@ import React from 'react';
 import COMPONENT_LIBRARY from './componentLibrary.js';
 
 export default class DragAndDropFormUtils {
-	
+
 	static 	getLabelForInputElementType(type) {
 		for(let vv = 0; vv < COMPONENT_LIBRARY.length; vv++) {
 			let component = COMPONENT_LIBRARY[vv];
@@ -66,5 +66,22 @@ export default class DragAndDropFormUtils {
 			return item.inputType === inputType;
 		});
 		return found.editable;
+	}
+
+	static getTodaysDate() {
+		let today = new Date();
+		let dd = today.getDate();
+		let mm = today.getMonth() + 1; //January is 0!
+		let yyyy = today.getFullYear();
+
+		if (dd < 10) {
+		  dd = '0' + dd;
+		}
+
+		if (mm < 10) {
+		  mm = '0' + mm;
+		}
+
+		return mm + '-' + dd + '-' + yyyy; 
 	}
 }	

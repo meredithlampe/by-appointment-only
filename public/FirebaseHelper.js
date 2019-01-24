@@ -26,16 +26,16 @@ var FirebaseHelper = function () {
     }
   }, {
     key: 'saveForm',
-    value: function saveForm(name, items) {
-      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).set(items);
+    value: function saveForm(name, formData) {
+      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).set(formData);
     }
   }, {
     key: 'setOnFormAdded',
     value: function setOnFormAdded(onFormAdded) {
       var formsRef = this.database.ref('/forms/' + this.auth.currentUser.uid);
       this.firebaseRefs.push(formsRef);
-      formsRef.on('child_added', function (formData) {
-        onFormAdded(formData);
+      formsRef.on('child_added', function (snapshot) {
+        onFormAdded(snapshot.val());
       });
     }
   }]);

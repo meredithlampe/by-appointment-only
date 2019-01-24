@@ -17,15 +17,15 @@ export default class FirebaseHelper {
   	this.auth.onAuthStateChanged(onAuthStateChanged);
   }
 
-  saveForm(name, items) {
-	return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).set(items);
+  saveForm(name, formData) {
+	return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).set(formData);
   }
 
   setOnFormAdded(onFormAdded) {
   	const formsRef = this.database.ref('/forms/' + this.auth.currentUser.uid);
 	this.firebaseRefs.push(formsRef);
-	formsRef.on('child_added', (formData) => {
-		onFormAdded(formData);
+	formsRef.on('child_added', (snapshot) => {
+		onFormAdded(snapshot.val());
     });
   }
 }

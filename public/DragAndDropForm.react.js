@@ -152,8 +152,11 @@ export var DragAndDropForm = function (_React$Component) {
 	}, {
 		key: 'saveForm',
 		value: function saveForm() {
-			console.log("saving form");
-			this.firebaseHelper.saveForm(this.state.name, this.state.items);
+			this.firebaseHelper.saveForm(this.state.name, {
+				items: this.state.items,
+				name: this.state.name,
+				lastEdited: DragAndDropFormUtils.getTodaysDate()
+			});
 		}
 	}, {
 		key: 'render',

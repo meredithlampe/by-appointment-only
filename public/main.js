@@ -138,15 +138,18 @@ var currentUID;
 
 function startFormsLiveUpdaters() {
 	window.firebaseHelper.setOnFormAdded(function (formData) {
+		var name = formData.name;
+		var lastEdited = formData.lastEdited;
+
 		console.log(formData);
 		var formTable = $('.applicant-forms-table-body');
 		var tableRow = $(document.createElement('tr'));
 		tableRow.addClass('odd gradeX');
 
 		// replace data below with actual form data
-		tableRow.append("<td>Sample Form</td>");
-		tableRow.append("<td>Date</td>");
-		tableRow.append("<td>80</td>");
+		tableRow.append("<td>" + name + "</td>");
+		tableRow.append("<td>" + lastEdited + "</td>");
+		tableRow.append("<td>Not available</td>");
 		tableRow.append("<td class=\"center\"><a>Edit</a></td>");
 		tableRow.append("<td class=\"center\"><a>Delete</a></td>");
 		tableRow.append("<td class=\"center\"><a>Share</a></td>");

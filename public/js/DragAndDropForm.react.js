@@ -123,8 +123,13 @@ export class DragAndDropForm extends React.Component {
 	}
 
 	saveForm() {
-		console.log("saving form");
-		this.firebaseHelper.saveForm(this.state.name, this.state.items);
+		this.firebaseHelper.saveForm(
+			this.state.name, 
+			{
+				items: this.state.items,
+				name: this.state.name,
+				lastEdited: DragAndDropFormUtils.getTodaysDate(),
+			});
 	}
 
   render() {
