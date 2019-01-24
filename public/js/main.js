@@ -31,9 +31,35 @@ document.addEventListener('DOMContentLoaded', function() {
     // firebase.messaging().requestPermission().then(() => { });
     // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
 
-    // configure forms UI
-    const domContainer = document.querySelector('.create-form-input-area');
+    try {
+      let app = firebase.app();
+      let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
 
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
+// hide all components initially
+cleanupUI();
+transitionToScreen('home-container');
+
+// authentication - sign in button
+let signInButton = document.getElementById('sign-in-button');
+signInButton.addEventListener('click', function() {
+	var provider = new firebase.auth.GoogleAuthProvider();
+	firebase.auth().signInWithPopup(provider);
+});
+
+// authentication - sign out button
+let signOutButton = document.getElementById('sign-out-button');
+signOutButton.addEventListener('click', function() {
+	firebase.auth().signOut();
+});
+
+// new form button
+let newFormButton = $('.create-form-button');
+newFormButton.click(function() {
 	let sampleFormItems = {
 		items: [
 			{
@@ -66,38 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
 		lastUnusedId: 4,
 		firebaseHelper: firebaseHelper,
 	};
-	console.log("creating drag and drop form");
-	ReactDOM.render(React.createElement(DragAndDropForm, props), domContainer);
-
-    try {
-      let app = firebase.app();
-      let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-
-    } catch (e) {
-      console.error(e);
-    }
-  });
-
-// hide all components initially
-cleanupUI();
-transitionToScreen('home-container');
-
-// authentication - sign in button
-let signInButton = document.getElementById('sign-in-button');
-signInButton.addEventListener('click', function() {
-	var provider = new firebase.auth.GoogleAuthProvider();
-	firebase.auth().signInWithPopup(provider);
-});
-
-// authentication - sign out button
-let signOutButton = document.getElementById('sign-out-button');
-signOutButton.addEventListener('click', function() {
-	firebase.auth().signOut();
-});
-
-// new form button
-let newFormButton = $('.create-form-button');
-newFormButton.click(function() {
+   const formInputArea = document.querySelector('.create-form-input-area');
+	ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
 	$('.applicant-forms-home').hide();
 	$('.applicant-forms-create-form').show();
 });
@@ -106,6 +102,8 @@ newFormButton.click(function() {
 let cancelNewForm = $('.create-form-cancel').click(function() {
 	$('.applicant-forms-create-form').hide();
 	$('.applicant-forms-home').show();
+	const formInputArea = document.querySelector('.create-form-input-area');
+	ReactDOM.unmountComponentAtNode(formInputArea);
 })
 
 let previewFormLink = $('.preview-form-link');
@@ -144,16 +142,35 @@ function startFormsLiveUpdaters() {
 		let name = formData.name;
 		let lastEdited = formData.lastEdited;
 
-		console.log(formData);
+		// configure edit link
+		let editLink = document.createElement('a');
+		editLink.innerHTML = 'Edit';
+		let editFunction = (name, event) => {
+			let props = {
+				formName: name,
+				lastUnusedId: 4,
+				firebaseHelper: firebaseHelper,
+			};
+		   const formInputArea = document.querySelector('.create-form-input-area');
+		   console.log(props);
+			ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
+			$('.applicant-forms-home').hide();
+			$('.applicant-forms-create-form').show();
+		};
+		let editFunctionWithParams = editFunction.bind(null, formData.name);
+		editLink.addEventListener('click', editFunctionWithParams);
+		let editTd = document.createElement('td');
+		editTd.append(editLink);
+
+		// append table data elements to row
 		let formTable = $('.applicant-forms-table-body');
 		let tableRow = $(document.createElement('tr'));
 		tableRow.addClass('odd gradeX');
 
-		// replace data below with actual form data
 		tableRow.append("<td>" + name + "</td>");
 		tableRow.append("<td>" + lastEdited + "</td>");
 		tableRow.append("<td>Not available</td>");
-		tableRow.append("<td class=\"center\"><a>Edit</a></td>");
+		tableRow.append(editTd);
 		tableRow.append("<td class=\"center\"><a>Delete</a></td>");
 		tableRow.append("<td class=\"center\"><a>Share</a></td>");
 		formTable.append(tableRow);

@@ -18,10 +18,8 @@ export class DragAndDropForm extends React.Component {
   constructor(props) {
     super(props);
     this.firebaseHelper = props.firebaseHelper;
-    console.log("saving firebase helper");
-    console.log(props.firebaseHelper);
     this.state = { 
-    	items: props.formItems.items, 
+    	items: [],
     	name: props.formName,
     	lastUnusedId: props.lastUnusedId,
     	showModalEditComponent: false,
@@ -35,6 +33,11 @@ export class DragAndDropForm extends React.Component {
     this.hideModalRenameForm = this.hideModalRenameForm.bind(this);
     this.setFormName = this.setFormName.bind(this);
     this.saveForm = this.saveForm.bind(this);
+
+    // get items in form from databae
+     this.firebaseHelper.getItemsForForm(props.formName, (items) => {
+     	this.setState({items: items});
+     }); 
   }
 
 
@@ -118,7 +121,6 @@ export class DragAndDropForm extends React.Component {
 	}
 
 	openModalRenameForm() {
-		console.log("opening rename modal");
 		this.setState({showModalRenameForm: true});
 	}
 
@@ -126,7 +128,6 @@ export class DragAndDropForm extends React.Component {
 		this.setState({showModalRenameForm: false});
 	}
 	setFormName(name) {
-		console.log(name);
 		this.setState({name: name});
 	}
 
@@ -151,7 +152,6 @@ export class DragAndDropForm extends React.Component {
 	}
 
   render() {
-
 	const getItemStyle = (isDragging, draggableStyle) => ({
 	  userSelect: 'none',
 	  marginTop: 20,

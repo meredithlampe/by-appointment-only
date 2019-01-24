@@ -49,7 +49,7 @@ class RenameFormModal extends React.Component {
   }
 }
 
-Modal.propTypes = {
+RenameFormModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   name: PropTypes.string,

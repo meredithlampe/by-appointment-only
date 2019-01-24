@@ -28,4 +28,13 @@ export default class FirebaseHelper {
 		onFormAdded(snapshot.val());
     });
   }
+
+  getItemsForForm(name, callback) {
+    const formRef = this.database.ref('/forms/' + this.auth.currentUser.uid + "/" + name);
+    formRef.once('value').then(function(snapshot) {
+		let items = snapshot.val().items;
+		console.log("calling callback");
+		callback(items);
+    });	
+  }
 }

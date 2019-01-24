@@ -38,10 +38,8 @@ export var DragAndDropForm = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (DragAndDropForm.__proto__ || Object.getPrototypeOf(DragAndDropForm)).call(this, props));
 
 		_this.firebaseHelper = props.firebaseHelper;
-		console.log("saving firebase helper");
-		console.log(props.firebaseHelper);
 		_this.state = {
-			items: props.formItems.items,
+			items: [],
 			name: props.formName,
 			lastUnusedId: props.lastUnusedId,
 			showModalEditComponent: false,
@@ -55,6 +53,11 @@ export var DragAndDropForm = function (_React$Component) {
 		_this.hideModalRenameForm = _this.hideModalRenameForm.bind(_this);
 		_this.setFormName = _this.setFormName.bind(_this);
 		_this.saveForm = _this.saveForm.bind(_this);
+
+		// get items in form from databae
+		_this.firebaseHelper.getItemsForForm(props.formName, function (items) {
+			_this.setState({ items: items });
+		});
 		return _this;
 	}
 
@@ -146,7 +149,6 @@ export var DragAndDropForm = function (_React$Component) {
 	}, {
 		key: 'openModalRenameForm',
 		value: function openModalRenameForm() {
-			console.log("opening rename modal");
 			this.setState({ showModalRenameForm: true });
 		}
 	}, {
@@ -157,7 +159,6 @@ export var DragAndDropForm = function (_React$Component) {
 	}, {
 		key: 'setFormName',
 		value: function setFormName(name) {
-			console.log(name);
 			this.setState({ name: name });
 		}
 	}, {

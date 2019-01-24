@@ -93,7 +93,7 @@ var RenameFormModal = function (_React$Component) {
   return RenameFormModal;
 }(React.Component);
 
-Modal.propTypes = {
+RenameFormModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
   name: PropTypes.string

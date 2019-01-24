@@ -38,6 +38,16 @@ var FirebaseHelper = function () {
         onFormAdded(snapshot.val());
       });
     }
+  }, {
+    key: 'getItemsForForm',
+    value: function getItemsForForm(name, callback) {
+      var formRef = this.database.ref('/forms/' + this.auth.currentUser.uid + "/" + name);
+      formRef.once('value').then(function (snapshot) {
+        var items = snapshot.val().items;
+        console.log("calling callback");
+        callback(items);
+      });
+    }
   }]);
 
   return FirebaseHelper;

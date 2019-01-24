@@ -31,40 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	// firebase.messaging().requestPermission().then(() => { });
 	// firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
 
-	// configure forms UI
-	var domContainer = document.querySelector('.create-form-input-area');
-
-	var sampleFormItems = {
-		items: [{
-			id: 0,
-			idCopy: 0,
-			label: "Name",
-			placeholder: "Enter Name",
-			inputType: "shortText"
-		}, {
-			id: 1,
-			idCopy: 1,
-			label: "Email",
-			placeholder: "Enter Email",
-			inputType: "shortText"
-		}, {
-			id: 2,
-			idCopy: 3,
-			label: "Comments",
-			placeholder: "Provide any additional comments here",
-			inputType: "longText"
-		}]
-	};
-
-	var props = {
-		formItems: sampleFormItems,
-		formName: 'My New Form',
-		lastUnusedId: 4,
-		firebaseHelper: firebaseHelper
-	};
-	console.log("creating drag and drop form");
-	ReactDOM.render(React.createElement(DragAndDropForm, props), domContainer);
-
 	try {
 		var app = firebase.app();
 		var features = ['auth', 'database', 'messaging', 'storage'].filter(function (feature) {
@@ -95,6 +61,36 @@ signOutButton.addEventListener('click', function () {
 // new form button
 var newFormButton = $('.create-form-button');
 newFormButton.click(function () {
+	var sampleFormItems = {
+		items: [{
+			id: 0,
+			idCopy: 0,
+			label: "Name",
+			placeholder: "Enter Name",
+			inputType: "shortText"
+		}, {
+			id: 1,
+			idCopy: 1,
+			label: "Email",
+			placeholder: "Enter Email",
+			inputType: "shortText"
+		}, {
+			id: 2,
+			idCopy: 3,
+			label: "Comments",
+			placeholder: "Provide any additional comments here",
+			inputType: "longText"
+		}]
+	};
+
+	var props = {
+		formItems: sampleFormItems,
+		formName: 'My New Form',
+		lastUnusedId: 4,
+		firebaseHelper: firebaseHelper
+	};
+	var formInputArea = document.querySelector('.create-form-input-area');
+	ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
 	$('.applicant-forms-home').hide();
 	$('.applicant-forms-create-form').show();
 });
@@ -103,6 +99,8 @@ newFormButton.click(function () {
 var cancelNewForm = $('.create-form-cancel').click(function () {
 	$('.applicant-forms-create-form').hide();
 	$('.applicant-forms-home').show();
+	var formInputArea = document.querySelector('.create-form-input-area');
+	ReactDOM.unmountComponentAtNode(formInputArea);
 });
 
 var previewFormLink = $('.preview-form-link');
@@ -141,16 +139,35 @@ function startFormsLiveUpdaters() {
 		var name = formData.name;
 		var lastEdited = formData.lastEdited;
 
-		console.log(formData);
+		// configure edit link
+		var editLink = document.createElement('a');
+		editLink.innerHTML = 'Edit';
+		var editFunction = function editFunction(name, event) {
+			var props = {
+				formName: name,
+				lastUnusedId: 4,
+				firebaseHelper: firebaseHelper
+			};
+			var formInputArea = document.querySelector('.create-form-input-area');
+			console.log(props);
+			ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
+			$('.applicant-forms-home').hide();
+			$('.applicant-forms-create-form').show();
+		};
+		var editFunctionWithParams = editFunction.bind(null, formData.name);
+		editLink.addEventListener('click', editFunctionWithParams);
+		var editTd = document.createElement('td');
+		editTd.append(editLink);
+
+		// append table data elements to row
 		var formTable = $('.applicant-forms-table-body');
 		var tableRow = $(document.createElement('tr'));
 		tableRow.addClass('odd gradeX');
 
-		// replace data below with actual form data
 		tableRow.append("<td>" + name + "</td>");
 		tableRow.append("<td>" + lastEdited + "</td>");
 		tableRow.append("<td>Not available</td>");
-		tableRow.append("<td class=\"center\"><a>Edit</a></td>");
+		tableRow.append(editTd);
 		tableRow.append("<td class=\"center\"><a>Delete</a></td>");
 		tableRow.append("<td class=\"center\"><a>Share</a></td>");
 		formTable.append(tableRow);
