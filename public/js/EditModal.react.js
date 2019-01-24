@@ -67,15 +67,16 @@ class EditModal extends React.Component {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.props.onClose}>Close</Button>
-          <Button bsStyle="primary">Save changes</Button>
+          <Button onClick={() => {this.props.onSave(this.state.item)}} bsStyle="primary">Save changes</Button>
         </Modal.Footer>
       </Modal>
     );
   }
 }
 
-Modal.propTypes = {
+EditModal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
   children: PropTypes.node,
   title: PropTypes.string,
   item: PropTypes.shape({

@@ -122,7 +122,9 @@ var EditModal = function (_React$Component) {
           ),
           React.createElement(
             Button,
-            { bsStyle: 'primary' },
+            { onClick: function onClick() {
+                _this2.props.onSave(_this2.state.item);
+              }, bsStyle: 'primary' },
             'Save changes'
           )
         )
@@ -133,8 +135,9 @@ var EditModal = function (_React$Component) {
   return EditModal;
 }(React.Component);
 
-Modal.propTypes = {
+EditModal.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired,
   children: PropTypes.node,
   title: PropTypes.string,
   item: PropTypes.shape({

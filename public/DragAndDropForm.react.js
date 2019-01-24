@@ -122,6 +122,16 @@ export var DragAndDropForm = function (_React$Component) {
 			return result;
 		}
 	}, {
+		key: 'remove',
+		value: function remove(list, item) {
+			var result = Array.from(list);
+			var index = result.indexOf(item);
+			if (index !== -1) {
+				result.splice(index, 1);
+			}
+			return [index, result];
+		}
+	}, {
 		key: 'reorder',
 		value: function reorder(list, startIndex, endIndex) {
 			var result = Array.from(list);
@@ -205,7 +215,13 @@ export var DragAndDropForm = function (_React$Component) {
 			var editModal = this.state.showModalEditComponent ? React.createElement(EditModal, {
 				show: this.state.showModalEditComponent,
 				item: editingItem,
-				onClose: this.hideModalEditComponent }) : null;
+				onClose: this.hideModalEditComponent,
+				onSave: function onSave(newItem) {
+					var removeResult = _this2.remove(_this2.state.items, _this2.state.editingItem);
+					var index = removeResult[0];
+					var result = removeResult[1];
+					_this2.setState({ items: _this2.insert(result, newItem, index), showModalEditComponent: false });
+				} }) : null;
 
 			var renameModal = this.state.showModalRenameForm ? React.createElement(RenameFormModal, {
 				show: this.state.showModalRenameForm,

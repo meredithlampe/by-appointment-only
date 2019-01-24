@@ -97,11 +97,20 @@ export class DragAndDropForm extends React.Component {
    	}
   }
 
-  insert(list, newItem, destinationIndex) {
-  	const result = Array.from(list);
-  	result.splice(destinationIndex, 0, newItem);
-  	return result;
-  }
+	  insert(list, newItem, destinationIndex) {
+	  	const result = Array.from(list);
+	  	result.splice(destinationIndex, 0, newItem);
+	  	return result;
+	  }
+
+	  remove(list, item) {
+	  	const result = Array.from(list);
+	  	let index = result.indexOf(item);
+	  	if (index !== -1) {
+	  		result.splice(index, 1);
+	  	}
+	  	return [index, result];
+	  }
 
 	reorder(list, startIndex, endIndex) {
 	  const result = Array.from(list);
@@ -170,7 +179,13 @@ export class DragAndDropForm extends React.Component {
 		<EditModal 
 			show={this.state.showModalEditComponent} 
 			item={editingItem} 
-			onClose={this.hideModalEditComponent} /> 
+			onClose={this.hideModalEditComponent}
+			onSave={(newItem) => {
+				let removeResult = this.remove(this.state.items, this.state.editingItem);
+				let index = removeResult[0];
+				let result = removeResult[1];
+				this.setState({items: this.insert(result, newItem, index), showModalEditComponent: false});
+			}} /> 
 		: null;
 
 	let renameModal = this.state.showModalRenameForm ?
