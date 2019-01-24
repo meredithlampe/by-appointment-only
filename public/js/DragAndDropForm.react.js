@@ -3,6 +3,7 @@ var React = require('react');
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import EditModal from './EditModal.react.js';
 import RenameFormModal from './RenameFormModal.react.js';
+import DeleteModal from './DeleteModal.react.js';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
 import COMPONENT_LIBRARY from './componentLibrary.js';
 import FIELD_METADATA from './componentFieldMetadata.js';
@@ -24,6 +25,7 @@ export class DragAndDropForm extends React.Component {
     	lastUnusedId: props.lastUnusedId,
     	showModalEditComponent: false,
     	showModalRenameForm: false,
+    	showModalDeleteComponent: false,
     	editingItem: null,
     };
     this.onDragEnd = this.onDragEnd.bind(this);
@@ -128,6 +130,15 @@ export class DragAndDropForm extends React.Component {
 	hideModalEditComponent() {
 		this.setState({showModalEditComponent: false, editingItem: null});
 	}
+	openModalDeleteComponent(itemId) {
+		debugger;
+		let id = itemId.match(/delete-(.*)/);
+		let deleteItem = this.getItemForId(parseInt(id[1]));
+		this.setState({showModalDeleteComponent: true, deletingItem: deleteItem});
+	}
+	hideModalDeleteComponent() {
+		this.setState({showModalDeleteComponent: false, deletingItem: null});
+	}
 
 	openModalRenameForm() {
 		this.setState({showModalRenameForm: true});
@@ -196,10 +207,17 @@ export class DragAndDropForm extends React.Component {
 			onSave={this.setFormName}
 		/> : null;
 
+	let deleteModal = this.state.showModalDeleteComponent ?
+		<DeleteModal 
+			show={this.state.showModalDeleteComponent}
+			onClose={this.hideModalDeleteComponent}
+			onDelete={() => {}} /> : null;
+
     return (
     	<div style={{display: "flex"}}>
 	  	  {editModal}
 	  	  {renameModal}
+	  	  {deleteModal}
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (
@@ -296,7 +314,15 @@ export class DragAndDropForm extends React.Component {
 								     		this.openModalEditComponent(target.nativeEvent.target.id);
 								     	}} 
 								     	style={{display: "inline", marginLeft: 10}}><a id={'edit-' + item.id}>Edit</a></div>
-								   	<div className="form-component-link" style={{display: "inline", marginLeft: 10}}><a>Delete</a></div>
+								   	<div 
+								   		className="form-component-link"
+								   		style={{display: "inline", marginLeft: 10}}
+								   		onClick={(target) => {
+								   			debugger;
+								   			this.openModalDeleteComponent(target.nativeEvent.target.id);
+								   		}}>
+								   		<a id={'delete-' + item.id}>Delete</a>
+								   	</div>
 							    </div>
 							    <div style={{flexGrow: 1}} />
 							    <div>

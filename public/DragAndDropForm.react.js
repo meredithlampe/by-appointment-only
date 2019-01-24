@@ -13,6 +13,7 @@ var React = require('react');
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import EditModal from './EditModal.react.js';
 import RenameFormModal from './RenameFormModal.react.js';
+import DeleteModal from './DeleteModal.react.js';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
 import COMPONENT_LIBRARY from './componentLibrary.js';
 import FIELD_METADATA from './componentFieldMetadata.js';
@@ -44,6 +45,7 @@ export var DragAndDropForm = function (_React$Component) {
 			lastUnusedId: props.lastUnusedId,
 			showModalEditComponent: false,
 			showModalRenameForm: false,
+			showModalDeleteComponent: false,
 			editingItem: null
 		};
 		_this.onDragEnd = _this.onDragEnd.bind(_this);
@@ -157,6 +159,19 @@ export var DragAndDropForm = function (_React$Component) {
 			this.setState({ showModalEditComponent: false, editingItem: null });
 		}
 	}, {
+		key: 'openModalDeleteComponent',
+		value: function openModalDeleteComponent(itemId) {
+			debugger;
+			var id = itemId.match(/delete-(.*)/);
+			var deleteItem = this.getItemForId(parseInt(id[1]));
+			this.setState({ showModalDeleteComponent: true, deletingItem: deleteItem });
+		}
+	}, {
+		key: 'hideModalDeleteComponent',
+		value: function hideModalDeleteComponent() {
+			this.setState({ showModalDeleteComponent: false, deletingItem: null });
+		}
+	}, {
 		key: 'openModalRenameForm',
 		value: function openModalRenameForm() {
 			this.setState({ showModalRenameForm: true });
@@ -230,11 +245,17 @@ export var DragAndDropForm = function (_React$Component) {
 				onSave: this.setFormName
 			}) : null;
 
+			var deleteModal = this.state.showModalDeleteComponent ? React.createElement(DeleteModal, {
+				show: this.state.showModalDeleteComponent,
+				onClose: this.hideModalDeleteComponent,
+				onDelete: function onDelete() {} }) : null;
+
 			return React.createElement(
 				'div',
 				{ style: { display: "flex" } },
 				editModal,
 				renameModal,
+				deleteModal,
 				React.createElement(
 					DragDropContext,
 					{ onDragEnd: this.onDragEnd },
@@ -385,10 +406,16 @@ export var DragAndDropForm = function (_React$Component) {
 															),
 															React.createElement(
 																'div',
-																{ className: 'form-component-link', style: { display: "inline", marginLeft: 10 } },
+																{
+																	className: 'form-component-link',
+																	style: { display: "inline", marginLeft: 10 },
+																	onClick: function onClick(target) {
+																		debugger;
+																		_this2.openModalDeleteComponent(target.nativeEvent.target.id);
+																	} },
 																React.createElement(
 																	'a',
-																	null,
+																	{ id: 'delete-' + item.id },
 																	'Delete'
 																)
 															)
