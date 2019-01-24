@@ -1,7 +1,8 @@
 var React = require('react');	
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import EditModal from './Modal.react.js';
+import EditModal from './EditModal.react.js';
+import RenameFormModal from './RenameFormModal.react.js';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
 import COMPONENT_LIBRARY from './componentLibrary.js';
 import FIELD_METADATA from './componentFieldMetadata.js';
@@ -24,11 +25,15 @@ export class DragAndDropForm extends React.Component {
     	name: props.formName,
     	lastUnusedId: props.lastUnusedId,
     	showModalEditComponent: false,
+    	showModalRenameForm: false,
     	editingItem: null,
     };
     this.onDragEnd = this.onDragEnd.bind(this);
     this.openModalEditComponent = this.openModalEditComponent.bind(this);
     this.hideModalEditComponent = this.hideModalEditComponent.bind(this);
+    this.openModalRenameForm = this.openModalRenameForm.bind(this);
+    this.hideModalRenameForm = this.hideModalRenameForm.bind(this);
+    this.setFormName = this.setFormName.bind(this);
     this.saveForm = this.saveForm.bind(this);
   }
 
@@ -112,6 +117,19 @@ export class DragAndDropForm extends React.Component {
 		this.setState({showModalEditComponent: false, editingItem: null});
 	}
 
+	openModalRenameForm() {
+		console.log("opening rename modal");
+		this.setState({showModalRenameForm: true});
+	}
+
+	hideModalRenameForm() {
+		this.setState({showModalRenameForm: false});
+	}
+	setFormName(name) {
+		console.log(name);
+		this.setState({name: name});
+	}
+
 	getItemForId(id) {
 		for(let ii = 0; ii < this.state.items.length; ii++) {
 			let item = this.state.items[ii];
@@ -155,9 +173,18 @@ export class DragAndDropForm extends React.Component {
 			onClose={this.hideModalEditComponent} /> 
 		: null;
 
+	let renameModal = this.state.showModalRenameForm ?
+		<RenameFormModal 
+			show={this.state.showModalRenameForm}
+			name={this.state.name} 
+			onClose={this.hideModalRenameForm} 
+			onSave={this.setFormName}
+		/> : null;
+
     return (
     	<div style={{display: "flex"}}>
 	  	  {editModal}
+	  	  {renameModal}
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (
@@ -210,10 +237,13 @@ export class DragAndDropForm extends React.Component {
 					  background: snapshot.isDraggingOver ? '#eaf7ed' : 'white',
 					}
 					}>
-					<p className="lead" data-toggle="modal" data-target="#myModal">
+					<p className="lead">
 						{this.state.name}
 						<small style={{marginLeft: 20}}>
-							<a href="#">Rename</a>
+							<div style={{display: "inline"}}
+								onClick={this.openModalRenameForm}>
+								<a>Rename</a>
+							</div>
 						</small>
 						<div style={{float: "right"}}>
 							<button 

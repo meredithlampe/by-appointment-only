@@ -11,7 +11,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var React = require('react');
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import EditModal from './Modal.react.js';
+import EditModal from './EditModal.react.js';
+import RenameFormModal from './RenameFormModal.react.js';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
 import COMPONENT_LIBRARY from './componentLibrary.js';
 import FIELD_METADATA from './componentFieldMetadata.js';
@@ -44,11 +45,15 @@ export var DragAndDropForm = function (_React$Component) {
 			name: props.formName,
 			lastUnusedId: props.lastUnusedId,
 			showModalEditComponent: false,
+			showModalRenameForm: false,
 			editingItem: null
 		};
 		_this.onDragEnd = _this.onDragEnd.bind(_this);
 		_this.openModalEditComponent = _this.openModalEditComponent.bind(_this);
 		_this.hideModalEditComponent = _this.hideModalEditComponent.bind(_this);
+		_this.openModalRenameForm = _this.openModalRenameForm.bind(_this);
+		_this.hideModalRenameForm = _this.hideModalRenameForm.bind(_this);
+		_this.setFormName = _this.setFormName.bind(_this);
 		_this.saveForm = _this.saveForm.bind(_this);
 		return _this;
 	}
@@ -139,6 +144,23 @@ export var DragAndDropForm = function (_React$Component) {
 			this.setState({ showModalEditComponent: false, editingItem: null });
 		}
 	}, {
+		key: 'openModalRenameForm',
+		value: function openModalRenameForm() {
+			console.log("opening rename modal");
+			this.setState({ showModalRenameForm: true });
+		}
+	}, {
+		key: 'hideModalRenameForm',
+		value: function hideModalRenameForm() {
+			this.setState({ showModalRenameForm: false });
+		}
+	}, {
+		key: 'setFormName',
+		value: function setFormName(name) {
+			console.log(name);
+			this.setState({ name: name });
+		}
+	}, {
 		key: 'getItemForId',
 		value: function getItemForId(id) {
 			for (var ii = 0; ii < this.state.items.length; ii++) {
@@ -184,10 +206,18 @@ export var DragAndDropForm = function (_React$Component) {
 				item: editingItem,
 				onClose: this.hideModalEditComponent }) : null;
 
+			var renameModal = this.state.showModalRenameForm ? React.createElement(RenameFormModal, {
+				show: this.state.showModalRenameForm,
+				name: this.state.name,
+				onClose: this.hideModalRenameForm,
+				onSave: this.setFormName
+			}) : null;
+
 			return React.createElement(
 				'div',
 				{ style: { display: "flex" } },
 				editModal,
+				renameModal,
 				React.createElement(
 					DragDropContext,
 					{ onDragEnd: this.onDragEnd },
@@ -261,15 +291,20 @@ export var DragAndDropForm = function (_React$Component) {
 										} },
 									React.createElement(
 										'p',
-										{ className: 'lead', 'data-toggle': 'modal', 'data-target': '#myModal' },
+										{ className: 'lead' },
 										_this2.state.name,
 										React.createElement(
 											'small',
 											{ style: { marginLeft: 20 } },
 											React.createElement(
-												'a',
-												{ href: '#' },
-												'Rename'
+												'div',
+												{ style: { display: "inline" },
+													onClick: _this2.openModalRenameForm },
+												React.createElement(
+													'a',
+													null,
+													'Rename'
+												)
 											)
 										),
 										React.createElement(
