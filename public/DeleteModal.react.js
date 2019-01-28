@@ -34,6 +34,8 @@ var DeleteModal = function (_React$Component) {
       var _this2 = this;
 
       var item = this.state.item;
+      console.log("item");
+      console.log(item);
       return React.createElement(
         Modal,
         { show: this.props.show, onClose: this.props.onClose },
@@ -43,7 +45,7 @@ var DeleteModal = function (_React$Component) {
           React.createElement(
             Modal.Title,
             null,
-            'Delete?'
+            'Delete'
           )
         ),
         React.createElement(

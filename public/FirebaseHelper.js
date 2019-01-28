@@ -30,12 +30,20 @@ var FirebaseHelper = function () {
       return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).set(formData);
     }
   }, {
+    key: 'removeForm',
+    value: function removeForm(name) {
+      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).remove();
+    }
+  }, {
     key: 'setOnFormAdded',
-    value: function setOnFormAdded(onFormAdded) {
+    value: function setOnFormAdded(onFormAdded, onFormRemoved) {
       var formsRef = this.database.ref('/forms/' + this.auth.currentUser.uid);
       this.firebaseRefs.push(formsRef);
       formsRef.on('child_added', function (snapshot) {
         onFormAdded(snapshot.val());
+      });
+      formsRef.on('child_removed', function (snapshot) {
+        onFormRemoved(snapshot.val());
       });
     }
   }, {

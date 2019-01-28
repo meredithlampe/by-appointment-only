@@ -11,6 +11,11 @@ var DragAndDropFormUtils = function () {
 	}
 
 	_createClass(DragAndDropFormUtils, null, [{
+		key: 'getSafeName',
+		value: function getSafeName(name) {
+			return name.replace(/\s/g, '-');
+		}
+	}, {
 		key: 'getLabelForInputElementType',
 		value: function getLabelForInputElementType(type) {
 			for (var vv = 0; vv < COMPONENT_LIBRARY.length; vv++) {

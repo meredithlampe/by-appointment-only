@@ -53,6 +53,8 @@ export var DragAndDropForm = function (_React$Component) {
 		_this.hideModalEditComponent = _this.hideModalEditComponent.bind(_this);
 		_this.openModalRenameForm = _this.openModalRenameForm.bind(_this);
 		_this.hideModalRenameForm = _this.hideModalRenameForm.bind(_this);
+		_this.openModalDeleteComponent = _this.openModalDeleteComponent.bind(_this);
+		_this.hideModalDeleteComponent = _this.hideModalDeleteComponent.bind(_this);
 		_this.setFormName = _this.setFormName.bind(_this);
 		_this.saveForm = _this.saveForm.bind(_this);
 
@@ -161,7 +163,6 @@ export var DragAndDropForm = function (_React$Component) {
 	}, {
 		key: 'openModalDeleteComponent',
 		value: function openModalDeleteComponent(itemId) {
-			debugger;
 			var id = itemId.match(/delete-(.*)/);
 			var deleteItem = this.getItemForId(parseInt(id[1]));
 			this.setState({ showModalDeleteComponent: true, deletingItem: deleteItem });
@@ -246,9 +247,14 @@ export var DragAndDropForm = function (_React$Component) {
 			}) : null;
 
 			var deleteModal = this.state.showModalDeleteComponent ? React.createElement(DeleteModal, {
+				item: this.state.deletingItem,
 				show: this.state.showModalDeleteComponent,
 				onClose: this.hideModalDeleteComponent,
-				onDelete: function onDelete() {} }) : null;
+				onDelete: function onDelete() {
+					var newItems = _this2.remove(_this2.state.items, _this2.state.deletingItem)[1];
+					_this2.setState({ items: newItems });
+					_this2.hideModalDeleteComponent();
+				} }) : null;
 
 			return React.createElement(
 				'div',
@@ -410,7 +416,6 @@ export var DragAndDropForm = function (_React$Component) {
 																	className: 'form-component-link',
 																	style: { display: "inline", marginLeft: 10 },
 																	onClick: function onClick(target) {
-																		debugger;
 																		_this2.openModalDeleteComponent(target.nativeEvent.target.id);
 																	} },
 																React.createElement(

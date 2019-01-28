@@ -33,6 +33,8 @@ export class DragAndDropForm extends React.Component {
     this.hideModalEditComponent = this.hideModalEditComponent.bind(this);
     this.openModalRenameForm = this.openModalRenameForm.bind(this);
     this.hideModalRenameForm = this.hideModalRenameForm.bind(this);
+    this.openModalDeleteComponent = this.openModalDeleteComponent.bind(this);
+    this.hideModalDeleteComponent = this.hideModalDeleteComponent.bind(this);
     this.setFormName = this.setFormName.bind(this);
     this.saveForm = this.saveForm.bind(this);
 
@@ -131,7 +133,6 @@ export class DragAndDropForm extends React.Component {
 		this.setState({showModalEditComponent: false, editingItem: null});
 	}
 	openModalDeleteComponent(itemId) {
-		debugger;
 		let id = itemId.match(/delete-(.*)/);
 		let deleteItem = this.getItemForId(parseInt(id[1]));
 		this.setState({showModalDeleteComponent: true, deletingItem: deleteItem});
@@ -208,10 +209,15 @@ export class DragAndDropForm extends React.Component {
 		/> : null;
 
 	let deleteModal = this.state.showModalDeleteComponent ?
-		<DeleteModal 
+		<DeleteModal
+			item={this.state.deletingItem} 
 			show={this.state.showModalDeleteComponent}
 			onClose={this.hideModalDeleteComponent}
-			onDelete={() => {}} /> : null;
+			onDelete={() => { 
+				let newItems = this.remove(this.state.items, this.state.deletingItem)[1];
+				this.setState({items: newItems});
+				this.hideModalDeleteComponent();
+			}} /> : null;
 
     return (
     	<div style={{display: "flex"}}>
@@ -318,7 +324,6 @@ export class DragAndDropForm extends React.Component {
 								   		className="form-component-link"
 								   		style={{display: "inline", marginLeft: 10}}
 								   		onClick={(target) => {
-								   			debugger;
 								   			this.openModalDeleteComponent(target.nativeEvent.target.id);
 								   		}}>
 								   		<a id={'delete-' + item.id}>Delete</a>

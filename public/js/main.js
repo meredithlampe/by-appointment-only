@@ -3,6 +3,7 @@ var DND = require('react-beautiful-dnd');
 var ReactDOM = require('react-dom');
 import {DragAndDropForm} from './DragAndDropForm.react.js';
 import FirebaseHelper from './FirebaseHelper';
+import DragAndDropFormUtils from './DragAndDropFormUtils.js';
 
 		// handle page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -138,43 +139,73 @@ previewFormLink.click(function() {
 var currentUID;
 
 function startFormsLiveUpdaters() {
-	window.firebaseHelper.setOnFormAdded(formData => {
-		let name = formData.name;
-		let lastEdited = formData.lastEdited;
+	window.firebaseHelper.setOnFormAdded(
+		(formData) => {
+			let name = formData.name;
+			let lastEdited = formData.lastEdited;
 
-		// configure edit link
-		let editLink = document.createElement('a');
-		editLink.innerHTML = 'Edit';
-		let editFunction = (name, event) => {
-			let props = {
-				formName: name,
-				lastUnusedId: 4,
-				firebaseHelper: firebaseHelper,
+			// configure edit link
+			let editLink = document.createElement('a');
+			editLink.innerHTML = 'Edit';
+			let editFunction = (name, event) => {
+				let props = {
+					formName: name,
+					lastUnusedId: 4,
+					firebaseHelper: firebaseHelper,
+				};
+			   const formInputArea = document.querySelector('.create-form-input-area');
+				ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
+				$('.applicant-forms-home').hide();
+				$('.applicant-forms-create-form').show();
 			};
-		   const formInputArea = document.querySelector('.create-form-input-area');
-		   console.log(props);
-			ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
-			$('.applicant-forms-home').hide();
-			$('.applicant-forms-create-form').show();
-		};
-		let editFunctionWithParams = editFunction.bind(null, formData.name);
-		editLink.addEventListener('click', editFunctionWithParams);
-		let editTd = document.createElement('td');
-		editTd.append(editLink);
+			let editFunctionWithParams = editFunction.bind(null, formData.name);
+			editLink.addEventListener('click', editFunctionWithParams);
+			let editTd = document.createElement('td');
+			editTd.append(editLink);
 
-		// append table data elements to row
-		let formTable = $('.applicant-forms-table-body');
-		let tableRow = $(document.createElement('tr'));
-		tableRow.addClass('odd gradeX');
+			// configure delete link
+			let deleteLink = document.createElement('a');
+			deleteLink.setAttribute('data-toggle', "modal");
+			deleteLink.setAttribute('data-target', '#deleteFormModal');
+			deleteLink.innerHTML = 'Delete';
+			let deleteFunction = (name, event) => {
+				// set body of modal
+				let modal = $('#deleteFormModal');
+				let body = modal.find('.modal-body');
+				body.html('Are you sure you want to delete <b>' + name + '</b>?');
+				let deleteButton = modal.find('.delete-form-button');
+				let removeFormFunction = (name) => {
+					firebaseHelper.removeForm(name);
+				};
+				removeFormFunction = removeFormFunction.bind(null, name);
+				deleteButton.click(removeFormFunction);
+			}
+			let deleteFunctionWithParams = deleteFunction.bind(null, formData.name);
+			deleteLink.addEventListener('click', deleteFunctionWithParams);
+			let deleteTd = document.createElement('td');
+			deleteTd.append(deleteLink);
 
-		tableRow.append("<td>" + name + "</td>");
-		tableRow.append("<td>" + lastEdited + "</td>");
-		tableRow.append("<td>Not available</td>");
-		tableRow.append(editTd);
-		tableRow.append("<td class=\"center\"><a>Delete</a></td>");
-		tableRow.append("<td class=\"center\"><a>Share</a></td>");
-		formTable.append(tableRow);
-	});
+			// append table data elements to row
+			let formTable = $('.applicant-forms-table-body');
+			let tableRow = $(document.createElement('tr'));
+			tableRow.addClass('odd gradeX');
+			tableRow.addClass('form-table-row-' + DragAndDropFormUtils.getSafeName(name));
+			tableRow.append("<td>" + name + "</td>");
+			tableRow.append("<td>" + lastEdited + "</td>");
+			tableRow.append("<td>Not available</td>");
+			tableRow.append(editTd);
+			tableRow.append(deleteTd);
+			tableRow.append("<td class=\"center\"><a>Share</a></td>");
+			formTable.append(tableRow);
+		},
+		(formData) => {
+			let tr = $('.form-table-row-' + DragAndDropFormUtils.getSafeName(formData.name));
+			if (tr) {
+				tr.remove();
+			}
+		},
+	);
+
 }
 
 /**

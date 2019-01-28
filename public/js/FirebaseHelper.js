@@ -21,12 +21,19 @@ export default class FirebaseHelper {
 	return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).set(formData);
   }
 
-  setOnFormAdded(onFormAdded) {
+  removeForm(name) {
+  	return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).remove();
+  }
+
+  setOnFormAdded(onFormAdded, onFormRemoved) {
   	const formsRef = this.database.ref('/forms/' + this.auth.currentUser.uid);
 	this.firebaseRefs.push(formsRef);
 	formsRef.on('child_added', (snapshot) => {
 		onFormAdded(snapshot.val());
     });
+    formsRef.on('child_removed', (snapshot) => {
+    	onFormRemoved(snapshot.val());
+    })
   }
 
   getItemsForForm(name, callback) {

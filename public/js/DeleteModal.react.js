@@ -9,17 +9,19 @@ class DeleteModal extends React.Component {
   constructor(props) {
     super(props);
     let item = props.item;
-    this.state = { 
-      item: props.item, 
+    this.state = {
+      item: props.item,
     };
   }
 
   render() {
     let item = this.state.item;
+    console.log("item");
+    console.log(item);
     return (
       <Modal show={this.props.show} onClose={this.props.onClose}>
         <Modal.Header>
-          <Modal.Title>Delete?</Modal.Title>
+          <Modal.Title>Delete</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="modal-body">

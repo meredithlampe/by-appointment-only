@@ -3,6 +3,10 @@ import COMPONENT_LIBRARY from './componentLibrary.js';
 
 export default class DragAndDropFormUtils {
 
+	static getSafeName(name) {
+		return name.replace(/\s/g, '-');
+	}
+
 	static 	getLabelForInputElementType(type) {
 		for(let vv = 0; vv < COMPONENT_LIBRARY.length; vv++) {
 			let component = COMPONENT_LIBRARY[vv];
