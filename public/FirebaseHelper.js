@@ -52,7 +52,6 @@ var FirebaseHelper = function () {
       var formRef = this.database.ref('/forms/' + this.auth.currentUser.uid + "/" + name);
       formRef.once('value').then(function (snapshot) {
         var items = snapshot.val().items;
-        console.log("calling callback");
         callback(items);
       });
     }

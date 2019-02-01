@@ -9,12 +9,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import EditModal from './EditModal.react.js';
 import RenameFormModal from './RenameFormModal.react.js';
 import DeleteModal from './DeleteModal.react.js';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
+import FormPreview from './FormPreview.react.js';
 import COMPONENT_LIBRARY from './componentLibrary.js';
 import FIELD_METADATA from './componentFieldMetadata.js';
 
@@ -46,7 +48,11 @@ export var DragAndDropForm = function (_React$Component) {
 			showModalEditComponent: false,
 			showModalRenameForm: false,
 			showModalDeleteComponent: false,
-			editingItem: null
+			editingItem: null,
+			lastSavedForm: {
+				items: [],
+				name: props.formName
+			}
 		};
 		_this.onDragEnd = _this.onDragEnd.bind(_this);
 		_this.openModalEditComponent = _this.openModalEditComponent.bind(_this);
@@ -57,10 +63,18 @@ export var DragAndDropForm = function (_React$Component) {
 		_this.hideModalDeleteComponent = _this.hideModalDeleteComponent.bind(_this);
 		_this.setFormName = _this.setFormName.bind(_this);
 		_this.saveForm = _this.saveForm.bind(_this);
+		_this.showPreview = _this.showPreview.bind(_this);
+		_this.hidePreview = _this.hidePreview.bind(_this);
 
 		// get items in form from databae
 		_this.firebaseHelper.getItemsForForm(props.formName, function (items) {
-			_this.setState({ items: items });
+			_this.setState({
+				items: items,
+				lastSavedForm: {
+					items: DragAndDropFormUtils.jsonDeepCopy(items),
+					name: _this.state.lastSavedForm.name
+				}
+			});
 		});
 		return _this;
 	}
@@ -188,6 +202,30 @@ export var DragAndDropForm = function (_React$Component) {
 			this.setState({ name: name });
 		}
 	}, {
+		key: 'showPreview',
+		value: function showPreview() {
+			// construct form preview
+			var formPreviewArea = document.querySelector('.applicant-forms-preview-form');
+			var props = {
+				formName: this.state.name,
+				firebaseHelper: this.firebaseHelper,
+				onClose: this.hidePreview
+			};
+			ReactDOM.render(React.createElement(FormPreview, props), formPreviewArea);
+
+			// show preview
+			$('.applicant-forms-create-form').hide();
+			$('.applicant-forms-preview-form').show();
+		}
+	}, {
+		key: 'hidePreview',
+		value: function hidePreview() {
+			$('.applicant-forms-preview-form').hide();
+			$('.applicant-forms-create-form').show();
+			var formPreviewArea = document.querySelector('.applicant-forms-preview-form');
+			ReactDOM.unmountComponentAtNode(formInputArea);
+		}
+	}, {
 		key: 'getItemForId',
 		value: function getItemForId(id) {
 			for (var ii = 0; ii < this.state.items.length; ii++) {
@@ -206,6 +244,39 @@ export var DragAndDropForm = function (_React$Component) {
 				name: this.state.name,
 				lastEdited: DragAndDropFormUtils.getTodaysDate()
 			});
+
+			// dangerous--looks like we've saved the items before the round trip is actually finished
+			this.setState({
+				lastSavedForm: {
+					items: DragAndDropFormUtils.jsonDeepCopy(this.state.items),
+					name: this.state.name
+				}
+			});
+		}
+	}, {
+		key: 'formHasPendingChanges',
+		value: function formHasPendingChanges() {
+
+			// compare form names
+			if (this.state.lastSavedForm.name !== this.state.name) {
+				return true;
+			}
+
+			// compare length of forms
+			var hasSameNumberOfFormItems = this.state.items.length === this.state.lastSavedForm.items.length;
+			if (!hasSameNumberOfFormItems) {
+				return true;
+			}
+
+			// compare individual items within forms
+			for (var ii = 0; ii < this.state.items.length; ii++) {
+				if (JSON.stringify(this.state.items[ii]) !== JSON.stringify(this.state.lastSavedForm.items[ii])) {
+					return true;
+				}
+			}
+
+			// current form is the same as the last saved form
+			return false;
 		}
 	}, {
 		key: 'render',
@@ -357,13 +428,14 @@ export var DragAndDropForm = function (_React$Component) {
 											React.createElement(
 												'button',
 												{
+													onClick: _this2.showPreview,
 													className: 'preview-form-link btn btn-outline btn-default',
 													style: { display: "inline", marginLeft: 15 } },
 												'Preview'
 											),
 											React.createElement(
 												'button',
-												{ onClick: _this2.saveForm, type: 'button', 'class': 'save-form-button btn btn-primary' },
+												{ disabled: !_this2.formHasPendingChanges(), onClick: _this2.saveForm, type: 'button', 'class': 'save-form-button btn btn-primary' },
 												'Save'
 											)
 										)

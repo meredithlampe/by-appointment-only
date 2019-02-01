@@ -1,10 +1,12 @@
 var React = require('react');	
+var ReactDOM = require('react-dom');
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import EditModal from './EditModal.react.js';
 import RenameFormModal from './RenameFormModal.react.js';
 import DeleteModal from './DeleteModal.react.js';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
+import FormPreview from './FormPreview.react.js';
 import COMPONENT_LIBRARY from './componentLibrary.js';
 import FIELD_METADATA from './componentFieldMetadata.js';
 
@@ -27,6 +29,10 @@ export class DragAndDropForm extends React.Component {
     	showModalRenameForm: false,
     	showModalDeleteComponent: false,
     	editingItem: null,
+    	lastSavedForm: {
+	    	items: [],
+	    	name: props.formName,
+    	},
     };
     this.onDragEnd = this.onDragEnd.bind(this);
     this.openModalEditComponent = this.openModalEditComponent.bind(this);
@@ -37,10 +43,18 @@ export class DragAndDropForm extends React.Component {
     this.hideModalDeleteComponent = this.hideModalDeleteComponent.bind(this);
     this.setFormName = this.setFormName.bind(this);
     this.saveForm = this.saveForm.bind(this);
+    this.showPreview = this.showPreview.bind(this);
+    this.hidePreview = this.hidePreview.bind(this);
 
     // get items in form from databae
      this.firebaseHelper.getItemsForForm(props.formName, (items) => {
-     	this.setState({items: items});
+     	this.setState({
+     		items: items,
+     		lastSavedForm: {
+     			items: DragAndDropFormUtils.jsonDeepCopy(items),
+     			name: this.state.lastSavedForm.name,
+     		},
+     	});
      }); 
   }
 
@@ -151,6 +165,26 @@ export class DragAndDropForm extends React.Component {
 	setFormName(name) {
 		this.setState({name: name});
 	}
+	showPreview() {
+		// construct form preview
+		const formPreviewArea = document.querySelector('.applicant-forms-preview-form');
+		let props = {
+			formName: this.state.name,
+			firebaseHelper: this.firebaseHelper,
+			onClose: this.hidePreview,
+		};
+		ReactDOM.render(React.createElement(FormPreview, props), formPreviewArea);
+
+		// show preview
+		$('.applicant-forms-create-form').hide();
+		$('.applicant-forms-preview-form').show();
+	}
+	hidePreview() {
+		$('.applicant-forms-preview-form').hide();	
+		$('.applicant-forms-create-form').show();
+		const formPreviewArea = document.querySelector('.applicant-forms-preview-form');
+		ReactDOM.unmountComponentAtNode(formInputArea);
+	}
 
 	getItemForId(id) {
 		for(let ii = 0; ii < this.state.items.length; ii++) {
@@ -170,6 +204,38 @@ export class DragAndDropForm extends React.Component {
 				name: this.state.name,
 				lastEdited: DragAndDropFormUtils.getTodaysDate(),
 			});
+
+		// dangerous--looks like we've saved the items before the round trip is actually finished
+		this.setState({
+			lastSavedForm: {
+				items: DragAndDropFormUtils.jsonDeepCopy(this.state.items),
+				name: this.state.name,
+			}
+		})
+	}
+
+	formHasPendingChanges() {
+
+		// compare form names
+		if (this.state.lastSavedForm.name !== this.state.name) {
+			return true;
+		}
+
+		// compare length of forms
+		let hasSameNumberOfFormItems = this.state.items.length === this.state.lastSavedForm.items.length;
+		if (!hasSameNumberOfFormItems) {
+			return true;
+		}
+
+		// compare individual items within forms
+		for (let ii = 0; ii < this.state.items.length; ii++) {
+			if (JSON.stringify(this.state.items[ii]) !== JSON.stringify(this.state.lastSavedForm.items[ii])) {
+				return true;
+			}
+		}
+
+		// current form is the same as the last saved form
+		return false;
 	}
 
   render() {
@@ -286,11 +352,12 @@ export class DragAndDropForm extends React.Component {
 						</small>
 						<div style={{float: "right"}}>
 							<button 
+								onClick={this.showPreview}
 								className="preview-form-link btn btn-outline btn-default" 
 								style={{display: "inline", marginLeft: 15}}>
 									Preview
 							</button>
-							<button onClick={this.saveForm} type="button" class="save-form-button btn btn-primary">Save</button>
+							<button disabled={!this.formHasPendingChanges()} onClick={this.saveForm} type="button" class="save-form-button btn btn-primary">Save</button>
 						</div>
 					</p>
 	              {this.state.items.map((item, index) => {

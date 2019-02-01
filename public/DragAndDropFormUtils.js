@@ -11,6 +11,11 @@ var DragAndDropFormUtils = function () {
 	}
 
 	_createClass(DragAndDropFormUtils, null, [{
+		key: 'jsonDeepCopy',
+		value: function jsonDeepCopy(object) {
+			return JSON.parse(JSON.stringify(object));
+		}
+	}, {
 		key: 'getSafeName',
 		value: function getSafeName(name) {
 			return name.replace(/\s/g, '-');

@@ -104,12 +104,6 @@ var cancelNewForm = $('.create-form-cancel').click(function () {
 	ReactDOM.unmountComponentAtNode(formInputArea);
 });
 
-var previewFormLink = $('.preview-form-link');
-previewFormLink.click(function () {
-	$('.applicant-forms-create-form').hide();
-	$('.applicant-forms-preview-form').show();
-});
-
 // all tab click handlers
 $('.home-tab').click(function () {
 	cleanupTabs();
@@ -191,7 +185,6 @@ function startFormsLiveUpdaters() {
 		tableRow.append("<td>Not available</td>");
 		tableRow.append(editTd);
 		tableRow.append(deleteTd);
-		tableRow.append("<td class=\"center\"><a>Share</a></td>");
 		formTable.append(tableRow);
 	}, function (formData) {
 		var tr = $('.form-table-row-' + DragAndDropFormUtils.getSafeName(formData.name));

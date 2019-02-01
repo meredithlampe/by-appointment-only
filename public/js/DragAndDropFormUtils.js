@@ -3,6 +3,10 @@ import COMPONENT_LIBRARY from './componentLibrary.js';
 
 export default class DragAndDropFormUtils {
 
+	static jsonDeepCopy(object) {
+		return JSON.parse(JSON.stringify(object));
+	}
+
 	static getSafeName(name) {
 		return name.replace(/\s/g, '-');
 	}
