@@ -2,6 +2,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+import DragAndDropFormUtils from './DragAndDropFormUtils.js';
+
 var FirebaseHelper = function () {
   /**
     * Initializes this Firebase facade.
@@ -54,6 +56,24 @@ var FirebaseHelper = function () {
         var items = snapshot.val().items;
         callback(items);
       });
+    }
+  }, {
+    key: 'publishForm',
+    value: function publishForm(name) {
+      // generate URL to publish form at
+      var safeName = DragAndDropFormUtils.getSafeName(name);
+      var formURL = this.auth.currentUser.uid + '/' + safeName;
+
+      // set form status to published
+      var formRef = this.database.ref('/forms/' + this.auth.currentUser.uid + '/' + safeName);
+      formRef.update({ 'publishStatus': 'published', 'publishURL': formURL });
+
+      // add form to list of publish forms
+      var setPublicForm = function setPublicForm(snapshot) {
+        this.database.ref('public/' + this.auth.currentUser.uid + '/' + safeName).set(snapshot.val());
+      };
+      setPublicForm = setPublicForm.bind(this);
+      formRef.once('value').then(setPublicForm);
     }
   }]);
 

@@ -19,7 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
   	};
 
 	// Configure Firebase.	
-	// firebase.initializeApp(config);
+	// if (!firebase.apps.length) {
+ // 		firebase.initializeApp(config);		
+	// }
 
 	// Make firebase reachable through the console.
 	window.firebase = firebase;
@@ -179,6 +181,28 @@ function startFormsLiveUpdaters() {
 			let deleteTd = document.createElement('td');
 			deleteTd.append(deleteLink);
 
+			//configure publish link
+			let publishLink = document.createElement('a');
+			publishLink.setAttribute('data-toggle', "modal");
+			publishLink.setAttribute('data-target', '#publishFormModal');
+			publishLink.innerHTML = 'Publish';
+			let publishFunction = (name, event) => {
+				// set body of modal
+				let modal = $('#publishFormModal');
+				let body = modal.find('.modal-body');
+				body.html('Ready to publish <b>' + name + "</b>?");
+				let publishButton = modal.find('.publish-form-button');
+				let publishFormFunction = (name) => {
+					firebaseHelper.publishForm(name);
+				}
+				publishFormFunction = publishFormFunction.bind(null, name);
+				publishButton.click(publishFormFunction);
+			};
+			let publishFunctionWithParams = publishFunction.bind(null, formData.name);
+			publishLink.addEventListener('click', publishFunctionWithParams);
+			let publishTd = document.createElement('td');
+			publishTd.append(publishLink);
+
 			// append table data elements to row
 			let formTable = $('.applicant-forms-table-body');
 			let tableRow = $(document.createElement('tr'));
@@ -189,6 +213,7 @@ function startFormsLiveUpdaters() {
 			tableRow.append("<td>Not available</td>");
 			tableRow.append(editTd);
 			tableRow.append(deleteTd);
+			tableRow.append(publishTd);
 			formTable.append(tableRow);
 		},
 		(formData) => {

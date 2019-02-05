@@ -1,2 +1,19 @@
- npx babel --watch js --out-dir . --presets react-app/prod 
-  webpack -w main.js --debug
+~~adminPanel~~
+
+### BABEL 
+
+ npx babel --watch src --out-dir babelOutput/ --presets react-app/prod 
+
+### WEBPCK
+
+ webpack -w babelOutput/main.js --debug -o webpackOutput/main.bundle.js
+
+ ~~viewForm~~
+
+ ## BABEL
+
+   npx babel --watch viewForm/src --out-dir viewForm/babelOutput --presets react-app/prod 
+
+  ### WEBPACK
+
+  webpack -w viewForm/babelOutput/mainViewForm.js --debug -o viewForm/webpackOutput/mainViewForm.bundle.js
