@@ -203,7 +203,7 @@ function startFormsLiveUpdaters() {
 		var formTable = $('.applicant-forms-table-body');
 		var tableRow = $(document.createElement('tr'));
 		tableRow.addClass('odd gradeX');
-		tableRow.addClass('form-table-row-' + DragAndDropFormUtils.getSafeName(name));
+		tableRow.addClass('form-table-row-' + DragAndDropFormUtils.getSafeName(formData.name));
 		tableRow.append("<td>" + name + "</td>");
 		tableRow.append("<td>" + lastEdited + "</td>");
 		tableRow.append("<td>Not available</td>");

@@ -1,25 +1,423 @@
-[debug] [2019-02-05T05:04:51.555Z] ----------------------------------------------------------------------
-[debug] [2019-02-05T05:04:51.557Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
-[debug] [2019-02-05T05:04:51.557Z] CLI Version:   6.3.1
-[debug] [2019-02-05T05:04:51.557Z] Platform:      darwin
-[debug] [2019-02-05T05:04:51.557Z] Node Version:  v8.4.0
-[debug] [2019-02-05T05:04:51.557Z] Time:          Tue Feb 05 2019 00:04:51 GMT-0500 (EST)
-[debug] [2019-02-05T05:04:51.557Z] ----------------------------------------------------------------------
+[debug] [2019-02-08T05:26:23.800Z] ----------------------------------------------------------------------
+[debug] [2019-02-08T05:26:23.802Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-08T05:26:23.802Z] CLI Version:   6.3.1
+[debug] [2019-02-08T05:26:23.802Z] Platform:      darwin
+[debug] [2019-02-08T05:26:23.802Z] Node Version:  v8.4.0
+[debug] [2019-02-08T05:26:23.802Z] Time:          Fri Feb 08 2019 00:26:23 GMT-0500 (EST)
+[debug] [2019-02-08T05:26:23.802Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2019-02-05T05:04:51.566Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2019-02-05T05:04:51.567Z] > authorizing via signed-in user
-[debug] [2019-02-05T05:04:51.567Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
-[debug] [2019-02-05T05:04:51.569Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+[debug] [2019-02-08T05:26:23.818Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-08T05:26:23.818Z] > authorizing via signed-in user
+[debug] [2019-02-08T05:26:23.818Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-08T05:26:23.820Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-02-08T05:26:23.820Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-02-08T05:26:24.042Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-08T05:26:24.054Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
 
-[debug] [2019-02-05T05:04:51.922Z] <<< HTTP RESPONSE 200
-[debug] [2019-02-05T05:04:51.924Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+[debug] [2019-02-08T05:26:24.330Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-08T05:26:24.331Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
  
-[debug] [2019-02-05T05:04:52.189Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-08T05:26:24.572Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
 [info] 
-[debug] [2019-02-05T05:04:52.191Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+[debug] [2019-02-08T05:26:24.574Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
  
-[debug] [2019-02-05T05:04:52.516Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-08T05:26:25.060Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-09T01:43:14.374Z] Error: getaddrinfo ENOTFOUND www.gstatic.com www.gstatic.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:43:14.376Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:43:14.382Z] Error: getaddrinfo ENOTFOUND www.gstatic.com www.gstatic.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:43:14.382Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:43:14.436Z] Error: getaddrinfo ENOTFOUND www.gstatic.com www.gstatic.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:43:14.437Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:43:14.438Z] Error: getaddrinfo ENOTFOUND www.gstatic.com www.gstatic.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:43:14.438Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:43:14.439Z] Error: getaddrinfo ENOTFOUND www.gstatic.com www.gstatic.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:43:14.439Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:53:35.400Z] ----------------------------------------------------------------------
+[debug] [2019-02-09T01:53:35.402Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-09T01:53:35.402Z] CLI Version:   6.3.1
+[debug] [2019-02-09T01:53:35.402Z] Platform:      darwin
+[debug] [2019-02-09T01:53:35.402Z] Node Version:  v8.4.0
+[debug] [2019-02-09T01:53:35.403Z] Time:          Fri Feb 08 2019 20:53:35 GMT-0500 (EST)
+[debug] [2019-02-09T01:53:35.403Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-09T01:53:35.415Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-09T01:53:35.415Z] > authorizing via signed-in user
+[debug] [2019-02-09T01:53:35.415Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-09T01:53:35.417Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-02-09T01:53:35.417Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-02-09T01:53:35.837Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T01:53:35.846Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-09T01:53:36.463Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T01:53:36.465Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-09T01:53:36.891Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-09T01:53:36.894Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-09T01:53:39.707Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-09T01:57:28.449Z] Error: socket hang up
+    at TLSSocket.onHangUp (_tls_wrap.js:1140:19)
+    at Object.onceWrapper (events.js:314:30)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:57:28.596Z] Error: socket hang up
+    at TLSSocket.onHangUp (_tls_wrap.js:1140:19)
+    at Object.onceWrapper (events.js:314:30)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T01:57:39.198Z] ----------------------------------------------------------------------
+[debug] [2019-02-09T01:57:39.200Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-09T01:57:39.200Z] CLI Version:   6.3.1
+[debug] [2019-02-09T01:57:39.200Z] Platform:      darwin
+[debug] [2019-02-09T01:57:39.200Z] Node Version:  v8.4.0
+[debug] [2019-02-09T01:57:39.200Z] Time:          Fri Feb 08 2019 20:57:39 GMT-0500 (EST)
+[debug] [2019-02-09T01:57:39.200Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-09T01:57:39.211Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-09T01:57:39.212Z] > authorizing via signed-in user
+[debug] [2019-02-09T01:57:39.212Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-09T01:57:39.213Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-09T01:57:51.791Z] Error: socket hang up
+    at TLSSocket.onHangUp (_tls_wrap.js:1140:19)
+    at Object.onceWrapper (events.js:314:30)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: Server Error. socket hang up
+[debug] [2019-02-09T02:00:01.180Z] ----------------------------------------------------------------------
+[debug] [2019-02-09T02:00:01.182Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-09T02:00:01.183Z] CLI Version:   6.3.1
+[debug] [2019-02-09T02:00:01.183Z] Platform:      darwin
+[debug] [2019-02-09T02:00:01.183Z] Node Version:  v8.4.0
+[debug] [2019-02-09T02:00:01.183Z] Time:          Fri Feb 08 2019 21:00:01 GMT-0500 (EST)
+[debug] [2019-02-09T02:00:01.183Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-09T02:00:01.196Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-09T02:00:01.196Z] > authorizing via signed-in user
+[debug] [2019-02-09T02:00:01.197Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-09T02:00:01.199Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-09T02:00:17.779Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T02:00:17.781Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-09T02:00:20.310Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-09T02:00:20.312Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-09T02:00:40.646Z] Error: socket hang up
+    at TLSSocket.onHangUp (_tls_wrap.js:1140:19)
+    at Object.onceWrapper (events.js:314:30)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: Server Error. socket hang up
+[debug] [2019-02-09T02:00:43.542Z] ----------------------------------------------------------------------
+[debug] [2019-02-09T02:00:43.544Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-09T02:00:43.545Z] CLI Version:   6.3.1
+[debug] [2019-02-09T02:00:43.545Z] Platform:      darwin
+[debug] [2019-02-09T02:00:43.545Z] Node Version:  v8.4.0
+[debug] [2019-02-09T02:00:43.545Z] Time:          Fri Feb 08 2019 21:00:43 GMT-0500 (EST)
+[debug] [2019-02-09T02:00:43.545Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-09T02:00:43.556Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-09T02:00:43.556Z] > authorizing via signed-in user
+[debug] [2019-02-09T02:00:43.556Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-09T02:00:43.558Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-09T02:00:45.088Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T02:00:45.090Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-09T02:00:46.278Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-09T02:00:46.280Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-09T02:00:53.923Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-09T02:22:55.314Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketOnEnd (_http_client.js:437:23)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T02:22:55.316Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T02:22:55.325Z] Error: socket hang up
+    at TLSSocket.onHangUp (_tls_wrap.js:1140:19)
+    at Object.onceWrapper (events.js:314:30)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T02:22:55.434Z] Error: socket hang up
+    at TLSSocket.onHangUp (_tls_wrap.js:1140:19)
+    at Object.onceWrapper (events.js:314:30)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T02:22:55.457Z] Error: socket hang up
+    at TLSSocket.onHangUp (_tls_wrap.js:1140:19)
+    at Object.onceWrapper (events.js:314:30)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T02:22:55.480Z] Error: socket hang up
+    at TLSSocket.onHangUp (_tls_wrap.js:1140:19)
+    at Object.onceWrapper (events.js:314:30)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T02:23:21.260Z] ----------------------------------------------------------------------
+[debug] [2019-02-09T02:23:21.262Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-09T02:23:21.262Z] CLI Version:   6.3.1
+[debug] [2019-02-09T02:23:21.262Z] Platform:      darwin
+[debug] [2019-02-09T02:23:21.262Z] Node Version:  v8.4.0
+[debug] [2019-02-09T02:23:21.262Z] Time:          Fri Feb 08 2019 21:23:21 GMT-0500 (EST)
+[debug] [2019-02-09T02:23:21.262Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-09T02:23:21.274Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-09T02:23:21.274Z] > authorizing via signed-in user
+[debug] [2019-02-09T02:23:21.274Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-09T02:23:21.276Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-09T02:23:23.220Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T02:23:23.222Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-09T02:23:24.156Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-09T02:23:24.159Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-09T02:23:29.550Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-09T02:23:47.983Z] Error: socket hang up
+    at TLSSocket.onHangUp (_tls_wrap.js:1140:19)
+    at Object.onceWrapper (events.js:314:30)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T02:24:20.401Z] ----------------------------------------------------------------------
+[debug] [2019-02-09T02:24:20.404Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-09T02:24:20.405Z] CLI Version:   6.3.1
+[debug] [2019-02-09T02:24:20.405Z] Platform:      darwin
+[debug] [2019-02-09T02:24:20.405Z] Node Version:  v8.4.0
+[debug] [2019-02-09T02:24:20.405Z] Time:          Fri Feb 08 2019 21:24:20 GMT-0500 (EST)
+[debug] [2019-02-09T02:24:20.405Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-09T02:24:20.428Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-09T02:24:20.429Z] > authorizing via signed-in user
+[debug] [2019-02-09T02:24:20.429Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-09T02:24:20.432Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-09T02:24:32.758Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T02:24:32.760Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-09T02:24:34.621Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-09T02:24:34.623Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-09T02:24:54.668Z] Error: socket hang up
+    at TLSSocket.onHangUp (_tls_wrap.js:1140:19)
+    at Object.onceWrapper (events.js:314:30)
+    at emitNone (events.js:110:20)
+    at TLSSocket.emit (events.js:207:7)
+    at endReadableNT (_stream_readable.js:1059:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickDomainCallback (internal/process/next_tick.js:218:9)
+[error] 
+[error] Error: Server Error. socket hang up
+[debug] [2019-02-09T21:26:19.441Z] ----------------------------------------------------------------------
+[debug] [2019-02-09T21:26:19.443Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-09T21:26:19.443Z] CLI Version:   6.3.1
+[debug] [2019-02-09T21:26:19.443Z] Platform:      darwin
+[debug] [2019-02-09T21:26:19.443Z] Node Version:  v8.4.0
+[debug] [2019-02-09T21:26:19.443Z] Time:          Sat Feb 09 2019 16:26:19 GMT-0500 (EST)
+[debug] [2019-02-09T21:26:19.443Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-09T21:26:19.455Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-09T21:26:19.455Z] > authorizing via signed-in user
+[debug] [2019-02-09T21:26:19.455Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-09T21:26:19.456Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-02-09T21:26:19.457Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-02-09T21:26:39.201Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T21:26:39.216Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-09T21:26:40.074Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T21:26:40.076Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-09T21:26:41.017Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-09T21:26:41.019Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-09T21:26:55.530Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-09T21:40:34.194Z] Error: connect ETIMEDOUT 172.217.10.131:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T21:40:34.195Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-09T21:41:13.583Z] ----------------------------------------------------------------------
+[debug] [2019-02-09T21:41:13.585Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-09T21:41:13.585Z] CLI Version:   6.3.1
+[debug] [2019-02-09T21:41:13.585Z] Platform:      darwin
+[debug] [2019-02-09T21:41:13.585Z] Node Version:  v8.4.0
+[debug] [2019-02-09T21:41:13.585Z] Time:          Sat Feb 09 2019 16:41:13 GMT-0500 (EST)
+[debug] [2019-02-09T21:41:13.585Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-09T21:41:13.597Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-09T21:41:13.597Z] > authorizing via signed-in user
+[debug] [2019-02-09T21:41:13.597Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-09T21:41:13.598Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-09T21:41:14.063Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-09T21:41:14.065Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-09T21:41:14.442Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-09T21:41:14.445Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-09T21:41:15.258Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000

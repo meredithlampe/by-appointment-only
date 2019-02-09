@@ -29,12 +29,12 @@ var FirebaseHelper = function () {
   }, {
     key: 'saveForm',
     value: function saveForm(name, formData) {
-      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).set(formData);
+      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + DragAndDropFormUtils.getSafeName(name)).set(formData);
     }
   }, {
     key: 'removeForm',
     value: function removeForm(name) {
-      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).remove();
+      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + DragAndDropFormUtils.getSafeName(name)).remove();
     }
   }, {
     key: 'setOnFormAdded',
@@ -51,11 +51,7 @@ var FirebaseHelper = function () {
   }, {
     key: 'getItemsForForm',
     value: function getItemsForForm(name, callback) {
-      var formRef = this.database.ref('/forms/' + this.auth.currentUser.uid + "/" + name);
-      formRef.once('value').then(function (snapshot) {
-        var items = snapshot.val().items;
-        callback(items);
-      });
+      getItemsForUserForm(this.auth.currentUser.uid, name, callback);
     }
   }, {
     key: 'publishForm',
@@ -74,6 +70,24 @@ var FirebaseHelper = function () {
       };
       setPublicForm = setPublicForm.bind(this);
       formRef.once('value').then(setPublicForm);
+    }
+  }, {
+    key: 'getFormForUser',
+    value: function getFormForUser(userid, name, callback) {
+      var formRef = this.database.ref('/forms/' + userid + "/" + DragAndDropFormUtils.getSafeName(name));
+      formRef.once('value').then(function (snapshot) {
+        var formData = snapshot.val();
+        callback(formData);
+      });
+    }
+  }, {
+    key: 'getItemsForUserForm',
+    value: function getItemsForUserForm(userid, name, callback) {
+      var formRef = this.database.ref('/forms/' + userid + "/" + DragAndDropFormUtils.getSafeName(name));
+      formRef.once('value').then(function (snapshot) {
+        var items = snapshot.val().items;
+        callback(items);
+      });
     }
   }]);
 

@@ -21,25 +21,25 @@ export default class DragAndDropFormUtils {
 		return null;
 	}
 
-	static getInputElementForType(item, inputId) {
+	static getInputElementForType(item, inputId, disabled = true) {
 		let type = item.inputType;
 		let placeholder = item.placeholder;
 		let id = inputId;
-		let input = null;
+		let result = null;
       	if (type === "shortText") {
-			input = (<input disabled type="email" className="form-control" id={id} aria-describedby="emailHelp" placeholder={placeholder}/>);
+			result = (<input disabled={disabled} type="email" className="form-control" id={id} aria-describedby="emailHelp" placeholder={placeholder}/>);
       	}
       	if (type === "longText") {
-      		input = (<textarea disabled className="form-control" id={id} rows="3" placeholder={placeholder}></textarea>);
+      		result = (<textarea disabled={disabled} className="form-control" id={id} rows="3" placeholder={placeholder}></textarea>);
       	}
       	if (type === "fileInput") {
-            input = (<input disabled id={id} type="file"/>);
+            result = (<input disabled={disabled} id={id} type="file"/>);
       	}
       	if (type === "staticText") {
-      		input = (<p className="text-muted" id={id}>{item.content}</p>)
+      		result = (<p className="text-muted" id={id}>{item.content}</p>)
       	}
       	if (type === "checkboxes") {
-      		input = (
+      		result = (
       			<div id={id}>
       				{
       				item.options.map(option => {
@@ -56,7 +56,7 @@ export default class DragAndDropFormUtils {
 			  );
       	}
       	if (type === 'selects') {
-      		input = (                                         
+      		result = (                                         
       			<select id={id} className="form-control">
 	                <option>1</option>
 	                <option>2</option>
@@ -66,7 +66,7 @@ export default class DragAndDropFormUtils {
                 </select>
             );
       	}
-      	return input;
+      	return result;
 	}
 
 	static getEditableFieldsForInputType(inputType) {

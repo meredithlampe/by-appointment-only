@@ -20,11 +20,11 @@ export default class FirebaseHelper {
   }
 
   saveForm(name, formData) {
-	 return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).set(formData);
+	 return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + DragAndDropFormUtils.getSafeName(name)).set(formData);
   }
 
   removeForm(name) {
-  	return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + name).remove();
+  	return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + DragAndDropFormUtils.getSafeName(name)).remove();
   }
 
   setOnFormAdded(onFormAdded, onFormRemoved) {
@@ -39,11 +39,7 @@ export default class FirebaseHelper {
   }
 
   getItemsForForm(name, callback) {
-    const formRef = this.database.ref('/forms/' + this.auth.currentUser.uid + "/" + name);
-    formRef.once('value').then(function(snapshot) {
-		let items = snapshot.val().items;
-		callback(items);
-    });	
+    getItemsForUserForm(this.auth.currentUser.uid, name, callback);
   }
 
   publishForm(name) {
@@ -62,5 +58,21 @@ export default class FirebaseHelper {
     setPublicForm = setPublicForm.bind(this);
     formRef.once('value').then(setPublicForm);
     
+  }
+
+  getFormForUser(userid, name, callback) {
+    const formRef = this.database.ref('/forms/' + userid + "/" + DragAndDropFormUtils.getSafeName(name));
+    formRef.once('value').then(function(snapshot) {
+      let formData = snapshot.val();
+      callback(formData);
+    });
+  }
+
+  getItemsForUserForm(userid, name, callback) {
+    const formRef = this.database.ref('/forms/' + userid + "/" + DragAndDropFormUtils.getSafeName(name));
+    formRef.once('value').then(function(snapshot) {
+      let items = snapshot.val().items;
+      callback(items);
+    }); 
   }
 }

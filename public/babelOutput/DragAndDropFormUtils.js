@@ -34,28 +34,30 @@ var DragAndDropFormUtils = function () {
 	}, {
 		key: 'getInputElementForType',
 		value: function getInputElementForType(item, inputId) {
+			var disabled = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
 			var type = item.inputType;
 			var placeholder = item.placeholder;
 			var id = inputId;
-			var input = null;
+			var result = null;
 			if (type === "shortText") {
-				input = React.createElement('input', { disabled: true, type: 'email', className: 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: placeholder });
+				result = React.createElement('input', { disabled: disabled, type: 'email', className: 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: placeholder });
 			}
 			if (type === "longText") {
-				input = React.createElement('textarea', { disabled: true, className: 'form-control', id: id, rows: '3', placeholder: placeholder });
+				result = React.createElement('textarea', { disabled: disabled, className: 'form-control', id: id, rows: '3', placeholder: placeholder });
 			}
 			if (type === "fileInput") {
-				input = React.createElement('input', { disabled: true, id: id, type: 'file' });
+				result = React.createElement('input', { disabled: disabled, id: id, type: 'file' });
 			}
 			if (type === "staticText") {
-				input = React.createElement(
+				result = React.createElement(
 					'p',
 					{ className: 'text-muted', id: id },
 					item.content
 				);
 			}
 			if (type === "checkboxes") {
-				input = React.createElement(
+				result = React.createElement(
 					'div',
 					{ id: id },
 					item.options.map(function (option) {
@@ -77,7 +79,7 @@ var DragAndDropFormUtils = function () {
 				);
 			}
 			if (type === 'selects') {
-				input = React.createElement(
+				result = React.createElement(
 					'select',
 					{ id: id, className: 'form-control' },
 					React.createElement(
@@ -107,7 +109,7 @@ var DragAndDropFormUtils = function () {
 					)
 				);
 			}
-			return input;
+			return result;
 		}
 	}, {
 		key: 'getEditableFieldsForInputType',

@@ -3,6 +3,15 @@ var DND = require('react-beautiful-dnd');
 var ReactDOM = require('react-dom');
 import FirebaseHelper from '../../babelOutput/FirebaseHelper';
 import DragAndDropFormUtils from '../../babelOutput/DragAndDropFormUtils.js';
+import {ViewForm} from './ViewForm.react.js';
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
 
 // handle page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -35,6 +44,26 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error(e);
     }
 
-    // get form ID from URL
-    
+    // get form info from URL
+    let user = getUrlVars()['u'];
+    let formName = getUrlVars()['name'];
+
+    // try to fetch form from firebase
+    firebaseHelper.getFormForUser(user, formName, function(formData) {
+
+    	console.log(formData);
+
+    	// header
+    	$('.form-header h2').html(formData.name);
+
+    	// body
+    	let props = {
+    		firebaseHelper: firebaseHelper,
+    		name: formData.name,
+    		formHostId: user,
+    	}
+    	const formContainer = document.querySelector('.form-body');
+		ReactDOM.render(React.createElement(ViewForm, props), formContainer);
+    });
+
   });
