@@ -109,25 +109,6 @@ let cancelNewForm = $('.create-form-cancel').click(function() {
 	ReactDOM.unmountComponentAtNode(formInputArea);
 })
 
-  // all tab click handlers
-  $('.home-tab').click(() => {
-    cleanupTabs();
-    transitionToTab('home');
-  });
-  $('.calendar-tab').click(() => {
-    cleanupTabs();
-    transitionToTab('calendar');
-  });
-  $('.appointments-tab').click(() => {
-    cleanupTabs();
-    transitionToTab('appointments');
-    renderAppointments();
-  });
-  $('.applicant-forms-tab').click(() => {
-    cleanupTabs();
-    transitionToTab('applicant-forms');
-  });
-
 /**
  * The ID of the currently signed-in User. We keep track of this to detect Auth state change events that are just
  * programmatic token refresh but not a User status change.
@@ -151,8 +132,8 @@ function startFormsLiveUpdaters() {
 				};
 			   const formInputArea = document.querySelector('.create-form-input-area');
 				ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
-				$('.applicant-forms-home').hide();
-				$('.applicant-forms-create-form').show();
+				$('.home').hide();
+				$('.create-form-input-area').show();
 			};
 			let editFunctionWithParams = editFunction.bind(null, formData.name);
 			editLink.addEventListener('click', editFunctionWithParams);
@@ -266,13 +247,6 @@ function cleanupUI() {
 	$('.applicant-forms-create-form').hide();
 	$('.applicant-forms-preview-form').hide();
 }
-
-  function cleanupTabs() {
-    hide($('.home'));
-    hide($('.calendar'));
-    hide($('.appointments'));
-    hide($('.applicant-forms'));
-  }
 
   function hide(jQueryElement) {
     jQueryElement.addClass('hidden');

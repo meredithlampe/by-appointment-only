@@ -329,7 +329,7 @@ export var DragAndDropForm = function (_React$Component) {
 
 			return React.createElement(
 				'div',
-				{ style: { display: "flex" } },
+				{ style: { display: "flex", margin: "auto" } },
 				editModal,
 				renameModal,
 				deleteModal,

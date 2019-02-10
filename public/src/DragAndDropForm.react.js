@@ -286,7 +286,7 @@ export class DragAndDropForm extends React.Component {
 			}} /> : null;
 
     return (
-    	<div style={{display: "flex"}}>
+    	<div style={{display: "flex", margin: "auto"}}>
 	  	  {editModal}
 	  	  {renameModal}
 	  	  {deleteModal}
