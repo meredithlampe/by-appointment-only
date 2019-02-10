@@ -48,11 +48,11 @@ cleanupUI();
 transitionToScreen('home-container');
 
 // authentication - sign in button
-let signInButton = document.getElementById('sign-in-button');
-signInButton.addEventListener('click', function() {
-	var provider = new firebase.auth.GoogleAuthProvider();
-	firebase.auth().signInWithPopup(provider);
-});
+// let signInButton = document.getElementById('sign-in-button');
+// signInButton.addEventListener('click', function() {
+// 	var provider = new firebase.auth.GoogleAuthProvider();
+// 	firebase.auth().signInWithPopup(provider);
+// });
 
 // authentication - sign out button
 let signOutButton = document.getElementById('sign-out-button');

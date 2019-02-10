@@ -51,7 +51,7 @@ var FirebaseHelper = function () {
   }, {
     key: 'getItemsForForm',
     value: function getItemsForForm(name, callback) {
-      getItemsForUserForm(this.auth.currentUser.uid, name, callback);
+      this.getItemsForUserForm(this.auth.currentUser.uid, name, callback);
     }
   }, {
     key: 'publishForm',

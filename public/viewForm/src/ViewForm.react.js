@@ -19,6 +19,10 @@ export class ViewForm extends React.Component {
      }); 
   }
 
+  onSubmit() {
+
+  }
+
   render() {
 
     return (
@@ -43,6 +47,7 @@ export class ViewForm extends React.Component {
 						    </div>
 					     </div>
 					     {input}
+					     <div class="invalid-feedback">{item.label + " is required."}</div>
 	                   </div>
 		                  )}		                
 		             )

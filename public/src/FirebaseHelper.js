@@ -39,7 +39,7 @@ export default class FirebaseHelper {
   }
 
   getItemsForForm(name, callback) {
-    getItemsForUserForm(this.auth.currentUser.uid, name, callback);
+    this.getItemsForUserForm(this.auth.currentUser.uid, name, callback);
   }
 
   publishForm(name) {

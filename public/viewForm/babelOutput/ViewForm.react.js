@@ -34,6 +34,9 @@ export var ViewForm = function (_React$Component) {
 	}
 
 	_createClass(ViewForm, [{
+		key: 'onSubmit',
+		value: function onSubmit() {}
+	}, {
 		key: 'render',
 		value: function render() {
 
@@ -68,7 +71,12 @@ export var ViewForm = function (_React$Component) {
 									)
 								)
 							),
-							input
+							input,
+							React.createElement(
+								'div',
+								{ 'class': 'invalid-feedback' },
+								item.label + " is required."
+							)
 						);
 					}),
 					React.createElement(

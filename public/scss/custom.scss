@@ -1,0 +1,54 @@
+@import "../dist/css/sb-admin-2.css";
+@import "../vendor/metisMenu/metisMenu.css";
+@import "../vendor/morrisjs/morris.css";
+@import "../vendor/startbootstrap-sb-admin-2-gh-pages/scss/sb-admin-2";
+@import "../vendor/startbootstrap-sb-admin-2-gh-pages/vendor/fontawesome-free/css/all.min.css";
+
+
+.hidden {
+  display: none;
+}
+
+.create-form-button {
+  float: right;
+  margin-bottom: 15px;
+}
+
+.create-form-header {
+	display: flex;
+	flex-direction: row;
+	/*justify-content: space-between;*/
+}
+
+.create-form-input-area {
+	display: flex;
+}
+
+.new-form-panel-body {
+	padding: 19px !important;
+}
+
+.test {
+	background: lightgreen;
+}
+
+.save-form-button {
+	margin-left: 20px;
+}
+
+.form-component-label {
+	cursor: grabbing;
+}
+
+.edit-form-component-field-label {
+	margin-top: 10px;
+}
+
+.form-component-link {
+	cursor: default;
+}
+
+.edit-modal-input-preview {
+	padding: 30px;
+}
+
