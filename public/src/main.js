@@ -5,7 +5,7 @@ import {DragAndDropForm} from './DragAndDropForm.react.js';
 import FirebaseHelper from './FirebaseHelper';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
 
-		// handle page load
+// handle page load
 document.addEventListener('DOMContentLoaded', function() {
 
 	//TODO: move this to file on server
@@ -30,10 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		window.firebaseHelper = firebaseHelper;
 	firebaseHelper.setOnAuthStateChanged(onAuthStateChanged);
 
-    // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-    // firebase.messaging().requestPermission().then(() => { });
-    // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-
     try {
       let app = firebase.app();
       let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
@@ -46,13 +42,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // hide all components initially
 cleanupUI();
 transitionToScreen('home-container');
-
-// authentication - sign in button
-// let signInButton = document.getElementById('sign-in-button');
-// signInButton.addEventListener('click', function() {
-// 	var provider = new firebase.auth.GoogleAuthProvider();
-// 	firebase.auth().signInWithPopup(provider);
-// });
 
 // authentication - sign out button
 let signOutButton = document.getElementById('sign-out-button');

@@ -30,10 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	window.firebaseHelper = firebaseHelper;
 	firebaseHelper.setOnAuthStateChanged(onAuthStateChanged);
 
-	// firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-	// firebase.messaging().requestPermission().then(() => { });
-	// firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-
 	try {
 		var app = firebase.app();
 		var features = ['auth', 'database', 'messaging', 'storage'].filter(function (feature) {
@@ -47,13 +43,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // hide all components initially
 cleanupUI();
 transitionToScreen('home-container');
-
-// authentication - sign in button
-// let signInButton = document.getElementById('sign-in-button');
-// signInButton.addEventListener('click', function() {
-// 	var provider = new firebase.auth.GoogleAuthProvider();
-// 	firebase.auth().signInWithPopup(provider);
-// });
 
 // authentication - sign out button
 var signOutButton = document.getElementById('sign-out-button');
