@@ -329,7 +329,7 @@ export var DragAndDropForm = function (_React$Component) {
 
 			return React.createElement(
 				'div',
-				{ style: { display: "flex", margin: "auto" } },
+				{ style: { display: "flex", margin: "auto" }, className: 'col-sm-8' },
 				editModal,
 				renameModal,
 				deleteModal,
@@ -342,20 +342,21 @@ export var DragAndDropForm = function (_React$Component) {
 						function (provided, snapshot) {
 							return React.createElement(
 								'div',
-								{ className: 'well' },
+								{ className: 'card shadow' },
 								React.createElement(
-									'p',
-									{ className: 'lead' },
-									'Form Element Library'
+									'div',
+									{ className: 'card-header py-3 d-flex flex-row align-items-center justify-content-between' },
+									React.createElement(
+										'h6',
+										{ 'class': 'm-0 font-weight-bold text-primary' },
+										'Form Element Library'
+									)
 								),
 								React.createElement(
 									'div',
 									{
-										ref: provided.innerRef,
-										style: {
-											width: 300,
-											borderRadius: 30
-										}
+										className: 'card-body',
+										ref: provided.innerRef
 									},
 									COMPONENT_LIBRARY.map(function (item, index) {
 										var input = null;
@@ -367,18 +368,24 @@ export var DragAndDropForm = function (_React$Component) {
 											function (provided, snapshot) {
 												return React.createElement(
 													'div',
-													Object.assign({ className: 'form-group',
+													Object.assign({ className: 'form-group card mb-4 py-3 border-left-primary shadow',
 														ref: provided.innerRef
 													}, provided.draggableProps, provided.dragHandleProps, {
 														style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
 													}),
 													React.createElement(
-														'label',
-														{ className: 'form-component-label', htmlFor: id },
-														item.label,
-														React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrows fa-fw' })
-													),
-													input
+														'div',
+														{ style: { paddingLeft: 15, paddingRight: 15 } },
+														React.createElement(
+															'label',
+															{
+																className: 'form-component-label d-flex flex-row justify-content-between',
+																htmlFor: id, style: { width: "100%" } },
+															item.label,
+															React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrows-alt fa-fw' })
+														),
+														input
+													)
 												);
 											}
 										);
@@ -394,19 +401,20 @@ export var DragAndDropForm = function (_React$Component) {
 						function (provided, snapshot) {
 							return React.createElement(
 								'div',
-								{ className: 'panel panel-default', style: { marginLeft: 40, height: "fit-content" } },
+								{
+									className: 'panel panel-default col-sm-7',
+									style: { marginLeft: 40, height: "fit-content" } },
 								React.createElement(
 									'div',
 									{
-										className: 'panel-body new-form-panel-body',
+										className: 'panel-body new-form-panel-body d-flex flex-column',
 										ref: provided.innerRef,
 										style: {
-											width: 500,
 											background: snapshot.isDraggingOver ? '#eaf7ed' : 'white'
 										} },
 									React.createElement(
-										'p',
-										{ className: 'lead' },
+										'h4',
+										null,
 										_this2.state.name,
 										React.createElement(
 											'small',
@@ -440,75 +448,79 @@ export var DragAndDropForm = function (_React$Component) {
 											)
 										)
 									),
-									_this2.state.items.map(function (item, index) {
-										var input = null;
-										var id = "input" + index;
-										input = DragAndDropFormUtils.getInputElementForType(item, id);
-										return React.createElement(
-											Draggable,
-											{ key: item.id, draggableId: id, index: index },
-											function (provided, snapshot) {
-												return React.createElement(
-													'div',
-													Object.assign({ className: 'form-group',
-														ref: provided.innerRef
-													}, provided.draggableProps, provided.dragHandleProps, {
-														style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
-													}),
-													React.createElement(
+									React.createElement(
+										'form',
+										{ className: 'col-sm-11 align-self-center' },
+										_this2.state.items.map(function (item, index) {
+											var input = null;
+											var id = "input" + index;
+											input = DragAndDropFormUtils.getInputElementForType(item, id);
+											return React.createElement(
+												Draggable,
+												{ key: item.id, draggableId: id, index: index },
+												function (provided, snapshot) {
+													return React.createElement(
 														'div',
-														{ style: { display: "flex", flexDirection: "row" } },
+														Object.assign({ className: 'form-group',
+															ref: provided.innerRef
+														}, provided.draggableProps, provided.dragHandleProps, {
+															style: getItemStyle(snapshot.isDragging, provided.draggableProps.style)
+														}),
 														React.createElement(
 															'div',
-															null,
-															React.createElement(
-																'label',
-																{ className: 'form-component-label', htmlFor: id },
-																item.label
-															),
+															{ style: { display: "flex", flexDirection: "row" } },
 															React.createElement(
 																'div',
-																{
-																	className: 'form-component-link',
-																	'data-toggle': 'modal',
-																	'data-target': '#exampleModal',
-																	onClick: function onClick(target) {
-																		_this2.openModalEditComponent(target.nativeEvent.target.id);
-																	},
-																	style: { display: "inline", marginLeft: 10 } },
+																null,
 																React.createElement(
-																	'a',
-																	{ id: 'edit-' + item.id },
-																	'Edit'
+																	'label',
+																	{ className: 'form-component-label', htmlFor: id },
+																	item.label
+																),
+																React.createElement(
+																	'div',
+																	{
+																		className: 'form-component-link',
+																		'data-toggle': 'modal',
+																		'data-target': '#exampleModal',
+																		onClick: function onClick(target) {
+																			_this2.openModalEditComponent(target.nativeEvent.target.id);
+																		},
+																		style: { display: "inline", marginLeft: 10 } },
+																	React.createElement(
+																		'a',
+																		{ id: 'edit-' + item.id },
+																		'Edit'
+																	)
+																),
+																React.createElement(
+																	'div',
+																	{
+																		className: 'form-component-link',
+																		style: { display: "inline", marginLeft: 10 },
+																		onClick: function onClick(target) {
+																			_this2.openModalDeleteComponent(target.nativeEvent.target.id);
+																		} },
+																	React.createElement(
+																		'a',
+																		{ id: 'delete-' + item.id },
+																		'Delete'
+																	)
 																)
 															),
+															React.createElement('div', { style: { flexGrow: 1 } }),
 															React.createElement(
 																'div',
-																{
-																	className: 'form-component-link',
-																	style: { display: "inline", marginLeft: 10 },
-																	onClick: function onClick(target) {
-																		_this2.openModalDeleteComponent(target.nativeEvent.target.id);
-																	} },
-																React.createElement(
-																	'a',
-																	{ id: 'delete-' + item.id },
-																	'Delete'
-																)
+																null,
+																React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrows-alt fa-fw' })
 															)
 														),
-														React.createElement('div', { style: { flexGrow: 1 } }),
-														React.createElement(
-															'div',
-															null,
-															React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrows fa-fw' })
-														)
-													),
-													input
-												);
-											}
-										);
-									}),
+														input
+													);
+												}
+											);
+										})
+									),
 									provided.placeholder
 								)
 							);

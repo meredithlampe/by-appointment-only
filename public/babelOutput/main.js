@@ -200,9 +200,6 @@ function onAuthStateChanged(user) {
 
 	if (user) {
 		currentUID = user.uid;
-		console.log("setting userid to " + user.uid);
-		//writeUserData(user.uid, user.displayName, user.email, user.photoURL);
-		//startDatabaseQueries();
 
 		// uesr has just signed in. redirect to home page.
 		cleanupUI();
@@ -210,6 +207,7 @@ function onAuthStateChanged(user) {
 
 		// listen for create/delete to user's forms
 		startFormsLiveUpdaters();
+		showUserInfo(user);
 	} else {
 		// Set currentUID to null.
 		currentUID = null;
@@ -219,6 +217,11 @@ function onAuthStateChanged(user) {
 		// Display the splash page where you can sign-in.
 		// splashPage.style.display = '';
 	}
+}
+
+function showUserInfo(user) {
+	$('.username').html(user.displayName);
+	$('.user-profile-photo').attr('src', user.photoURL);
 }
 
 function cleanupUI() {
@@ -244,11 +247,4 @@ function transitionToScreen(className) {
 
 function transitionToTab(tabName) {
 	show($('.' + tabName));
-}
-
-function renderAppointments() {
-	// get appointments from database
-
-
-	// render in table
 }

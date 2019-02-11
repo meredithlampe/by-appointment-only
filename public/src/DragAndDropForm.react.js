@@ -286,21 +286,20 @@ export class DragAndDropForm extends React.Component {
 			}} /> : null;
 
     return (
-    	<div style={{display: "flex", margin: "auto"}}>
+    	<div style={{display: "flex", margin: "auto"}} className="col-sm-8">
 	  	  {editModal}
 	  	  {renameModal}
 	  	  {deleteModal}
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (
-    	  	<div className="well">
-	    	  	<p className="lead">Form Element Library</p>
+    	  	<div className="card shadow">
+                <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Form Element Library</h6>
+                 </div>
 	            <div
+	            	className="card-body"
 	              ref={provided.innerRef}
-	              style={{
-					  width: 300,
-					  borderRadius: 30,
-					}}
 	            >
 	            {COMPONENT_LIBRARY.map((item, index) => {
 	              	let input = null;
@@ -309,7 +308,7 @@ export class DragAndDropForm extends React.Component {
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (
-		   					<div className="form-group"
+		   					<div className="form-group card mb-4 py-3 border-left-primary shadow"
 		                      ref={provided.innerRef}
 		                      {...provided.draggableProps}
 		                      {...provided.dragHandleProps}
@@ -318,8 +317,15 @@ export class DragAndDropForm extends React.Component {
 		                        provided.draggableProps.style
 		                      )}
 		                    >
-						     <label className="form-component-label" htmlFor={id}>{item.label}<i style={{marginLeft: 5}} className="fa fa-arrows fa-fw"></i></label>
-						     {input}
+		                    <div style={{paddingLeft: 15, paddingRight: 15}}>
+							     <label 
+							     	className="form-component-label d-flex flex-row justify-content-between" 
+							     	htmlFor={id} style={{width: "100%"}}>
+						     		{item.label}
+							     	<i style={{marginLeft: 5}} className="fa fa-arrows-alt fa-fw"></i>
+							     </label>
+							     {input}
+						     </div>
 		                   </div>
 		                  )}
 		                </Draggable>
@@ -332,17 +338,18 @@ export class DragAndDropForm extends React.Component {
     	 </Droppable>    
     	 <Droppable droppableId="form">
           {(provided, snapshot) => (
-          	<div className="panel panel-default" style={{marginLeft: 40, height: "fit-content"}}>
+          	<div 
+          		className="panel panel-default col-sm-7" 
+          		style={{marginLeft: 40, height: "fit-content"}}>
 	            <div
-	            className="panel-body new-form-panel-body"
+	            className="panel-body new-form-panel-body d-flex flex-column"
 	              ref={provided.innerRef}
 	              style={
 	              	{
-					  width: 500,
 					  background: snapshot.isDraggingOver ? '#eaf7ed' : 'white',
 					}
 					}>
-					<p className="lead">
+					<h4>
 						{this.state.name}
 						<small style={{marginLeft: 20}}>
 							<div style={{display: "inline"}}
@@ -359,7 +366,8 @@ export class DragAndDropForm extends React.Component {
 							</button>
 							<button disabled={!this.formHasPendingChanges()} onClick={this.saveForm} type="button" class="save-form-button btn btn-primary">Save</button>
 						</div>
-					</p>
+					</h4>
+				<form className="col-sm-11 align-self-center">
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "input" + index;
@@ -398,7 +406,7 @@ export class DragAndDropForm extends React.Component {
 							    </div>
 							    <div style={{flexGrow: 1}} />
 							    <div>
-								     <i style={{marginLeft: 5}} className="fa fa-arrows fa-fw"></i>
+								     <i style={{marginLeft: 5}} className="fa fa-arrows-alt fa-fw"></i>
 							    </div>
 						     </div>
 						     {input}
@@ -407,6 +415,7 @@ export class DragAndDropForm extends React.Component {
 		                </Draggable>
 		             );
 		         })}
+		         </form>
 	              {provided.placeholder}
 	            </div>
 	         </div>
