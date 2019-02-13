@@ -84,7 +84,7 @@ newFormButton.click(function() {
 		lastUnusedId: 4,
 		firebaseHelper: firebaseHelper,
 	};
-   const formInputArea = document.querySelector('.create-form-input-area');
+   const formInputArea = document.querySelector('.create-form-column');
 	ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
 	$('.applicant-forms-home').hide();
 	$('.applicant-forms-create-form').show();
@@ -92,9 +92,9 @@ newFormButton.click(function() {
 
 // cancel create new form
 let cancelNewForm = $('.create-form-cancel').click(function() {
-	$('.applicant-forms-create-form').hide();
-	$('.applicant-forms-home').show();
-	const formInputArea = document.querySelector('.create-form-input-area');
+	$('.create-form-input-area').addClass('hidden');
+	$('.home').removeClass('hidden');
+	const formInputArea = document.querySelector('.create-form-column');
 	ReactDOM.unmountComponentAtNode(formInputArea);
 })
 
@@ -119,10 +119,10 @@ function startFormsLiveUpdaters() {
 					lastUnusedId: 4,
 					firebaseHelper: firebaseHelper,
 				};
-			   const formInputArea = document.querySelector('.create-form-input-area');
+			   const formInputArea = document.querySelector('.create-form-column');
 				ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
-				$('.home').hide();
-				$('.create-form-input-area').show();
+				$('.home').addClass('hidden');
+				$('.create-form-input-area').removeClass('hidden');
 			};
 			let editFunctionWithParams = editFunction.bind(null, formData.name);
 			editLink.addEventListener('click', editFunctionWithParams);

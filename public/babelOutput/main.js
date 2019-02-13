@@ -81,7 +81,7 @@ newFormButton.click(function () {
 		lastUnusedId: 4,
 		firebaseHelper: firebaseHelper
 	};
-	var formInputArea = document.querySelector('.create-form-input-area');
+	var formInputArea = document.querySelector('.create-form-column');
 	ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
 	$('.applicant-forms-home').hide();
 	$('.applicant-forms-create-form').show();
@@ -89,9 +89,9 @@ newFormButton.click(function () {
 
 // cancel create new form
 var cancelNewForm = $('.create-form-cancel').click(function () {
-	$('.applicant-forms-create-form').hide();
-	$('.applicant-forms-home').show();
-	var formInputArea = document.querySelector('.create-form-input-area');
+	$('.create-form-input-area').addClass('hidden');
+	$('.home').removeClass('hidden');
+	var formInputArea = document.querySelector('.create-form-column');
 	ReactDOM.unmountComponentAtNode(formInputArea);
 });
 
@@ -115,10 +115,10 @@ function startFormsLiveUpdaters() {
 				lastUnusedId: 4,
 				firebaseHelper: firebaseHelper
 			};
-			var formInputArea = document.querySelector('.create-form-input-area');
+			var formInputArea = document.querySelector('.create-form-column');
 			ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
-			$('.home').hide();
-			$('.create-form-input-area').show();
+			$('.home').addClass('hidden');
+			$('.create-form-input-area').removeClass('hidden');
 		};
 		var editFunctionWithParams = editFunction.bind(null, formData.name);
 		editLink.addEventListener('click', editFunctionWithParams);

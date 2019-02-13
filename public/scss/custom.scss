@@ -7,6 +7,7 @@
 
 a {
 	color: #4e73df !important;
+	cursor: pointer;
 }
 
 .hidden {
@@ -22,10 +23,6 @@ a {
 	display: flex;
 	flex-direction: row;
 	/*justify-content: space-between;*/
-}
-
-.create-form-input-area {
-	display: flex;
 }
 
 .new-form-panel-body {
