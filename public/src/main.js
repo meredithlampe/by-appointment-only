@@ -52,42 +52,18 @@ signOutButton.addEventListener('click', function() {
 // new form button
 let newFormButton = $('.create-form-button');
 newFormButton.click(function() {
-	let sampleFormItems = {
-		items: [
-			{
-				id: 0,
-				idCopy: 0,
-				label: "Name",
-				placeholder: "Enter Name",
-				inputType: "shortText",
-			},
-			{
-				id: 1,
-				idCopy: 1,
-				label: "Email",
-				placeholder: "Enter Email",
-				inputType: "shortText",
-			},
-			{
-				id: 2,
-				idCopy: 3,
-				label: "Comments",
-				placeholder: "Provide any additional comments here",
-				inputType: "longText",
-			},
-		],
-	};
 
 	let props = {
-		formItems: sampleFormItems,
+		formItems: [],
 		formName: 'My New Form',
-		lastUnusedId: 4,
+		lastUnusedId: 0,
 		firebaseHelper: firebaseHelper,
+		newForm: true,
 	};
    const formInputArea = document.querySelector('.create-form-column');
 	ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
-	$('.applicant-forms-home').hide();
-	$('.applicant-forms-create-form').show();
+	$('.home').addClass('hidden');
+	$('.create-form-input-area').removeClass('hidden');
 });
 
 // cancel create new form

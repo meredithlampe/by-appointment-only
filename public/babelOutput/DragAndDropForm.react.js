@@ -67,15 +67,17 @@ export var DragAndDropForm = function (_React$Component) {
 		_this.hidePreview = _this.hidePreview.bind(_this);
 
 		// get items in form from databae
-		_this.firebaseHelper.getItemsForForm(props.formName, function (items) {
-			_this.setState({
-				items: items,
-				lastSavedForm: {
-					items: DragAndDropFormUtils.jsonDeepCopy(items),
-					name: _this.state.lastSavedForm.name
-				}
+		if (!props.newForm) {
+			_this.firebaseHelper.getItemsForForm(props.formName, function (items) {
+				_this.setState({
+					items: items,
+					lastSavedForm: {
+						items: DragAndDropFormUtils.jsonDeepCopy(items),
+						name: _this.state.lastSavedForm.name
+					}
+				});
 			});
-		});
+		}
 		return _this;
 	}
 
@@ -189,7 +191,15 @@ export var DragAndDropForm = function (_React$Component) {
 	}, {
 		key: 'openModalRenameForm',
 		value: function openModalRenameForm() {
-			this.setState({ showModalRenameForm: true });
+			// this.setState({showModalRenameForm: true});
+			var renameModal = document.querySelector('#renameFormModal');
+			debugger;
+			ReactDOM.render(React.createElement(RenameFormModal, {
+				show: this.state.showModalRenameForm,
+				name: this.state.name,
+				onClose: this.hideModalRenameForm,
+				onSave: this.setFormName
+			}), renameModal);
 		}
 	}, {
 		key: 'hideModalRenameForm',
@@ -310,12 +320,13 @@ export var DragAndDropForm = function (_React$Component) {
 					_this2.setState({ items: _this2.insert(result, newItem, index), showModalEditComponent: false });
 				} }) : null;
 
-			var renameModal = this.state.showModalRenameForm ? React.createElement(RenameFormModal, {
-				show: this.state.showModalRenameForm,
-				name: this.state.name,
-				onClose: this.hideModalRenameForm,
-				onSave: this.setFormName
-			}) : null;
+			// let renameModal = this.state.showModalRenameForm ?
+			// 	<RenameFormModal 
+			// 		show={this.state.showModalRenameForm}
+			// 		name={this.state.name} 
+			// 		onClose={this.hideModalRenameForm} 
+			// 		onSave={this.setFormName}
+			// 	/> : null;
 
 			var deleteModal = this.state.showModalDeleteComponent ? React.createElement(DeleteModal, {
 				item: this.state.deletingItem,
@@ -331,7 +342,6 @@ export var DragAndDropForm = function (_React$Component) {
 				'div',
 				{ style: { display: "flex", margin: "auto" }, className: 'col-sm-12' },
 				editModal,
-				renameModal,
 				deleteModal,
 				React.createElement(
 					DragDropContext,
@@ -422,7 +432,9 @@ export var DragAndDropForm = function (_React$Component) {
 											React.createElement(
 												'div',
 												{ style: { display: "inline" },
-													onClick: _this2.openModalRenameForm },
+													onClick: _this2.openModalRenameForm,
+													'data-toggle': 'modal',
+													'data-target': '#renameFormModal' },
 												React.createElement(
 													'a',
 													null,

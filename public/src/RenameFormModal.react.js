@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/lib/Button';
 
 class RenameFormModal extends React.Component {
   constructor(props) {
+    console.log("constructing modal");
     super(props);
     this.state = { 
       name: props.name, 
@@ -15,11 +16,8 @@ class RenameFormModal extends React.Component {
 
   render() {
     return (
-      <Modal show={this.props.show} onClose={this.props.onClose}>
-        <Modal.Header>
-          <Modal.Title>Rename Form</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      // <Modal show={this.props.show} onClose={this.props.onClose}>
+      <div>
           <div className="modal-body">
             <div className="edit-modal-input-preview">
                 <label className="form-component-label">Form Name</label>
@@ -31,20 +29,8 @@ class RenameFormModal extends React.Component {
                     this.setState({name: newValue});
                   }}/>
             </div>
+          </div>
         </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.onClose}>Close</Button>
-          <Button onClick={
-            event => {
-              this.props.onSave(this.state.name);
-              this.props.onClose();
-            }} 
-            bsStyle="primary">
-              Save changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
     );
   }
 }

@@ -19,6 +19,8 @@ var RenameFormModal = function (_React$Component) {
   function RenameFormModal(props) {
     _classCallCheck(this, RenameFormModal);
 
+    console.log("constructing modal");
+
     var _this = _possibleConstructorReturn(this, (RenameFormModal.__proto__ || Object.getPrototypeOf(RenameFormModal)).call(this, props));
 
     _this.state = {
@@ -32,20 +34,10 @@ var RenameFormModal = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      return React.createElement(
-        Modal,
-        { show: this.props.show, onClose: this.props.onClose },
+      return (
+        // <Modal show={this.props.show} onClose={this.props.onClose}>
         React.createElement(
-          Modal.Header,
-          null,
-          React.createElement(
-            Modal.Title,
-            null,
-            'Rename Form'
-          )
-        ),
-        React.createElement(
-          Modal.Body,
+          'div',
           null,
           React.createElement(
             'div',
@@ -66,24 +58,6 @@ var RenameFormModal = function (_React$Component) {
                   _this2.setState({ name: newValue });
                 } })
             )
-          )
-        ),
-        React.createElement(
-          Modal.Footer,
-          null,
-          React.createElement(
-            Button,
-            { onClick: this.props.onClose },
-            'Close'
-          ),
-          React.createElement(
-            Button,
-            { onClick: function onClick(event) {
-                _this2.props.onSave(_this2.state.name);
-                _this2.props.onClose();
-              },
-              bsStyle: 'primary' },
-            'Save changes'
           )
         )
       );
