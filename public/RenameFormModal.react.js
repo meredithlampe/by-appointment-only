@@ -19,56 +19,49 @@ var RenameFormModal = function (_React$Component) {
   function RenameFormModal(props) {
     _classCallCheck(this, RenameFormModal);
 
+    console.log("constructing modal");
+
     var _this = _possibleConstructorReturn(this, (RenameFormModal.__proto__ || Object.getPrototypeOf(RenameFormModal)).call(this, props));
 
     _this.state = {
       name: props.name
     };
-    _this.onSave = _this.onSave.bind(_this);
     return _this;
   }
 
   _createClass(RenameFormModal, [{
-    key: 'onSave',
-    value: function onSave() {
-      this.props.onSave(this.state.name);
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      return React.createElement(
-        'div',
-        null,
+      return (
+        // <Modal show={this.props.show} onClose={this.props.onClose}>
         React.createElement(
           'div',
-          { className: 'edit-modal-input-preview' },
-          React.createElement(
-            'label',
-            { className: 'form-component-label' },
-            'Form Name'
-          ),
-          React.createElement('input', {
-            className: 'form-control',
-            value: this.state.name,
-            onChange: function onChange(event) {
-              var newValue = event.nativeEvent.target.value;
-              _this2.setState({ name: newValue });
-            } })
-        ),
-        React.createElement(
-          'div',
-          { className: 'modal-footer' },
-          React.createElement(
-            'button',
-            { className: 'btn btn-secondary', type: 'button', 'data-dismiss': 'modal' },
-            'Cancel'
-          ),
+          { 'class': 'modal-dialog', role: 'document' },
           React.createElement(
             'div',
-            { id: 'rename-modal-save-button', 'class': 'btn btn-primary', 'data-dismiss': 'modal', onClick: this.onSave },
-            'Save Changes'
+            { 'class': 'modal-content' },
+            React.createElement(
+              'div',
+              { className: 'modal-body' },
+              React.createElement(
+                'div',
+                { className: 'edit-modal-input-preview' },
+                React.createElement(
+                  'label',
+                  { className: 'form-component-label' },
+                  'Form Name'
+                ),
+                React.createElement('input', {
+                  className: 'form-control',
+                  value: this.state.name,
+                  onChange: function onChange(event) {
+                    var newValue = event.nativeEvent.target.value;
+                    _this2.setState({ name: newValue });
+                  } })
+              )
+            )
           )
         )
       );

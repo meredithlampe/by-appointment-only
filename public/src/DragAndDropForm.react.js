@@ -159,8 +159,7 @@ export class DragAndDropForm extends React.Component {
 
 	openModalRenameForm() {
 		// this.setState({showModalRenameForm: true});
-		const renameModal = document.querySelector('#renameFormModal');
-		debugger;
+		const renameModal = document.querySelector('.rename-form-react-container');
 		ReactDOM.render(React.createElement(RenameFormModal, {
 			show: this.state.showModalRenameForm,
 			name: this.state.name,
@@ -171,6 +170,8 @@ export class DragAndDropForm extends React.Component {
 
 	hideModalRenameForm() {
 		this.setState({showModalRenameForm: false});
+		const renameModal = document.querySelector('#renameFormModal');
+		ReactDOM.unmountComponentAtNode(renameModal);
 	}
 	setFormName(name) {
 		this.setState({name: name});

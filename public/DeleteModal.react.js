@@ -13,75 +13,103 @@ import FIELD_METADATA from './componentFieldMetadata.js';
 import Modal from 'react-bootstrap/lib/Modal';
 import Button from 'react-bootstrap/lib/Button';
 
-var RenameFormModal = function (_React$Component) {
-  _inherits(RenameFormModal, _React$Component);
+var DeleteModal = function (_React$Component) {
+  _inherits(DeleteModal, _React$Component);
 
-  function RenameFormModal(props) {
-    _classCallCheck(this, RenameFormModal);
+  function DeleteModal(props) {
+    _classCallCheck(this, DeleteModal);
 
-    var _this = _possibleConstructorReturn(this, (RenameFormModal.__proto__ || Object.getPrototypeOf(RenameFormModal)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (DeleteModal.__proto__ || Object.getPrototypeOf(DeleteModal)).call(this, props));
 
+    var item = props.item;
     _this.state = {
-      name: props.name
+      item: props.item
     };
-    _this.onSave = _this.onSave.bind(_this);
     return _this;
   }
 
-  _createClass(RenameFormModal, [{
-    key: 'onSave',
-    value: function onSave() {
-      this.props.onSave(this.state.name);
-    }
-  }, {
+  _createClass(DeleteModal, [{
     key: 'render',
     value: function render() {
       var _this2 = this;
 
+      var item = this.state.item;
+      console.log("item");
+      console.log(item);
       return React.createElement(
-        'div',
-        null,
+        Modal,
+        { show: this.props.show, onClose: this.props.onClose },
         React.createElement(
-          'div',
-          { className: 'edit-modal-input-preview' },
+          Modal.Header,
+          null,
           React.createElement(
-            'label',
-            { className: 'form-component-label' },
-            'Form Name'
-          ),
-          React.createElement('input', {
-            className: 'form-control',
-            value: this.state.name,
-            onChange: function onChange(event) {
-              var newValue = event.nativeEvent.target.value;
-              _this2.setState({ name: newValue });
-            } })
+            Modal.Title,
+            null,
+            'Delete'
+          )
         ),
         React.createElement(
-          'div',
-          { className: 'modal-footer' },
-          React.createElement(
-            'button',
-            { className: 'btn btn-secondary', type: 'button', 'data-dismiss': 'modal' },
-            'Cancel'
-          ),
+          Modal.Body,
+          null,
           React.createElement(
             'div',
-            { id: 'rename-modal-save-button', 'class': 'btn btn-primary', 'data-dismiss': 'modal', onClick: this.onSave },
-            'Save Changes'
+            { className: 'modal-body' },
+            React.createElement(
+              'div',
+              { className: 'edit-modal-input-preview' },
+              React.createElement(
+                'label',
+                { className: 'form-component-label' },
+                item ? item.label : null
+              ),
+              item ? DragAndDropFormUtils.getInputElementForType(item, 100) : null
+            )
+          ),
+          React.createElement('hr', null),
+          React.createElement(
+            'div',
+            { style: { margin: 20 } },
+            React.createElement(
+              'p',
+              { className: 'text-muted' },
+              'Delete this component?'
+            )
+          )
+        ),
+        React.createElement(
+          Modal.Footer,
+          null,
+          React.createElement(
+            Button,
+            { onClick: this.props.onClose },
+            'Close'
+          ),
+          React.createElement(
+            Button,
+            { onClick: function onClick() {
+                _this2.props.onDelete(_this2.state.item);
+              }, bsStyle: 'primary' },
+            'Delete'
           )
         )
       );
     }
   }]);
 
-  return RenameFormModal;
+  return DeleteModal;
 }(React.Component);
 
-RenameFormModal.propTypes = {
+DeleteModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired,
-  name: PropTypes.string
+  onDelete: PropTypes.func.isRequired,
+  item: PropTypes.shape({
+    inputType: PropTypes.string,
+    label: PropTypes.string,
+    placeholder: PropTypes.string,
+    content: PropTypes.string,
+    options: PropTypes.array,
+    editable: PropTypes.array
+  })
 };
 
-export default RenameFormModal;
+export default DeleteModal;
