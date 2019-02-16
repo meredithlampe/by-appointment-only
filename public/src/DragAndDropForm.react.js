@@ -144,21 +144,37 @@ export class DragAndDropForm extends React.Component {
 		let id = itemId.match(/edit-(.*)/);
 		let editingItem = this.getItemForId(parseInt(id[1]));
 		this.setState({showModalEditComponent: true, editingItem: editingItem});
+		const editModal = document.querySelector('.edit-form-component-react-container');
+		ReactDOM.render(React.createElement(EditModal, {
+			show: this.state.showModalEditComponent,
+			item: editingItem,
+			onClose: this.hideModalEditComponent,
+			onSave: (newItem) => {
+				let removeResult = this.remove(this.state.items, this.state.editingItem);
+				let index = removeResult[0];
+				let result = removeResult[1];
+				this.setState({items: this.insert(result, newItem, index), showModalEditComponent: false});
+			},
+		}), editModal);
 	}
+
 	hideModalEditComponent() {
 		this.setState({showModalEditComponent: false, editingItem: null});
+		const editModal = document.querySelector('.edit-form-component-react-container');
+		ReactDOM.unmountComponentAtNode(editModal);
 	}
+
 	openModalDeleteComponent(itemId) {
 		let id = itemId.match(/delete-(.*)/);
 		let deleteItem = this.getItemForId(parseInt(id[1]));
 		this.setState({showModalDeleteComponent: true, deletingItem: deleteItem});
 	}
+
 	hideModalDeleteComponent() {
 		this.setState({showModalDeleteComponent: false, deletingItem: null});
 	}
 
 	openModalRenameForm() {
-		// this.setState({showModalRenameForm: true});
 		const renameModal = document.querySelector('.rename-form-react-container');
 		ReactDOM.render(React.createElement(RenameFormModal, {
 			show: this.state.showModalRenameForm,
@@ -173,9 +189,11 @@ export class DragAndDropForm extends React.Component {
 		const renameModal = document.querySelector('#renameFormModal');
 		ReactDOM.unmountComponentAtNode(renameModal);
 	}
+
 	setFormName(name) {
 		this.setState({name: name});
 	}
+	
 	showPreview() {
 		// construct form preview
 		const formPreviewArea = document.querySelector('.applicant-forms-preview-form');
@@ -263,28 +281,6 @@ export class DragAndDropForm extends React.Component {
 	  borderRadius: 30,
 	});	
 
-	let editingItem = this.state.editingItem;
-	let editModal = this.state.showModalEditComponent ? 
-		<EditModal 
-			show={this.state.showModalEditComponent} 
-			item={editingItem} 
-			onClose={this.hideModalEditComponent}
-			onSave={(newItem) => {
-				let removeResult = this.remove(this.state.items, this.state.editingItem);
-				let index = removeResult[0];
-				let result = removeResult[1];
-				this.setState({items: this.insert(result, newItem, index), showModalEditComponent: false});
-			}} /> 
-		: null;
-
-	// let renameModal = this.state.showModalRenameForm ?
-	// 	<RenameFormModal 
-	// 		show={this.state.showModalRenameForm}
-	// 		name={this.state.name} 
-	// 		onClose={this.hideModalRenameForm} 
-	// 		onSave={this.setFormName}
-	// 	/> : null;
-
 	let deleteModal = this.state.showModalDeleteComponent ?
 		<DeleteModal
 			item={this.state.deletingItem} 
@@ -298,7 +294,6 @@ export class DragAndDropForm extends React.Component {
 
     return (
     	<div style={{display: "flex", margin: "auto"}} className="col-sm-12">
-	  	  {editModal}
 	  	  {deleteModal}
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
@@ -402,7 +397,7 @@ export class DragAndDropForm extends React.Component {
 								     <div 
 								     	className="form-component-link" 
 								     	data-toggle="modal" 
-								     	data-target="#exampleModal" 
+								     	data-target="#editFormComponentModal" 
 								     	onClick={(target) => {
 								     		this.openModalEditComponent(target.nativeEvent.target.id);
 								     	}} 

@@ -32,17 +32,11 @@ class EditModal extends React.Component {
   render() {
     let editingItem = this.state.item;
     return (
-      <Modal show={this.props.show} onClose={this.props.onClose}>
-        <Modal.Header>
-          <Modal.Title>Modal title</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="modal-body">
             <div className="edit-modal-input-preview">
-                <label className="form-component-label">{editingItem ? editingItem.label : null}</label>
-                    {editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem, 100) : null}
-                  </div>
-              </div>
+                <div style={{margin: 20}}>
+                  <label className="form-component-label">{editingItem ? editingItem.label : null}</label>
+                  {editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem, 100) : null}
+                </div>
               <hr/>
               <div style={{margin: 20}}>
                 <p className="text-muted">Change the fields below to see how the form element will look above.</p>
@@ -64,12 +58,11 @@ class EditModal extends React.Component {
                     );
                 }) : null}
               </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={this.props.onClose}>Close</Button>
+        <div className="modal-footer">
+          <Button data-dismiss="modal" onClick={this.props.onClose}>Close</Button>
           <Button onClick={() => {this.props.onSave(this.state.item)}} bsStyle="primary">Save changes</Button>
-        </Modal.Footer>
-      </Modal>
+        </div>
+      </div>
     );
   }
 }

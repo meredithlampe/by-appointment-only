@@ -52,72 +52,55 @@ var EditModal = function (_React$Component) {
 
       var editingItem = this.state.item;
       return React.createElement(
-        Modal,
-        { show: this.props.show, onClose: this.props.onClose },
+        'div',
+        { className: 'edit-modal-input-preview' },
         React.createElement(
-          Modal.Header,
-          null,
+          'div',
+          { style: { margin: 20 } },
           React.createElement(
-            Modal.Title,
-            null,
-            'Modal title'
-          )
+            'label',
+            { className: 'form-component-label' },
+            editingItem ? editingItem.label : null
+          ),
+          editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem, 100) : null
         ),
+        React.createElement('hr', null),
         React.createElement(
-          Modal.Body,
-          null,
+          'div',
+          { style: { margin: 20 } },
           React.createElement(
-            'div',
-            { className: 'modal-body' },
-            React.createElement(
+            'p',
+            { className: 'text-muted' },
+            'Change the fields below to see how the form element will look above.'
+          ),
+          editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(function (editableField) {
+            var helpText = _this2.getHelpTextForField(editableField);
+            return React.createElement(
               'div',
-              { className: 'edit-modal-input-preview' },
+              { key: editableField },
               React.createElement(
                 'label',
-                { className: 'form-component-label' },
-                editingItem ? editingItem.label : null
+                { className: 'form-component-label edit-form-component-field-label' },
+                FIELD_METADATA[editableField].label
               ),
-              editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem, 100) : null
-            )
-          ),
-          React.createElement('hr', null),
-          React.createElement(
-            'div',
-            { style: { margin: 20 } },
-            React.createElement(
-              'p',
-              { className: 'text-muted' },
-              'Change the fields below to see how the form element will look above.'
-            ),
-            editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(function (editableField) {
-              var helpText = _this2.getHelpTextForField(editableField);
-              return React.createElement(
-                'div',
-                { key: editableField },
-                React.createElement(
-                  'label',
-                  { className: 'form-component-label edit-form-component-field-label' },
-                  FIELD_METADATA[editableField].label
-                ),
-                React.createElement('input', {
-                  className: 'form-control',
-                  value: editingItem[editableField],
-                  onChange: function onChange(event) {
-                    var newValue = event.nativeEvent.target.value;
-                    var newItem = JSON.parse(JSON.stringify(_this2.state.item));
-                    newItem[editableField] = newValue;
-                    _this2.setState({ item: newItem });
-                  } })
-              );
-            }) : null
-          )
+              React.createElement('input', {
+                className: 'form-control',
+                value: editingItem[editableField],
+                onChange: function onChange(event) {
+                  var newValue = event.nativeEvent.target.value;
+                  var newItem = JSON.parse(JSON.stringify(_this2.state.item));
+                  newItem[editableField] = newValue;
+                  _this2.setState({ item: newItem });
+                } })
+            );
+          }) : null
         ),
         React.createElement(
-          Modal.Footer,
-          null,
+          'div',
+          { className: 'modal-footer' },
           React.createElement(
             Button,
-            { onClick: this.props.onClose },
+            { 'data-dismiss': 'modal', onClick: this.props.onClose },
             'Close'
           ),
           React.createElement(
