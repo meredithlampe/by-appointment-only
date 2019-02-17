@@ -37,48 +37,35 @@ var DeleteModal = function (_React$Component) {
       console.log("item");
       console.log(item);
       return React.createElement(
-        Modal,
-        { show: this.props.show, onClose: this.props.onClose },
+        'div',
+        null,
         React.createElement(
-          Modal.Header,
-          null,
+          'div',
+          { className: 'modal-body' },
           React.createElement(
-            Modal.Title,
-            null,
-            'Delete'
+            'div',
+            { className: 'edit-modal-input-preview' },
+            React.createElement(
+              'label',
+              { className: 'form-component-label' },
+              item ? item.label : null
+            ),
+            item ? DragAndDropFormUtils.getInputElementForType(item, 100) : null
+          )
+        ),
+        React.createElement('hr', null),
+        React.createElement(
+          'div',
+          { style: { margin: 20 } },
+          React.createElement(
+            'p',
+            { className: 'text-muted' },
+            'Delete this component?'
           )
         ),
         React.createElement(
-          Modal.Body,
-          null,
-          React.createElement(
-            'div',
-            { className: 'modal-body' },
-            React.createElement(
-              'div',
-              { className: 'edit-modal-input-preview' },
-              React.createElement(
-                'label',
-                { className: 'form-component-label' },
-                item ? item.label : null
-              ),
-              item ? DragAndDropFormUtils.getInputElementForType(item, 100) : null
-            )
-          ),
-          React.createElement('hr', null),
-          React.createElement(
-            'div',
-            { style: { margin: 20 } },
-            React.createElement(
-              'p',
-              { className: 'text-muted' },
-              'Delete this component?'
-            )
-          )
-        ),
-        React.createElement(
-          Modal.Footer,
-          null,
+          'div',
+          { className: 'modal-footer' },
           React.createElement(
             Button,
             { onClick: this.props.onClose },
@@ -88,7 +75,7 @@ var DeleteModal = function (_React$Component) {
             Button,
             { onClick: function onClick() {
                 _this2.props.onDelete(_this2.state.item);
-              }, bsStyle: 'primary' },
+              }, 'data-dismiss': 'modal', bsStyle: 'primary' },
             'Delete'
           )
         )

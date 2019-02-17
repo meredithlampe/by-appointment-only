@@ -24,7 +24,7 @@ export class DragAndDropForm extends React.Component {
     this.state = { 
     	items: [],
     	name: props.formName,
-    	lastUnusedId: props.lastUnusedId,
+    	lastUnusedId: -1,
     	showModalEditComponent: false,
     	showModalRenameForm: false,
     	showModalDeleteComponent: false,
@@ -48,11 +48,12 @@ export class DragAndDropForm extends React.Component {
 
     // get items in form from databae
     if (!props.newForm) {
-	    this.firebaseHelper.getItemsForForm(props.formName, (items) => {
+	    this.firebaseHelper.getCurrentUserForm(props.formName, (formData) => {
 	     	this.setState({
-	     		items: items,
+	     		lastUnusedId: formData.lastUnusedId !== undefined ? formData.lastUnusedId : 0,
+	     		items: formData.items,
 	     		lastSavedForm: {
-	     			items: DragAndDropFormUtils.jsonDeepCopy(items),
+	     			items: DragAndDropFormUtils.jsonDeepCopy(formData.items),
 	     			name: this.state.lastSavedForm.name,
 	     		},
 	     	});
@@ -168,10 +169,27 @@ export class DragAndDropForm extends React.Component {
 		let id = itemId.match(/delete-(.*)/);
 		let deleteItem = this.getItemForId(parseInt(id[1]));
 		this.setState({showModalDeleteComponent: true, deletingItem: deleteItem});
+		const deleteModal = document.querySelector('.delete-form-component-react-container');
+		ReactDOM.render(
+			React.createElement(DeleteModal, {
+				show: this.state.showModalDeleteComponent,
+				item: deleteItem,
+				onClose: this.hideModalDeleteComponent,
+				onDelete: () => { 
+						let newItems = this.remove(this.state.items, this.state.deletingItem)[1];
+						this.setState({items: newItems});
+						this.hideModalDeleteComponent();
+					},
+				},
+			),
+			deleteModal,
+		);
 	}
 
 	hideModalDeleteComponent() {
 		this.setState({showModalDeleteComponent: false, deletingItem: null});
+		const deleteModal = document.querySelector('.delete-form-component-react-container');
+		ReactDOM.unmountComponentAtNode(deleteModal);
 	}
 
 	openModalRenameForm() {
@@ -193,7 +211,7 @@ export class DragAndDropForm extends React.Component {
 	setFormName(name) {
 		this.setState({name: name});
 	}
-	
+
 	showPreview() {
 		// construct form preview
 		const formPreviewArea = document.querySelector('.applicant-forms-preview-form');
@@ -232,6 +250,7 @@ export class DragAndDropForm extends React.Component {
 				items: this.state.items,
 				name: this.state.name,
 				lastEdited: DragAndDropFormUtils.getTodaysDate(),
+				lastUnusedId: this.state.lastUnusedId,
 			});
 
 		// dangerous--looks like we've saved the items before the round trip is actually finished
@@ -281,20 +300,8 @@ export class DragAndDropForm extends React.Component {
 	  borderRadius: 30,
 	});	
 
-	let deleteModal = this.state.showModalDeleteComponent ?
-		<DeleteModal
-			item={this.state.deletingItem} 
-			show={this.state.showModalDeleteComponent}
-			onClose={this.hideModalDeleteComponent}
-			onDelete={() => { 
-				let newItems = this.remove(this.state.items, this.state.deletingItem)[1];
-				this.setState({items: newItems});
-				this.hideModalDeleteComponent();
-			}} /> : null;
-
     return (
     	<div style={{display: "flex", margin: "auto"}} className="col-sm-12">
-	  	  {deleteModal}
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (
@@ -404,6 +411,8 @@ export class DragAndDropForm extends React.Component {
 								     	style={{display: "inline", marginLeft: 10}}><a id={'edit-' + item.id}>Edit</a></div>
 								   	<div 
 								   		className="form-component-link"
+								     	data-toggle="modal" 
+								     	data-target="#deleteFormComponentModal" 								   		
 								   		style={{display: "inline", marginLeft: 10}}
 								   		onClick={(target) => {
 								   			this.openModalDeleteComponent(target.nativeEvent.target.id);

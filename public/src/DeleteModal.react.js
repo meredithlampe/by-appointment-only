@@ -19,27 +19,22 @@ class DeleteModal extends React.Component {
     console.log("item");
     console.log(item);
     return (
-      <Modal show={this.props.show} onClose={this.props.onClose}>
-        <Modal.Header>
-          <Modal.Title>Delete</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="modal-body">
-            <div className="edit-modal-input-preview">
-                <label className="form-component-label">{item ? item.label : null}</label>
-                    {item ? DragAndDropFormUtils.getInputElementForType(item, 100) : null}
-                  </div>
-              </div>
-              <hr/>
-              <div style={{margin: 20}}>
-                <p className="text-muted">Delete this component?</p>
-              </div>
-        </Modal.Body>
-        <Modal.Footer>
+      <div>
+        <div className="modal-body">
+          <div className="edit-modal-input-preview">
+            <label className="form-component-label">{item ? item.label : null}</label>
+            {item ? DragAndDropFormUtils.getInputElementForType(item, 100) : null}
+          </div>
+        </div>
+        <hr/>
+        <div style={{margin: 20}}>
+          <p className="text-muted">Delete this component?</p>
+        </div>
+        <div className="modal-footer">
           <Button onClick={this.props.onClose}>Close</Button>
-          <Button onClick={() => {this.props.onDelete(this.state.item)}} bsStyle="primary">Delete</Button>
-        </Modal.Footer>
-      </Modal>
+          <Button onClick={() => {this.props.onDelete(this.state.item)}} data-dismiss="modal" bsStyle="primary">Delete</Button>
+        </div>
+      </div>
     );
   }
 }

@@ -38,8 +38,8 @@ export default class FirebaseHelper {
     })
   }
 
-  getItemsForForm(name, callback) {
-    this.getItemsForUserForm(this.auth.currentUser.uid, name, callback);
+  getCurrentUserForm(name, callback) {
+    this.getUserForm(this.auth.currentUser.uid, name, callback);
   }
 
   publishForm(name) {
@@ -60,19 +60,10 @@ export default class FirebaseHelper {
     
   }
 
-  getFormForUser(userid, name, callback) {
+  getUserForm(userid, name, callback) {
     const formRef = this.database.ref('/forms/' + userid + "/" + DragAndDropFormUtils.getSafeName(name));
     formRef.once('value').then(function(snapshot) {
-      let formData = snapshot.val();
-      callback(formData);
-    });
-  }
-
-  getItemsForUserForm(userid, name, callback) {
-    const formRef = this.database.ref('/forms/' + userid + "/" + DragAndDropFormUtils.getSafeName(name));
-    formRef.once('value').then(function(snapshot) {
-      let items = snapshot.val().items;
-      callback(items);
+      callback(snapshot.val());
     }); 
   }
 }

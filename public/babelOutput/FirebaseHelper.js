@@ -49,9 +49,9 @@ var FirebaseHelper = function () {
       });
     }
   }, {
-    key: 'getItemsForForm',
-    value: function getItemsForForm(name, callback) {
-      this.getItemsForUserForm(this.auth.currentUser.uid, name, callback);
+    key: 'getCurrentUserForm',
+    value: function getCurrentUserForm(name, callback) {
+      this.getUserForm(this.auth.currentUser.uid, name, callback);
     }
   }, {
     key: 'publishForm',
@@ -72,21 +72,11 @@ var FirebaseHelper = function () {
       formRef.once('value').then(setPublicForm);
     }
   }, {
-    key: 'getFormForUser',
-    value: function getFormForUser(userid, name, callback) {
+    key: 'getUserForm',
+    value: function getUserForm(userid, name, callback) {
       var formRef = this.database.ref('/forms/' + userid + "/" + DragAndDropFormUtils.getSafeName(name));
       formRef.once('value').then(function (snapshot) {
-        var formData = snapshot.val();
-        callback(formData);
-      });
-    }
-  }, {
-    key: 'getItemsForUserForm',
-    value: function getItemsForUserForm(userid, name, callback) {
-      var formRef = this.database.ref('/forms/' + userid + "/" + DragAndDropFormUtils.getSafeName(name));
-      formRef.once('value').then(function (snapshot) {
-        var items = snapshot.val().items;
-        callback(items);
+        callback(snapshot.val());
       });
     }
   }]);
