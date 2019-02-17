@@ -40,7 +40,7 @@ var EditModal = function (_React$Component) {
     key: 'parseInputForField',
     value: function parseInputForField(fieldContent, field) {
       if (field === 'options') {
-        var options = fieldContent.explode(',');
+        var options = fieldContent.split(',');
         return options;
       }
       return fieldContent;
@@ -75,6 +75,13 @@ var EditModal = function (_React$Component) {
           ),
           editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(function (editableField) {
             var helpText = _this2.getHelpTextForField(editableField);
+            var onInputChange = function onInputChange(event) {
+              var newValue = event.nativeEvent.target.value;
+              var newItem = JSON.parse(JSON.stringify(_this2.state.item));
+              newItem[editableField] = _this2.parseInputForField(newValue, editableField);
+              _this2.setState({ item: newItem });
+            };
+            onInputChange = onInputChange.bind(_this2);
             return React.createElement(
               'div',
               { key: editableField },
@@ -86,12 +93,7 @@ var EditModal = function (_React$Component) {
               React.createElement('input', {
                 className: 'form-control',
                 value: editingItem[editableField],
-                onChange: function onChange(event) {
-                  var newValue = event.nativeEvent.target.value;
-                  var newItem = JSON.parse(JSON.stringify(_this2.state.item));
-                  newItem[editableField] = newValue;
-                  _this2.setState({ item: newItem });
-                } })
+                onChange: onInputChange })
             );
           }) : null
         ),

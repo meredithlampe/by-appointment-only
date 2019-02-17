@@ -23,7 +23,7 @@ class EditModal extends React.Component {
 
   parseInputForField(fieldContent, field) {
     if (field === 'options') {
-      let options = fieldContent.explode(',');
+      let options = fieldContent.split(',');
       return options;
     }
     return fieldContent;
@@ -42,18 +42,20 @@ class EditModal extends React.Component {
                 <p className="text-muted">Change the fields below to see how the form element will look above.</p>
                 {editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(editableField => {
                   let helpText = this.getHelpTextForField(editableField);
+                  let onInputChange = (event) => {
+                          let newValue = event.nativeEvent.target.value;
+                          let newItem = JSON.parse(JSON.stringify(this.state.item));
+                          newItem[editableField] = this.parseInputForField(newValue, editableField);
+                          this.setState({item: newItem});
+                        };
+                  onInputChange = onInputChange.bind(this);
                   return (
                     <div key={editableField}>
                       <label className="form-component-label edit-form-component-field-label">{FIELD_METADATA[editableField].label}</label>
                       <input 
                         className="form-control" 
                         value={editingItem[editableField]}
-                        onChange={event => {
-                          let newValue = event.nativeEvent.target.value;
-                          let newItem = JSON.parse(JSON.stringify(this.state.item));
-                          newItem[editableField] = newValue;
-                          this.setState({item: newItem});
-                        }} />
+                        onChange={onInputChange} />
                     </div>
                     );
                 }) : null}
