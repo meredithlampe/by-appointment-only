@@ -64,10 +64,10 @@ var DragAndDropFormUtils = function () {
 						return React.createElement(
 							'div',
 							{ className: 'checkbox' },
+							React.createElement('input', { id: inputId, type: 'checkbox', value: '' }),
 							React.createElement(
 								'label',
-								null,
-								React.createElement('input', { type: 'checkbox', value: '' }),
+								{ className: 'mb-0 ml-2', htmlFor: inputId },
 								React.createElement(
 									'div',
 									{ className: 'text-muted' },

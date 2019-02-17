@@ -45,9 +45,8 @@ export default class DragAndDropFormUtils {
       				item.options.map(option => {
       					return (
 			        		<div className="checkbox">
-			                    <label>
-			                        <input type="checkbox" value=""/><div className="text-muted">{option}</div>
-			                    </label>
+			                    <input id={inputId} type="checkbox" value=""/>
+			                    <label className="mb-0 ml-2" htmlFor={inputId}><div className="text-muted">{option}</div></label>
 			                </div>
 			             );
 			         })
