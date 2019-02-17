@@ -23,7 +23,7 @@ export class DragAndDropForm extends React.Component {
     this.firebaseHelper = props.firebaseHelper;
     this.state = { 
     	items: [],
-    	name: props.formName,
+    	name: '',
     	lastUnusedId: -1,
     	showModalEditComponent: false,
     	showModalRenameForm: false,
@@ -31,7 +31,7 @@ export class DragAndDropForm extends React.Component {
     	editingItem: null,
     	lastSavedForm: {
 	    	items: [],
-	    	name: props.formName,
+	    	name: '',
     	},
     };
     this.onDragEnd = this.onDragEnd.bind(this);
@@ -48,13 +48,14 @@ export class DragAndDropForm extends React.Component {
 
     // get items in form from databae
     if (!props.newForm) {
-	    this.firebaseHelper.getCurrentUserForm(props.formName, (formData) => {
+	    this.firebaseHelper.getCurrentUserForm(props.formID, (formData) => {
 	     	this.setState({
+	     		name: formData.name,
 	     		lastUnusedId: formData.lastUnusedId !== undefined ? formData.lastUnusedId : 0,
 	     		items: formData.items,
 	     		lastSavedForm: {
 	     			items: DragAndDropFormUtils.jsonDeepCopy(formData.items),
-	     			name: this.state.lastSavedForm.name,
+	     			name: formData.name,
 	     		},
 	     	});
 	     });
@@ -245,7 +246,6 @@ export class DragAndDropForm extends React.Component {
 
 	saveForm() {
 		this.firebaseHelper.saveForm(
-			this.state.name, 
 			{
 				items: this.state.items,
 				name: this.state.name,
@@ -307,7 +307,7 @@ export class DragAndDropForm extends React.Component {
     	  {(provided, snapshot) => (
     	  	<div className="card shadow">
                 <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Form Element Library</h6>
+                  <h6 className="m-0 font-weight-bold text-primary">Form Element Library</h6>
                  </div>
 	            <div
 	            	className="card-body"
@@ -378,7 +378,7 @@ export class DragAndDropForm extends React.Component {
 								style={{display: "inline", marginLeft: 15}}>
 									Preview
 							</button>
-							<button disabled={!this.formHasPendingChanges()} onClick={this.saveForm} type="button" class="save-form-button btn btn-primary">Save</button>
+							<button disabled={!this.formHasPendingChanges()} onClick={this.saveForm} type="button" className="save-form-button btn btn-primary">Save</button>
 						</div>
 					</h4>
 				<form className="col-sm-11 align-self-center">

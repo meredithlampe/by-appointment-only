@@ -43,7 +43,7 @@ export var DragAndDropForm = function (_React$Component) {
 		_this.firebaseHelper = props.firebaseHelper;
 		_this.state = {
 			items: [],
-			name: props.formName,
+			name: '',
 			lastUnusedId: -1,
 			showModalEditComponent: false,
 			showModalRenameForm: false,
@@ -51,7 +51,7 @@ export var DragAndDropForm = function (_React$Component) {
 			editingItem: null,
 			lastSavedForm: {
 				items: [],
-				name: props.formName
+				name: ''
 			}
 		};
 		_this.onDragEnd = _this.onDragEnd.bind(_this);
@@ -68,13 +68,14 @@ export var DragAndDropForm = function (_React$Component) {
 
 		// get items in form from databae
 		if (!props.newForm) {
-			_this.firebaseHelper.getCurrentUserForm(props.formName, function (formData) {
+			_this.firebaseHelper.getCurrentUserForm(props.formID, function (formData) {
 				_this.setState({
+					name: formData.name,
 					lastUnusedId: formData.lastUnusedId !== undefined ? formData.lastUnusedId : 0,
 					items: formData.items,
 					lastSavedForm: {
 						items: DragAndDropFormUtils.jsonDeepCopy(formData.items),
-						name: _this.state.lastSavedForm.name
+						name: formData.name
 					}
 				});
 			});
@@ -281,7 +282,7 @@ export var DragAndDropForm = function (_React$Component) {
 	}, {
 		key: 'saveForm',
 		value: function saveForm() {
-			this.firebaseHelper.saveForm(this.state.name, {
+			this.firebaseHelper.saveForm({
 				items: this.state.items,
 				name: this.state.name,
 				lastEdited: DragAndDropFormUtils.getTodaysDate(),
@@ -359,7 +360,7 @@ export var DragAndDropForm = function (_React$Component) {
 									{ className: 'card-header py-3 d-flex flex-row align-items-center justify-content-between' },
 									React.createElement(
 										'h6',
-										{ 'class': 'm-0 font-weight-bold text-primary' },
+										{ className: 'm-0 font-weight-bold text-primary' },
 										'Form Element Library'
 									)
 								),
@@ -456,7 +457,7 @@ export var DragAndDropForm = function (_React$Component) {
 											),
 											React.createElement(
 												'button',
-												{ disabled: !_this4.formHasPendingChanges(), onClick: _this4.saveForm, type: 'button', 'class': 'save-form-button btn btn-primary' },
+												{ disabled: !_this4.formHasPendingChanges(), onClick: _this4.saveForm, type: 'button', className: 'save-form-button btn btn-primary' },
 												'Save'
 											)
 										)

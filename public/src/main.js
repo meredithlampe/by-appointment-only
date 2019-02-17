@@ -83,15 +83,12 @@ var currentUID;
 function startFormsLiveUpdaters() {
 	window.firebaseHelper.setOnFormAdded(
 		(formData) => {
-			let name = formData.name;
-			let lastEdited = formData.lastEdited;
-
 			// configure edit link
 			let editLink = document.createElement('a');
 			editLink.innerHTML = 'Edit';
-			let editFunction = (name, event) => {
+			let editFunction = (id, event) => {
 				let props = {
-					formName: name,
+					formID: id,
 					lastUnusedId: 4,
 					firebaseHelper: firebaseHelper,
 				};
@@ -100,7 +97,7 @@ function startFormsLiveUpdaters() {
 				$('.home').addClass('hidden');
 				$('.create-form-input-area').removeClass('hidden');
 			};
-			let editFunctionWithParams = editFunction.bind(null, formData.name);
+			let editFunctionWithParams = editFunction.bind(null, formData.id);
 			editLink.addEventListener('click', editFunctionWithParams);
 			let editTd = document.createElement('td');
 			editTd.append(editLink);
@@ -110,19 +107,19 @@ function startFormsLiveUpdaters() {
 			deleteLink.setAttribute('data-toggle', "modal");
 			deleteLink.setAttribute('data-target', '#deleteFormModal');
 			deleteLink.innerHTML = 'Delete';
-			let deleteFunction = (name, event) => {
+			let deleteFunction = (id, name, event) => {
 				// set body of modal
 				let modal = $('#deleteFormModal');
 				let body = modal.find('.modal-body');
 				body.html('Are you sure you want to delete <b>' + name + '</b>?');
 				let deleteButton = modal.find('.delete-form-button');
-				let removeFormFunction = (name) => {
-					firebaseHelper.removeForm(name);
+				let removeFormFunction = (id) => {
+					firebaseHelper.removeForm(id);
 				};
-				removeFormFunction = removeFormFunction.bind(null, name);
+				removeFormFunction = removeFormFunction.bind(null, id);
 				deleteButton.click(removeFormFunction);
 			}
-			let deleteFunctionWithParams = deleteFunction.bind(null, formData.name);
+			let deleteFunctionWithParams = deleteFunction.bind(null, formData.id, formData.name);
 			deleteLink.addEventListener('click', deleteFunctionWithParams);
 			let deleteTd = document.createElement('td');
 			deleteTd.append(deleteLink);
@@ -132,19 +129,19 @@ function startFormsLiveUpdaters() {
 			publishLink.setAttribute('data-toggle', "modal");
 			publishLink.setAttribute('data-target', '#publishFormModal');
 			publishLink.innerHTML = 'Publish';
-			let publishFunction = (name, event) => {
+			let publishFunction = (id, name, event) => {
 				// set body of modal
 				let modal = $('#publishFormModal');
 				let body = modal.find('.modal-body');
 				body.html('Ready to publish <b>' + name + "</b>?");
 				let publishButton = modal.find('.publish-form-button');
-				let publishFormFunction = (name) => {
-					firebaseHelper.publishForm(name);
+				let publishFormFunction = (id) => {
+					firebaseHelper.publishForm(id);
 				}
-				publishFormFunction = publishFormFunction.bind(null, name);
+				publishFormFunction = publishFormFunction.bind(null, formData.id);
 				publishButton.click(publishFormFunction);
 			};
-			let publishFunctionWithParams = publishFunction.bind(null, formData.name);
+			let publishFunctionWithParams = publishFunction.bind(null, formData.id, formData.name);
 			publishLink.addEventListener('click', publishFunctionWithParams);
 			let publishTd = document.createElement('td');
 			publishTd.append(publishLink);
@@ -153,9 +150,9 @@ function startFormsLiveUpdaters() {
 			let formTable = $('.applicant-forms-table-body');
 			let tableRow = $(document.createElement('tr'));
 			tableRow.addClass('odd gradeX');
-			tableRow.addClass('form-table-row-' + DragAndDropFormUtils.getSafeName(formData.name));
-			tableRow.append("<td>" + name + "</td>");
-			tableRow.append("<td>" + lastEdited + "</td>");
+			tableRow.addClass('form-table-row-' + formData.id);
+			tableRow.append("<td>" + formData.name + "</td>");
+			tableRow.append("<td>" + formData.lastEdited + "</td>");
 			tableRow.append("<td>Not available</td>");
 			tableRow.append(editTd);
 			tableRow.append(deleteTd);

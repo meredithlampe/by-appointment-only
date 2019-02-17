@@ -83,15 +83,12 @@ var currentUID;
 
 function startFormsLiveUpdaters() {
 	window.firebaseHelper.setOnFormAdded(function (formData) {
-		var name = formData.name;
-		var lastEdited = formData.lastEdited;
-
 		// configure edit link
 		var editLink = document.createElement('a');
 		editLink.innerHTML = 'Edit';
-		var editFunction = function editFunction(name, event) {
+		var editFunction = function editFunction(id, event) {
 			var props = {
-				formName: name,
+				formID: id,
 				lastUnusedId: 4,
 				firebaseHelper: firebaseHelper
 			};
@@ -100,7 +97,7 @@ function startFormsLiveUpdaters() {
 			$('.home').addClass('hidden');
 			$('.create-form-input-area').removeClass('hidden');
 		};
-		var editFunctionWithParams = editFunction.bind(null, formData.name);
+		var editFunctionWithParams = editFunction.bind(null, formData.id);
 		editLink.addEventListener('click', editFunctionWithParams);
 		var editTd = document.createElement('td');
 		editTd.append(editLink);
@@ -110,19 +107,19 @@ function startFormsLiveUpdaters() {
 		deleteLink.setAttribute('data-toggle', "modal");
 		deleteLink.setAttribute('data-target', '#deleteFormModal');
 		deleteLink.innerHTML = 'Delete';
-		var deleteFunction = function deleteFunction(name, event) {
+		var deleteFunction = function deleteFunction(id, name, event) {
 			// set body of modal
 			var modal = $('#deleteFormModal');
 			var body = modal.find('.modal-body');
 			body.html('Are you sure you want to delete <b>' + name + '</b>?');
 			var deleteButton = modal.find('.delete-form-button');
-			var removeFormFunction = function removeFormFunction(name) {
-				firebaseHelper.removeForm(name);
+			var removeFormFunction = function removeFormFunction(id) {
+				firebaseHelper.removeForm(id);
 			};
-			removeFormFunction = removeFormFunction.bind(null, name);
+			removeFormFunction = removeFormFunction.bind(null, id);
 			deleteButton.click(removeFormFunction);
 		};
-		var deleteFunctionWithParams = deleteFunction.bind(null, formData.name);
+		var deleteFunctionWithParams = deleteFunction.bind(null, formData.id, formData.name);
 		deleteLink.addEventListener('click', deleteFunctionWithParams);
 		var deleteTd = document.createElement('td');
 		deleteTd.append(deleteLink);
@@ -132,19 +129,19 @@ function startFormsLiveUpdaters() {
 		publishLink.setAttribute('data-toggle', "modal");
 		publishLink.setAttribute('data-target', '#publishFormModal');
 		publishLink.innerHTML = 'Publish';
-		var publishFunction = function publishFunction(name, event) {
+		var publishFunction = function publishFunction(id, name, event) {
 			// set body of modal
 			var modal = $('#publishFormModal');
 			var body = modal.find('.modal-body');
 			body.html('Ready to publish <b>' + name + "</b>?");
 			var publishButton = modal.find('.publish-form-button');
-			var publishFormFunction = function publishFormFunction(name) {
-				firebaseHelper.publishForm(name);
+			var publishFormFunction = function publishFormFunction(id) {
+				firebaseHelper.publishForm(id);
 			};
-			publishFormFunction = publishFormFunction.bind(null, name);
+			publishFormFunction = publishFormFunction.bind(null, formData.id);
 			publishButton.click(publishFormFunction);
 		};
-		var publishFunctionWithParams = publishFunction.bind(null, formData.name);
+		var publishFunctionWithParams = publishFunction.bind(null, formData.id, formData.name);
 		publishLink.addEventListener('click', publishFunctionWithParams);
 		var publishTd = document.createElement('td');
 		publishTd.append(publishLink);
@@ -153,9 +150,9 @@ function startFormsLiveUpdaters() {
 		var formTable = $('.applicant-forms-table-body');
 		var tableRow = $(document.createElement('tr'));
 		tableRow.addClass('odd gradeX');
-		tableRow.addClass('form-table-row-' + DragAndDropFormUtils.getSafeName(formData.name));
-		tableRow.append("<td>" + name + "</td>");
-		tableRow.append("<td>" + lastEdited + "</td>");
+		tableRow.addClass('form-table-row-' + formData.id);
+		tableRow.append("<td>" + formData.name + "</td>");
+		tableRow.append("<td>" + formData.lastEdited + "</td>");
 		tableRow.append("<td>Not available</td>");
 		tableRow.append(editTd);
 		tableRow.append(deleteTd);

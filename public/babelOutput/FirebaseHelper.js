@@ -27,14 +27,21 @@ var FirebaseHelper = function () {
       this.auth.onAuthStateChanged(onAuthStateChanged);
     }
   }, {
+    key: 'generateFormID',
+    value: function generateFormID(uid) {
+      return uid + '' + Date.now();
+    }
+  }, {
     key: 'saveForm',
-    value: function saveForm(name, formData) {
-      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + DragAndDropFormUtils.getSafeName(name)).set(formData);
+    value: function saveForm(formData) {
+      var id = this.generateFormID(this.auth.currentUser.uid);
+      formData.id = id;
+      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + id).set(formData);
     }
   }, {
     key: 'removeForm',
-    value: function removeForm(name) {
-      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + DragAndDropFormUtils.getSafeName(name)).remove();
+    value: function removeForm(id) {
+      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + id).remove();
     }
   }, {
     key: 'setOnFormAdded',
@@ -50,31 +57,30 @@ var FirebaseHelper = function () {
     }
   }, {
     key: 'getCurrentUserForm',
-    value: function getCurrentUserForm(name, callback) {
-      this.getUserForm(this.auth.currentUser.uid, name, callback);
+    value: function getCurrentUserForm(id, callback) {
+      this.getUserForm(this.auth.currentUser.uid, id, callback);
     }
   }, {
     key: 'publishForm',
-    value: function publishForm(name) {
+    value: function publishForm(id) {
       // generate URL to publish form at
-      var safeName = DragAndDropFormUtils.getSafeName(name);
-      var formURL = this.auth.currentUser.uid + '/' + safeName;
+      var formURL = this.auth.currentUser.uid + '/' + id;
 
       // set form status to published
-      var formRef = this.database.ref('/forms/' + this.auth.currentUser.uid + '/' + safeName);
+      var formRef = this.database.ref('/forms/' + formURL);
       formRef.update({ 'publishStatus': 'published', 'publishURL': formURL });
 
       // add form to list of publish forms
       var setPublicForm = function setPublicForm(snapshot) {
-        this.database.ref('public/' + this.auth.currentUser.uid + '/' + safeName).set(snapshot.val());
+        this.database.ref('public/' + formURL).set(snapshot.val());
       };
       setPublicForm = setPublicForm.bind(this);
       formRef.once('value').then(setPublicForm);
     }
   }, {
     key: 'getUserForm',
-    value: function getUserForm(userid, name, callback) {
-      var formRef = this.database.ref('/forms/' + userid + "/" + DragAndDropFormUtils.getSafeName(name));
+    value: function getUserForm(userid, id, callback) {
+      var formRef = this.database.ref('/forms/' + userid + "/" + id);
       formRef.once('value').then(function (snapshot) {
         callback(snapshot.val());
       });

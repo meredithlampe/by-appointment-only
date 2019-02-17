@@ -19,12 +19,18 @@ export default class FirebaseHelper {
   	this.auth.onAuthStateChanged(onAuthStateChanged);
   }
 
-  saveForm(name, formData) {
-	 return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + DragAndDropFormUtils.getSafeName(name)).set(formData);
+  generateFormID(uid) {
+    return uid + '' + Date.now();
   }
 
-  removeForm(name) {
-  	return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + DragAndDropFormUtils.getSafeName(name)).remove();
+  saveForm(formData) {
+    let id = this.generateFormID(this.auth.currentUser.uid);
+    formData.id = id;
+	   return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + id).set(formData);
+  }
+
+  removeForm(id) {
+  	return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + id).remove();
   }
 
   setOnFormAdded(onFormAdded, onFormRemoved) {
@@ -38,30 +44,29 @@ export default class FirebaseHelper {
     })
   }
 
-  getCurrentUserForm(name, callback) {
-    this.getUserForm(this.auth.currentUser.uid, name, callback);
+  getCurrentUserForm(id, callback) {
+    this.getUserForm(this.auth.currentUser.uid, id, callback);
   }
 
-  publishForm(name) {
+  publishForm(id) {
     // generate URL to publish form at
-    let safeName = DragAndDropFormUtils.getSafeName(name);
-    let formURL = this.auth.currentUser.uid + '/' + safeName;
+    let formURL = this.auth.currentUser.uid + '/' + id;
 
     // set form status to published
-    const formRef = this.database.ref('/forms/' + this.auth.currentUser.uid + '/' + safeName);
+    const formRef = this.database.ref('/forms/' + formURL);
     formRef.update({'publishStatus': 'published', 'publishURL': formURL});
 
     // add form to list of publish forms
     let setPublicForm = function(snapshot) {
-      this.database.ref('public/' + this.auth.currentUser.uid + '/' + safeName).set(snapshot.val());  
+      this.database.ref('public/' + formURL).set(snapshot.val());  
     };
     setPublicForm = setPublicForm.bind(this);
     formRef.once('value').then(setPublicForm);
     
   }
 
-  getUserForm(userid, name, callback) {
-    const formRef = this.database.ref('/forms/' + userid + "/" + DragAndDropFormUtils.getSafeName(name));
+  getUserForm(userid, id, callback) {
+    const formRef = this.database.ref('/forms/' + userid + "/" + id);
     formRef.once('value').then(function(snapshot) {
       callback(snapshot.val());
     }); 
