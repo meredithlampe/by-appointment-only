@@ -19,14 +19,14 @@ export default class FirebaseHelper {
   	this.auth.onAuthStateChanged(onAuthStateChanged);
   }
 
-  generateFormID(uid) {
-    return uid + '' + Date.now();
+  generateFormID() {
+    let test = this.auth.currentUser.uid + '' + Date.now();
+    console.log(test);
+    return test;
   }
 
   saveForm(formData) {
-    let id = this.generateFormID(this.auth.currentUser.uid);
-    formData.id = id;
-	   return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + id).set(formData);
+	   return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + formData.id).set(formData);
   }
 
   removeForm(id) {

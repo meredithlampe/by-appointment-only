@@ -21,7 +21,8 @@ export class DragAndDropForm extends React.Component {
   constructor(props) {
     super(props);
     this.firebaseHelper = props.firebaseHelper;
-    this.state = { 
+    this.databaseID = props.databaseID;
+    this.state = {
     	items: [],
     	name: '',
     	lastUnusedId: -1,
@@ -48,7 +49,7 @@ export class DragAndDropForm extends React.Component {
 
     // get items in form from databae
     if (!props.newForm) {
-	    this.firebaseHelper.getCurrentUserForm(props.formID, (formData) => {
+	    this.firebaseHelper.getCurrentUserForm(props.databaseID, (formData) => {
 	     	this.setState({
 	     		name: formData.name,
 	     		lastUnusedId: formData.lastUnusedId !== undefined ? formData.lastUnusedId : 0,
@@ -59,9 +60,12 @@ export class DragAndDropForm extends React.Component {
 	     		},
 	     	});
 	     });
+    } else {
+    	// is new form
+    	this.state.name = 'My New Form';
+    	this.state.lastUnusedId = 0;
     }
   }
-
 
  onDragEnd(result) {
     // dropped outside the list
@@ -247,6 +251,7 @@ export class DragAndDropForm extends React.Component {
 	saveForm() {
 		this.firebaseHelper.saveForm(
 			{
+				id: this.databaseID,
 				items: this.state.items,
 				name: this.state.name,
 				lastEdited: DragAndDropFormUtils.getTodaysDate(),

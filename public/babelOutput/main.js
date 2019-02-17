@@ -53,8 +53,8 @@ signOutButton.addEventListener('click', function () {
 // new form button
 var newFormButton = $('.create-form-button');
 newFormButton.click(function () {
-
 	var props = {
+		databaseID: firebaseHelper.generateFormID(),
 		formItems: [],
 		formName: 'My New Form',
 		lastUnusedId: 0,
@@ -88,7 +88,7 @@ function startFormsLiveUpdaters() {
 		editLink.innerHTML = 'Edit';
 		var editFunction = function editFunction(id, event) {
 			var props = {
-				formID: id,
+				databaseID: id,
 				lastUnusedId: 4,
 				firebaseHelper: firebaseHelper
 			};

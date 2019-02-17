@@ -107,7 +107,7 @@ var EditModal = function (_React$Component) {
           ),
           React.createElement(
             Button,
-            { onClick: function onClick() {
+            { 'data-dismiss': 'modal', onClick: function onClick() {
                 _this2.props.onSave(_this2.state.item);
               }, bsStyle: 'primary' },
             'Save changes'

@@ -41,6 +41,7 @@ export var DragAndDropForm = function (_React$Component) {
 		var _this = _possibleConstructorReturn(this, (DragAndDropForm.__proto__ || Object.getPrototypeOf(DragAndDropForm)).call(this, props));
 
 		_this.firebaseHelper = props.firebaseHelper;
+		_this.databaseID = props.databaseID;
 		_this.state = {
 			items: [],
 			name: '',
@@ -68,7 +69,7 @@ export var DragAndDropForm = function (_React$Component) {
 
 		// get items in form from databae
 		if (!props.newForm) {
-			_this.firebaseHelper.getCurrentUserForm(props.formID, function (formData) {
+			_this.firebaseHelper.getCurrentUserForm(props.databaseID, function (formData) {
 				_this.setState({
 					name: formData.name,
 					lastUnusedId: formData.lastUnusedId !== undefined ? formData.lastUnusedId : 0,
@@ -79,6 +80,10 @@ export var DragAndDropForm = function (_React$Component) {
 					}
 				});
 			});
+		} else {
+			// is new form
+			_this.state.name = 'My New Form';
+			_this.state.lastUnusedId = 0;
 		}
 		return _this;
 	}
@@ -283,6 +288,7 @@ export var DragAndDropForm = function (_React$Component) {
 		key: 'saveForm',
 		value: function saveForm() {
 			this.firebaseHelper.saveForm({
+				id: this.databaseID,
 				items: this.state.items,
 				name: this.state.name,
 				lastEdited: DragAndDropFormUtils.getTodaysDate(),

@@ -62,7 +62,7 @@ class EditModal extends React.Component {
               </div>
         <div className="modal-footer">
           <Button data-dismiss="modal" onClick={this.props.onClose}>Close</Button>
-          <Button onClick={() => {this.props.onSave(this.state.item)}} bsStyle="primary">Save changes</Button>
+          <Button data-dismiss="modal" onClick={() => {this.props.onSave(this.state.item)}} bsStyle="primary">Save changes</Button>
         </div>
       </div>
     );
