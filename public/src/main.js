@@ -136,7 +136,24 @@ function startFormsLiveUpdaters() {
 				body.html('Ready to publish <b>' + name + "</b>?");
 				let publishButton = modal.find('.publish-form-button');
 				let publishFormFunction = (id) => {
-					firebaseHelper.publishForm(id);
+					// clear publish modal content
+					let modal = $('#publishFormModal');
+					let body = modal.find('.modal-body');
+					body.empty();					
+
+					// set publish modal to loading
+					body.append('<div class="d-flex justify-content-center loader-container"><div class="loader"></div></div>');
+					firebaseHelper.publishForm(id, (formData) => {
+						// clear publish modal content
+						let modal = $('#publishFormModal');
+						let body = modal.find('.modal-body');
+						body.empty();
+
+						// set to done and show new URL
+						body.html(formData.name + " has been published!");
+						body.append('<a class="view-published-form" target="_blank" href="' + formData.publishURL + '">View Published Form</a>');
+
+					});
 				}
 				publishFormFunction = publishFormFunction.bind(null, formData.id);
 				publishButton.click(publishFormFunction);

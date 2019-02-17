@@ -62,19 +62,22 @@ var FirebaseHelper = function () {
     }
   }, {
     key: 'publishForm',
-    value: function publishForm(id) {
+    value: function publishForm(id, onFinish) {
+      var formPath = this.auth.currentUser.uid + '/' + id;
+
       // generate URL to publish form at
-      var formURL = this.auth.currentUser.uid + '/' + id;
+      var formURL = 'viewForm/viewForm.html?u=' + this.auth.currentUser.uid + "&name=" + id;
 
       // set form status to published
-      var formRef = this.database.ref('/forms/' + formURL);
+      var formRef = this.database.ref('/forms/' + formPath);
       formRef.update({ 'publishStatus': 'published', 'publishURL': formURL });
 
       // add form to list of publish forms
-      var setPublicForm = function setPublicForm(snapshot) {
-        this.database.ref('public/' + formURL).set(snapshot.val());
+      var setPublicForm = function setPublicForm(onFinish, snapshot) {
+        this.database.ref('public/' + formPath).set(snapshot.val());
+        onFinish(snapshot.val());
       };
-      setPublicForm = setPublicForm.bind(this);
+      setPublicForm = setPublicForm.bind(this, onFinish);
       formRef.once('value').then(setPublicForm);
     }
   }, {

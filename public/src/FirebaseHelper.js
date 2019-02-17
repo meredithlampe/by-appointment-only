@@ -48,19 +48,22 @@ export default class FirebaseHelper {
     this.getUserForm(this.auth.currentUser.uid, id, callback);
   }
 
-  publishForm(id) {
+  publishForm(id, onFinish) {
+    let formPath = this.auth.currentUser.uid + '/' + id;
+
     // generate URL to publish form at
-    let formURL = this.auth.currentUser.uid + '/' + id;
+    let formURL = 'viewForm/viewForm.html?u=' + this.auth.currentUser.uid + "&name=" + id;
 
     // set form status to published
-    const formRef = this.database.ref('/forms/' + formURL);
+    const formRef = this.database.ref('/forms/' + formPath);
     formRef.update({'publishStatus': 'published', 'publishURL': formURL});
 
     // add form to list of publish forms
-    let setPublicForm = function(snapshot) {
-      this.database.ref('public/' + formURL).set(snapshot.val());  
+    let setPublicForm = function(onFinish, snapshot) {
+      this.database.ref('public/' + formPath).set(snapshot.val());
+      onFinish(snapshot.val());  
     };
-    setPublicForm = setPublicForm.bind(this);
+    setPublicForm = setPublicForm.bind(this, onFinish);
     formRef.once('value').then(setPublicForm);
     
   }
