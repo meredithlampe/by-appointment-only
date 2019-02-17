@@ -81,85 +81,102 @@ let cancelNewForm = $('.create-form-cancel').click(function() {
 var currentUID;
 
 function startFormsLiveUpdaters() {
-	window.firebaseHelper.setOnFormAdded(
-		(formData) => {
-			// configure edit link
-			let editLink = document.createElement('a');
-			editLink.innerHTML = 'Edit';
-			let editFunction = (id, event) => {
-				let props = {
-					databaseID: id,
-					lastUnusedId: 4,
-					firebaseHelper: firebaseHelper,
-				};
-			   const formInputArea = document.querySelector('.create-form-column');
-				ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
-				$('.home').addClass('hidden');
-				$('.create-form-input-area').removeClass('hidden');
+	// get edit form link
+	let getEditFormLink = (formData) => {
+		let editLink = document.createElement('a');
+		editLink.innerHTML = 'Edit';
+		let editFunction = (id, event) => {
+			let props = {
+				databaseID: id,
+				lastUnusedId: 4,
+				firebaseHelper: firebaseHelper,
 			};
-			let editFunctionWithParams = editFunction.bind(null, formData.id);
-			editLink.addEventListener('click', editFunctionWithParams);
+		   const formInputArea = document.querySelector('.create-form-column');
+			ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
+			$('.home').addClass('hidden');
+			$('.create-form-input-area').removeClass('hidden');
+		};
+		let editFunctionWithParams = editFunction.bind(null, formData.id);
+		editLink.addEventListener('click', editFunctionWithParams);
+		return editLink;
+	};
+
+	// get publish form link
+	let getPublishFormLink =(formData) => {
+		let publishLink = document.createElement('a');
+		publishLink.setAttribute('data-toggle', "modal");
+		publishLink.setAttribute('data-target', '#publishFormModal');
+		publishLink.innerHTML = 'Publish';
+		let publishFunction = (id, name, event) => {
+			// set body of modal
+			let modal = $('#publishFormModal');
+			let body = modal.find('.modal-body');
+			body.html('Ready to publish <b>' + name + "</b>?");
+			let publishButton = modal.find('.publish-form-button');
+			let publishFormFunction = (id) => {
+				// clear publish modal content
+				let modal = $('#publishFormModal');
+				let body = modal.find('.modal-body');
+				body.empty();					
+
+				// set publish modal to loading
+				body.append('<div class="d-flex justify-content-center loader-container"><div class="loader"></div></div>');
+				firebaseHelper.publishForm(id, (formData) => {
+					// clear publish modal content
+					let modal = $('#publishFormModal');
+					let body = modal.find('.modal-body');
+					body.empty();
+
+					// set to done and show new URL
+					body.html(formData.name + " has been published!");
+					body.append('<a class="view-published-form" target="_blank" href="' + formData.publishURL + '">View Published Form</a>');
+
+				});
+			}
+			publishFormFunction = publishFormFunction.bind(null, formData.id);
+			publishButton.click(publishFormFunction);
+		};
+		let publishFunctionWithParams = publishFunction.bind(null, formData.id, formData.name);
+		publishLink.addEventListener('click', publishFunctionWithParams);
+		return publishLink;
+	};
+
+	// get delete form link
+	let getDeleteFormLink = (formData) => {
+		let deleteLink = document.createElement('a');
+		deleteLink.setAttribute('data-toggle', "modal");
+		deleteLink.setAttribute('data-target', '#deleteFormModal');
+		deleteLink.innerHTML = 'Delete';
+		let deleteFunction = (id, name, event) => {
+			// set body of modal
+			let modal = $('#deleteFormModal');
+			let body = modal.find('.modal-body');
+			body.html('Are you sure you want to delete <b>' + name + '</b>?');
+			let deleteButton = modal.find('.delete-form-button');
+			let removeFormFunction = (id) => {
+				firebaseHelper.removeForm(id);
+			};
+			removeFormFunction = removeFormFunction.bind(null, id);
+			deleteButton.click(removeFormFunction);
+		}
+		let deleteFunctionWithParams = deleteFunction.bind(null, formData.id, formData.name);
+		deleteLink.addEventListener('click', deleteFunctionWithParams);
+		return deleteLink;
+	};
+
+	let onFormAdded = (formData) => {
+			// configure edit link
+			let editLink = getEditFormLink(formData);
 			let editTd = document.createElement('td');
 			editTd.append(editLink);
 
 			// configure delete link
-			let deleteLink = document.createElement('a');
-			deleteLink.setAttribute('data-toggle', "modal");
-			deleteLink.setAttribute('data-target', '#deleteFormModal');
-			deleteLink.innerHTML = 'Delete';
-			let deleteFunction = (id, name, event) => {
-				// set body of modal
-				let modal = $('#deleteFormModal');
-				let body = modal.find('.modal-body');
-				body.html('Are you sure you want to delete <b>' + name + '</b>?');
-				let deleteButton = modal.find('.delete-form-button');
-				let removeFormFunction = (id) => {
-					firebaseHelper.removeForm(id);
-				};
-				removeFormFunction = removeFormFunction.bind(null, id);
-				deleteButton.click(removeFormFunction);
-			}
-			let deleteFunctionWithParams = deleteFunction.bind(null, formData.id, formData.name);
-			deleteLink.addEventListener('click', deleteFunctionWithParams);
+			let deleteLink = getDeleteFormLink(formData);
 			let deleteTd = document.createElement('td');
 			deleteTd.append(deleteLink);
 
 			//configure publish link
-			let publishLink = document.createElement('a');
-			publishLink.setAttribute('data-toggle', "modal");
-			publishLink.setAttribute('data-target', '#publishFormModal');
-			publishLink.innerHTML = 'Publish';
-			let publishFunction = (id, name, event) => {
-				// set body of modal
-				let modal = $('#publishFormModal');
-				let body = modal.find('.modal-body');
-				body.html('Ready to publish <b>' + name + "</b>?");
-				let publishButton = modal.find('.publish-form-button');
-				let publishFormFunction = (id) => {
-					// clear publish modal content
-					let modal = $('#publishFormModal');
-					let body = modal.find('.modal-body');
-					body.empty();					
-
-					// set publish modal to loading
-					body.append('<div class="d-flex justify-content-center loader-container"><div class="loader"></div></div>');
-					firebaseHelper.publishForm(id, (formData) => {
-						// clear publish modal content
-						let modal = $('#publishFormModal');
-						let body = modal.find('.modal-body');
-						body.empty();
-
-						// set to done and show new URL
-						body.html(formData.name + " has been published!");
-						body.append('<a class="view-published-form" target="_blank" href="' + formData.publishURL + '">View Published Form</a>');
-
-					});
-				}
-				publishFormFunction = publishFormFunction.bind(null, formData.id);
-				publishButton.click(publishFormFunction);
-			};
-			let publishFunctionWithParams = publishFunction.bind(null, formData.id, formData.name);
-			publishLink.addEventListener('click', publishFunctionWithParams);
+			let publishLink = getPublishFormLink(formData);
 			let publishTd = document.createElement('td');
 			publishTd.append(publishLink);
 
@@ -175,7 +192,10 @@ function startFormsLiveUpdaters() {
 			tableRow.append(deleteTd);
 			tableRow.append(publishTd);
 			formTable.append(tableRow);
-		},
+		};
+	onFormAdded = onFormAdded.bind(this);
+	window.firebaseHelper.setOnFormAdded(
+		onFormAdded,
 		(formData) => {
 			let tr = $('.form-table-row-' + DragAndDropFormUtils.getSafeName(formData.name));
 			if (tr) {

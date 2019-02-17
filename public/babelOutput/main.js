@@ -82,8 +82,8 @@ var cancelNewForm = $('.create-form-cancel').click(function () {
 var currentUID;
 
 function startFormsLiveUpdaters() {
-	window.firebaseHelper.setOnFormAdded(function (formData) {
-		// configure edit link
+	// get edit form link
+	var getEditFormLink = function getEditFormLink(formData) {
 		var editLink = document.createElement('a');
 		editLink.innerHTML = 'Edit';
 		var editFunction = function editFunction(id, event) {
@@ -99,32 +99,11 @@ function startFormsLiveUpdaters() {
 		};
 		var editFunctionWithParams = editFunction.bind(null, formData.id);
 		editLink.addEventListener('click', editFunctionWithParams);
-		var editTd = document.createElement('td');
-		editTd.append(editLink);
+		return editLink;
+	};
 
-		// configure delete link
-		var deleteLink = document.createElement('a');
-		deleteLink.setAttribute('data-toggle', "modal");
-		deleteLink.setAttribute('data-target', '#deleteFormModal');
-		deleteLink.innerHTML = 'Delete';
-		var deleteFunction = function deleteFunction(id, name, event) {
-			// set body of modal
-			var modal = $('#deleteFormModal');
-			var body = modal.find('.modal-body');
-			body.html('Are you sure you want to delete <b>' + name + '</b>?');
-			var deleteButton = modal.find('.delete-form-button');
-			var removeFormFunction = function removeFormFunction(id) {
-				firebaseHelper.removeForm(id);
-			};
-			removeFormFunction = removeFormFunction.bind(null, id);
-			deleteButton.click(removeFormFunction);
-		};
-		var deleteFunctionWithParams = deleteFunction.bind(null, formData.id, formData.name);
-		deleteLink.addEventListener('click', deleteFunctionWithParams);
-		var deleteTd = document.createElement('td');
-		deleteTd.append(deleteLink);
-
-		//configure publish link
+	// get publish form link
+	var getPublishFormLink = function getPublishFormLink(formData) {
 		var publishLink = document.createElement('a');
 		publishLink.setAttribute('data-toggle', "modal");
 		publishLink.setAttribute('data-target', '#publishFormModal');
@@ -159,6 +138,45 @@ function startFormsLiveUpdaters() {
 		};
 		var publishFunctionWithParams = publishFunction.bind(null, formData.id, formData.name);
 		publishLink.addEventListener('click', publishFunctionWithParams);
+		return publishLink;
+	};
+
+	// get delete form link
+	var getDeleteFormLink = function getDeleteFormLink(formData) {
+		var deleteLink = document.createElement('a');
+		deleteLink.setAttribute('data-toggle', "modal");
+		deleteLink.setAttribute('data-target', '#deleteFormModal');
+		deleteLink.innerHTML = 'Delete';
+		var deleteFunction = function deleteFunction(id, name, event) {
+			// set body of modal
+			var modal = $('#deleteFormModal');
+			var body = modal.find('.modal-body');
+			body.html('Are you sure you want to delete <b>' + name + '</b>?');
+			var deleteButton = modal.find('.delete-form-button');
+			var removeFormFunction = function removeFormFunction(id) {
+				firebaseHelper.removeForm(id);
+			};
+			removeFormFunction = removeFormFunction.bind(null, id);
+			deleteButton.click(removeFormFunction);
+		};
+		var deleteFunctionWithParams = deleteFunction.bind(null, formData.id, formData.name);
+		deleteLink.addEventListener('click', deleteFunctionWithParams);
+		return deleteLink;
+	};
+
+	var onFormAdded = function onFormAdded(formData) {
+		// configure edit link
+		var editLink = getEditFormLink(formData);
+		var editTd = document.createElement('td');
+		editTd.append(editLink);
+
+		// configure delete link
+		var deleteLink = getDeleteFormLink(formData);
+		var deleteTd = document.createElement('td');
+		deleteTd.append(deleteLink);
+
+		//configure publish link
+		var publishLink = getPublishFormLink(formData);
 		var publishTd = document.createElement('td');
 		publishTd.append(publishLink);
 
@@ -174,7 +192,9 @@ function startFormsLiveUpdaters() {
 		tableRow.append(deleteTd);
 		tableRow.append(publishTd);
 		formTable.append(tableRow);
-	}, function (formData) {
+	};
+	onFormAdded = onFormAdded.bind(this);
+	window.firebaseHelper.setOnFormAdded(onFormAdded, function (formData) {
 		var tr = $('.form-table-row-' + DragAndDropFormUtils.getSafeName(formData.name));
 		if (tr) {
 			tr.remove();
