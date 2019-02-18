@@ -1,0 +1,25 @@
+[debug] [2019-02-18T19:09:26.570Z] ----------------------------------------------------------------------
+[debug] [2019-02-18T19:09:26.572Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-18T19:09:26.573Z] CLI Version:   6.3.1
+[debug] [2019-02-18T19:09:26.573Z] Platform:      darwin
+[debug] [2019-02-18T19:09:26.573Z] Node Version:  v10.15.1
+[debug] [2019-02-18T19:09:26.574Z] Time:          Mon Feb 18 2019 14:09:26 GMT-0500 (Eastern Standard Time)
+[debug] [2019-02-18T19:09:26.574Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-18T19:09:26.586Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-18T19:09:26.586Z] > authorizing via signed-in user
+[debug] [2019-02-18T19:09:26.586Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-18T19:09:26.588Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-18T19:09:26.883Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-18T19:09:26.886Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-18T19:09:27.096Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/zaven/Meredith/by-appointment-only'...
+[info] 
+[debug] [2019-02-18T19:09:27.101Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-18T19:09:27.344Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000

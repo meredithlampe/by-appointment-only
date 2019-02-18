@@ -19,6 +19,10 @@ export default class FirebaseHelper {
   	this.auth.onAuthStateChanged(onAuthStateChanged);
   }
 
+  isLoggedIn() {
+    
+  }
+
   generateFormID() {
     let test = this.auth.currentUser.uid + '' + Date.now();
     console.log(test);

@@ -40,10 +40,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 });
 
-// hide all components initially
-cleanupUI();
-transitionToScreen('home-container');
-
 // authentication - sign out button
 var signOutButton = document.getElementById('sign-out-button');
 signOutButton.addEventListener('click', function () {
@@ -249,37 +245,24 @@ function onAuthStateChanged(user) {
 
 	if (user) {
 		currentUID = user.uid;
-
-		// uesr has just signed in. redirect to home page.
-		cleanupUI();
-		transitionToScreen('home-container');
+		console.log("changing auth state");
 
 		// listen for create/delete to user's forms
 		startFormsLiveUpdaters();
 		showUserInfo(user);
 	} else {
-		// Set currentUID to null.
-		currentUID = null;
-		console.log("setting userid to null");
-		cleanupUI();
-		transitionToScreen('sign-in');
-		// Display the splash page where you can sign-in.
-		// splashPage.style.display = '';
+		showLoggedOut();
 	}
+}
+
+function showLoggedOut() {
+	currentUID = null;
+	window.location.href = "login.html";
 }
 
 function showUserInfo(user) {
 	$('.username').html(user.displayName);
 	$('.user-profile-photo').attr('src', user.photoURL);
-}
-
-function cleanupUI() {
-	$('.sign-in').hide();
-	$('.home-container').hide();
-
-	// hide sections of tabs that shouldn't be shown
-	$('.applicant-forms-create-form').hide();
-	$('.applicant-forms-preview-form').hide();
 }
 
 function hide(jQueryElement) {
@@ -288,12 +271,4 @@ function hide(jQueryElement) {
 
 function show(jQueryElement) {
 	jQueryElement.removeClass('hidden');
-}
-
-function transitionToScreen(className) {
-	$('.' + className).show();
-}
-
-function transitionToTab(tabName) {
-	show($('.' + tabName));
 }

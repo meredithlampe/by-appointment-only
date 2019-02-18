@@ -27,21 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
 	window.firebase = firebase;
 
 	let firebaseHelper = new FirebaseHelper(firebase);
-		window.firebaseHelper = firebaseHelper;
+	window.firebaseHelper = firebaseHelper;
 	firebaseHelper.setOnAuthStateChanged(onAuthStateChanged);
 
-    try {
-      let app = firebase.app();
-      let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
+  try {
+    let app = firebase.app();
+    let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
 
-    } catch (e) {
-      console.error(e);
-    }
-  });
+  } catch (e) {
+    console.error(e);
+  }
 
-// hide all components initially
-cleanupUI();
-transitionToScreen('home-container');
+});
 
 // authentication - sign out button
 let signOutButton = document.getElementById('sign-out-button');
@@ -254,23 +251,19 @@ function onAuthStateChanged(user) {
 
 	if (user) {
 		currentUID = user.uid;
+		console.log("changing auth state");
 
-		// uesr has just signed in. redirect to home page.
-		cleanupUI();
-		transitionToScreen('home-container');
-
-	    // listen for create/delete to user's forms
-	    startFormsLiveUpdaters();
-	    showUserInfo(user);
+    // listen for create/delete to user's forms
+    startFormsLiveUpdaters();
+    showUserInfo(user);
 	} else {
-		// Set currentUID to null.
-		currentUID = null;
-		console.log("setting userid to null");
-		cleanupUI();
-		transitionToScreen('sign-in');
-		// Display the splash page where you can sign-in.
-		// splashPage.style.display = '';
+		showLoggedOut();
 	}
+}
+
+function showLoggedOut() {
+		currentUID = null;
+		window.location.href = "login.html";
 }
 
 function showUserInfo(user) {
@@ -278,27 +271,10 @@ function showUserInfo(user) {
 	$('.user-profile-photo').attr('src', user.photoURL);
 }
 
-function cleanupUI() {
-	$('.sign-in').hide();
-	$('.home-container').hide();
-
-	// hide sections of tabs that shouldn't be shown
-	$('.applicant-forms-create-form').hide();
-	$('.applicant-forms-preview-form').hide();
+function hide(jQueryElement) {
+  jQueryElement.addClass('hidden');
 }
 
-  function hide(jQueryElement) {
-    jQueryElement.addClass('hidden');
-  }
-
-  function show(jQueryElement) {
-    jQueryElement.removeClass('hidden');
-  }
-
-		function transitionToScreen(className) {
-			$('.' + className).show();
-		}
-
-  function transitionToTab(tabName) {
-    show($('.'+tabName));
-  }
+function show(jQueryElement) {
+  jQueryElement.removeClass('hidden');
+}

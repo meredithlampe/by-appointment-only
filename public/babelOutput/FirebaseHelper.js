@@ -27,6 +27,9 @@ var FirebaseHelper = function () {
       this.auth.onAuthStateChanged(onAuthStateChanged);
     }
   }, {
+    key: 'isLoggedIn',
+    value: function isLoggedIn() {}
+  }, {
     key: 'generateFormID',
     value: function generateFormID() {
       var test = this.auth.currentUser.uid + '' + Date.now();
