@@ -12,86 +12,81 @@ import DragAndDropFormUtils from '../../babelOutput/DragAndDropFormUtils.js';
 
 // drag and drop form creation for client forms
 export var ViewForm = function (_React$Component) {
-	_inherits(ViewForm, _React$Component);
+  _inherits(ViewForm, _React$Component);
 
-	function ViewForm(props) {
-		_classCallCheck(this, ViewForm);
+  function ViewForm(props) {
+    _classCallCheck(this, ViewForm);
 
-		var _this = _possibleConstructorReturn(this, (ViewForm.__proto__ || Object.getPrototypeOf(ViewForm)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (ViewForm.__proto__ || Object.getPrototypeOf(ViewForm)).call(this, props));
 
-		_this.firebaseHelper = props.firebaseHelper;
-		_this.state = {
-			items: []
-		};
+    _this.firebaseHelper = props.firebaseHelper;
+    _this.state = {
+      items: []
+    };
 
-		// get items in form from databae
-		_this.firebaseHelper.getItemsForUserForm(props.formHostId, props.name, function (items) {
-			_this.setState({
-				items: items
-			});
-		});
-		return _this;
-	}
+    // get items in form from databae
+    _this.firebaseHelper.getUserForm(props.formHostId, props.id, function (formData) {
+      _this.setState({
+        items: formData.items
+      });
+    });
+    return _this;
+  }
 
-	_createClass(ViewForm, [{
-		key: 'onSubmit',
-		value: function onSubmit() {}
-	}, {
-		key: 'render',
-		value: function render() {
+  _createClass(ViewForm, [{
+    key: 'onSubmit',
+    value: function onSubmit() {}
+  }, {
+    key: 'render',
+    value: function render() {
+      return React.createElement(
+        'div',
+        { className: 'panel panel-default' },
+        React.createElement(
+          'div',
+          {
+            className: 'panel-body new-form-panel-body' },
+          this.state.items.map(function (item, index) {
+            var input = null;
+            var id = "input" + index;
+            input = DragAndDropFormUtils.getInputElementForType(item, id, false);
+            return React.createElement(
+              'div',
+              { className: 'form-group' },
+              React.createElement(
+                'div',
+                { style: { display: "flex", flexDirection: "row" } },
+                React.createElement(
+                  'div',
+                  null,
+                  React.createElement(
+                    'label',
+                    { className: 'form-component-label', htmlFor: id },
+                    item.label
+                  )
+                )
+              ),
+              input,
+              React.createElement(
+                'div',
+                { 'class': 'invalid-feedback' },
+                item.label + " is required."
+              )
+            );
+          }),
+          React.createElement(
+            'div',
+            { className: 'bottom-action-bar', style: { display: "flex", justifyContent: "flex-end" } },
+            React.createElement(
+              'button',
+              { className: 'btn btn-primary btn-md', type: 'submit' },
+              'Submit'
+            )
+          )
+        )
+      );
+    }
+  }]);
 
-			return React.createElement(
-				'div',
-				{ className: 'panel panel-default', style: { padding: 10 } },
-				React.createElement(
-					'div',
-					{
-						className: 'panel-body new-form-panel-body',
-						style: {
-							width: 500,
-							background: 'white'
-						} },
-					this.state.items.map(function (item, index) {
-						var input = null;
-						var id = "input" + index;
-						input = DragAndDropFormUtils.getInputElementForType(item, id, false);
-						return React.createElement(
-							'div',
-							{ className: 'form-group' },
-							React.createElement(
-								'div',
-								{ style: { display: "flex", flexDirection: "row" } },
-								React.createElement(
-									'div',
-									null,
-									React.createElement(
-										'label',
-										{ className: 'form-component-label', htmlFor: id },
-										item.label
-									)
-								)
-							),
-							input,
-							React.createElement(
-								'div',
-								{ 'class': 'invalid-feedback' },
-								item.label + " is required."
-							)
-						);
-					}),
-					React.createElement(
-						'div',
-						{ className: 'bottom-action-bar', style: { display: "flex", justifyContent: "flex-end" } },
-						React.createElement(
-							'button',
-							{ className: 'btn btn-primary btn-md', type: 'submit' },
-							'Submit'
-						)
-					)
-				)
-			);
-		}
-	}]);
-
-	return ViewForm;
+  return ViewForm;
 }(React.Component);

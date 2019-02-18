@@ -138,8 +138,39 @@ function startFormsLiveUpdaters() {
 		};
 		var publishFunctionWithParams = publishFunction.bind(null, formData.id, formData.name);
 		publishLink.addEventListener('click', publishFunctionWithParams);
+
 		return publishLink;
 	};
+
+	var getViewFormLink = function getViewFormLink(formData) {
+		var viewLink = document.createElement('a');
+		viewLink.setAttribute('data-toggle', "modal");
+		viewLink.setAttribute('data-target', '#viewFormModal');
+		viewLink.innerHTML = 'View';
+		var viewFunction = function viewFunction(id, name, publishURL, event) {
+			// set body of modal
+			var modal = $('#viewFormModal');
+			var body = modal.find('.modal-body');
+			body.html('View <b>' + name + '</b>? This will take you to view your form at the public URL.');
+			var viewButton = modal.find('.view-form-button');
+			var viewFormFunction = function viewFormFunction(id, publishURL) {
+				// clear out this modal
+				var modal = $('#viewFormModal');
+				var body = modal.find('.modal-body');
+				body.empty();
+
+				// redirect to view form page
+				window.open(publishURL, '_blank');
+			};
+			viewFormFunction = viewFormFunction.bind(null, id, publishURL);
+			viewButton.click(viewFormFunction);
+		};
+		viewFunction = viewFunction.bind(null, formData.id, formData.name, formData.publishURL);
+		viewLink.addEventListener('click', viewFunction);
+		return viewLink;
+	};
+
+	var getUnpublishFormLink = function getUnpublishFormLink(formData) {};
 
 	// get delete form link
 	var getDeleteFormLink = function getDeleteFormLink(formData) {
@@ -175,10 +206,15 @@ function startFormsLiveUpdaters() {
 		var deleteTd = document.createElement('td');
 		deleteTd.append(deleteLink);
 
-		//configure publish link
-		var publishLink = getPublishFormLink(formData);
+		//configure publish or view link
+		var link = null;
+		if (formData.publishStatus && formData.publishStatus === 'published') {
+			link = getViewFormLink(formData);
+		} else {
+			link = getPublishFormLink(formData);
+		}
 		var publishTd = document.createElement('td');
-		publishTd.append(publishLink);
+		publishTd.append(link);
 
 		// append table data elements to row
 		var formTable = $('.applicant-forms-table-body');
@@ -195,7 +231,7 @@ function startFormsLiveUpdaters() {
 	};
 	onFormAdded = onFormAdded.bind(this);
 	window.firebaseHelper.setOnFormAdded(onFormAdded, function (formData) {
-		var tr = $('.form-table-row-' + DragAndDropFormUtils.getSafeName(formData.name));
+		var tr = $('.form-table-row-' + formData.id);
 		if (tr) {
 			tr.remove();
 		}

@@ -50,16 +50,15 @@ document.addEventListener('DOMContentLoaded', function () {
   var formName = getUrlVars()['name'];
 
   // try to fetch form from firebase
-  firebaseHelper.getFormForUser(user, formName, function (formData) {
-
-    console.log(formData);
+  firebaseHelper.getUserForm(user, formName, function (formData) {
 
     // header
-    $('.form-header h2').html(formData.name);
+    $('.form-header h4').html(formData.name);
 
     // body
     var props = {
       firebaseHelper: firebaseHelper,
+      id: formData.id,
       name: formData.name,
       formHostId: user
     };

@@ -12,9 +12,9 @@ export class ViewForm extends React.Component {
     	};
 
     // get items in form from databae
-     this.firebaseHelper.getItemsForUserForm(props.formHostId, props.name, (items) => {
+     this.firebaseHelper.getUserForm(props.formHostId, props.id, (formData) => {
      	this.setState({
-     		items: items,
+     		items: formData.items,
      	});
      }); 
   }
@@ -24,23 +24,15 @@ export class ViewForm extends React.Component {
   }
 
   render() {
-
-    return (
-          	<div className="panel panel-default" style={{padding: 10}}>
-	            <div
-	            className="panel-body new-form-panel-body"
-	              style={
-	              	{
-					  width: 500,
-					  background: 'white',
-					}
-					}>
-	              {this.state.items.map((item, index) => {
-	              	let input = null;
-	              	let id = "input" + index;
-	              	input = DragAndDropFormUtils.getInputElementForType(item, id, false);
-	              	return(
-	   					<div className="form-group">
+    return (<div className="panel panel-default">
+            <div
+            className="panel-body new-form-panel-body">
+              {this.state.items.map((item, index) => {
+              	let input = null;
+              	let id = "input" + index;
+              	input = DragAndDropFormUtils.getInputElementForType(item, id, false);
+              	return(
+   					<div className="form-group">
 	                    <div style={{display: "flex", flexDirection: "row"}}>
 		                    <div>
 							     <label className="form-component-label" htmlFor={id}>{item.label}</label>
@@ -48,16 +40,15 @@ export class ViewForm extends React.Component {
 					     </div>
 					     {input}
 					     <div class="invalid-feedback">{item.label + " is required."}</div>
-	                   </div>
-		                  )}		                
-		             )
-		         }
-		       <div className="bottom-action-bar" style={{display: "flex", justifyContent: "flex-end"}}>
-                  <button className="btn btn-primary btn-md" type="submit">Submit</button>
-              </div>
-		         </div>
-		         </div>
-		         );
-
+                   </div>
+	                  )}		                
+	             )
+	         }
+	       <div className="bottom-action-bar" style={{display: "flex", justifyContent: "flex-end"}}>
+              <button className="btn btn-primary btn-md" type="submit">Submit</button>
+          </div>	
+     	</div>
+     </div>
+	);
   }
 }

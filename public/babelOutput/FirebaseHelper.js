@@ -49,7 +49,6 @@ var FirebaseHelper = function () {
       var formsRef = this.database.ref('/forms/' + this.auth.currentUser.uid);
       this.firebaseRefs.push(formsRef);
       formsRef.on('child_added', function (snapshot) {
-        debugger;
         onFormAdded(snapshot.val());
       });
       formsRef.on('child_removed', function (snapshot) {

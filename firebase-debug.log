@@ -1,25 +1,29 @@
-[debug] [2019-02-16T22:42:37.204Z] ----------------------------------------------------------------------
-[debug] [2019-02-16T22:42:37.206Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
-[debug] [2019-02-16T22:42:37.206Z] CLI Version:   6.3.1
-[debug] [2019-02-16T22:42:37.207Z] Platform:      darwin
-[debug] [2019-02-16T22:42:37.207Z] Node Version:  v8.4.0
-[debug] [2019-02-16T22:42:37.207Z] Time:          Sat Feb 16 2019 17:42:37 GMT-0500 (EST)
-[debug] [2019-02-16T22:42:37.207Z] ----------------------------------------------------------------------
+[debug] [2019-02-17T23:40:42.067Z] ----------------------------------------------------------------------
+[debug] [2019-02-17T23:40:42.069Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-17T23:40:42.069Z] CLI Version:   6.3.1
+[debug] [2019-02-17T23:40:42.069Z] Platform:      darwin
+[debug] [2019-02-17T23:40:42.069Z] Node Version:  v8.4.0
+[debug] [2019-02-17T23:40:42.070Z] Time:          Sun Feb 17 2019 18:40:42 GMT-0500 (EST)
+[debug] [2019-02-17T23:40:42.070Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2019-02-16T22:42:37.219Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2019-02-16T22:42:37.220Z] > authorizing via signed-in user
-[debug] [2019-02-16T22:42:37.220Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
-[debug] [2019-02-16T22:42:37.223Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+[debug] [2019-02-17T23:40:42.085Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-17T23:40:42.085Z] > authorizing via signed-in user
+[debug] [2019-02-17T23:40:42.085Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-17T23:40:42.087Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-02-17T23:40:42.087Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-02-17T23:40:42.338Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-17T23:40:42.347Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
 
-[debug] [2019-02-16T22:42:37.565Z] <<< HTTP RESPONSE 200
-[debug] [2019-02-16T22:42:37.567Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+[debug] [2019-02-17T23:40:42.630Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-17T23:40:42.631Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
  
-[debug] [2019-02-16T22:42:37.799Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-17T23:40:42.869Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
 [info] 
-[debug] [2019-02-16T22:42:37.802Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+[debug] [2019-02-17T23:40:42.872Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
  
-[debug] [2019-02-16T22:42:38.225Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-17T23:40:43.278Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000

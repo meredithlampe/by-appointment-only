@@ -130,7 +130,6 @@ function startFormsLiveUpdaters() {
 					// set to done and show new URL
 					body.html(formData.name + " has been published!");
 					body.append('<a class="view-published-form" target="_blank" href="' + formData.publishURL + '">View Published Form</a>');
-
 				});
 			}
 			publishFormFunction = publishFormFunction.bind(null, formData.id);
@@ -138,8 +137,41 @@ function startFormsLiveUpdaters() {
 		};
 		let publishFunctionWithParams = publishFunction.bind(null, formData.id, formData.name);
 		publishLink.addEventListener('click', publishFunctionWithParams);
+		
 		return publishLink;
 	};
+
+	let getViewFormLink = (formData) => {
+		let viewLink = document.createElement('a');
+		viewLink.setAttribute('data-toggle', "modal");
+		viewLink.setAttribute('data-target', '#viewFormModal');
+		viewLink.innerHTML = 'View';
+		let viewFunction = (id, name, publishURL, event) => {
+			// set body of modal
+			let modal = $('#viewFormModal');
+			let body = modal.find('.modal-body');
+			body.html('View <b>' + name + '</b>? This will take you to view your form at the public URL.');
+			let viewButton = modal.find('.view-form-button');
+			let viewFormFunction = (id, publishURL) => {
+				// clear out this modal
+				let modal = $('#viewFormModal');
+				let body = modal.find('.modal-body');
+				body.empty();
+
+				// redirect to view form page
+				window.open(publishURL, '_blank');
+			}
+			viewFormFunction = viewFormFunction.bind(null, id, publishURL);
+			viewButton.click(viewFormFunction);
+		}
+		viewFunction = viewFunction.bind(null, formData.id, formData.name, formData.publishURL);
+		viewLink.addEventListener('click', viewFunction);
+		return viewLink;
+	}
+
+	let getUnpublishFormLink = (formData) => {
+		
+	}
 
 	// get delete form link
 	let getDeleteFormLink = (formData) => {
@@ -165,39 +197,44 @@ function startFormsLiveUpdaters() {
 	};
 
 	let onFormAdded = (formData) => {
-			// configure edit link
-			let editLink = getEditFormLink(formData);
-			let editTd = document.createElement('td');
-			editTd.append(editLink);
+		// configure edit link
+		let editLink = getEditFormLink(formData);
+		let editTd = document.createElement('td');
+		editTd.append(editLink);
 
-			// configure delete link
-			let deleteLink = getDeleteFormLink(formData);
-			let deleteTd = document.createElement('td');
-			deleteTd.append(deleteLink);
+		// configure delete link
+		let deleteLink = getDeleteFormLink(formData);
+		let deleteTd = document.createElement('td');
+		deleteTd.append(deleteLink);
 
-			//configure publish link
-			let publishLink = getPublishFormLink(formData);
-			let publishTd = document.createElement('td');
-			publishTd.append(publishLink);
+		//configure publish or view link
+		let link = null;
+		if (formData.publishStatus && formData.publishStatus === 'published') {
+			link = getViewFormLink(formData);
+		} else {
+			link = getPublishFormLink(formData);				
+		}
+		let publishTd = document.createElement('td');
+		publishTd.append(link);
 
-			// append table data elements to row
-			let formTable = $('.applicant-forms-table-body');
-			let tableRow = $(document.createElement('tr'));
-			tableRow.addClass('odd gradeX');
-			tableRow.addClass('form-table-row-' + formData.id);
-			tableRow.append("<td>" + formData.name + "</td>");
-			tableRow.append("<td>" + formData.lastEdited + "</td>");
-			tableRow.append("<td>Not available</td>");
-			tableRow.append(editTd);
-			tableRow.append(deleteTd);
-			tableRow.append(publishTd);
-			formTable.append(tableRow);
-		};
+		// append table data elements to row
+		let formTable = $('.applicant-forms-table-body');
+		let tableRow = $(document.createElement('tr'));
+		tableRow.addClass('odd gradeX');
+		tableRow.addClass('form-table-row-' + formData.id);
+		tableRow.append("<td>" + formData.name + "</td>");
+		tableRow.append("<td>" + formData.lastEdited + "</td>");
+		tableRow.append("<td>Not available</td>");
+		tableRow.append(editTd);
+		tableRow.append(deleteTd);
+		tableRow.append(publishTd);
+		formTable.append(tableRow);
+	};
 	onFormAdded = onFormAdded.bind(this);
 	window.firebaseHelper.setOnFormAdded(
 		onFormAdded,
 		(formData) => {
-			let tr = $('.form-table-row-' + DragAndDropFormUtils.getSafeName(formData.name));
+			let tr = $('.form-table-row-' + formData.id);
 			if (tr) {
 				tr.remove();
 			}

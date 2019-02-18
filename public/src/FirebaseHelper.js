@@ -37,7 +37,6 @@ export default class FirebaseHelper {
   	const formsRef = this.database.ref('/forms/' + this.auth.currentUser.uid);
   	this.firebaseRefs.push(formsRef);
   	formsRef.on('child_added', (snapshot) => {
-      debugger;
   		onFormAdded(snapshot.val());
     });
     formsRef.on('child_removed', (snapshot) => {
