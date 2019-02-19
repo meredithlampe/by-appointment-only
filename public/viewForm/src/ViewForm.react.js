@@ -12,7 +12,7 @@ export class ViewForm extends React.Component {
     	};
 
     // get items in form from databae
-     this.firebaseHelper.getUserForm(props.formHostId, props.id, (formData) => {
+     this.firebaseHelper.getPublicUserForm(props.formHostId, props.id, (formData) => {
      	this.setState({
      		items: formData.items,
      	});
@@ -39,7 +39,7 @@ export class ViewForm extends React.Component {
 						    </div>
 					     </div>
 					     {input}
-					     <div class="invalid-feedback">{item.label + " is required."}</div>
+					     <div className="invalid-feedback">{"This field is required."}</div>
                    </div>
 	                  )}		                
 	             )

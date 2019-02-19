@@ -78,4 +78,11 @@ export default class FirebaseHelper {
       callback(snapshot.val());
     }); 
   }
+
+  getPublicUserForm(userid, id, callback) {
+    const formRef = this.database.ref('/public/' + userid + "/" + id);
+    formRef.once('value').then(function(snapshot) {
+      callback(snapshot.val());
+    });     
+  }
 }

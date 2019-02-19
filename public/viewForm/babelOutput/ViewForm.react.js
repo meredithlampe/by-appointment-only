@@ -25,7 +25,7 @@ export var ViewForm = function (_React$Component) {
     };
 
     // get items in form from databae
-    _this.firebaseHelper.getUserForm(props.formHostId, props.id, function (formData) {
+    _this.firebaseHelper.getPublicUserForm(props.formHostId, props.id, function (formData) {
       _this.setState({
         items: formData.items
       });
@@ -69,8 +69,8 @@ export var ViewForm = function (_React$Component) {
               input,
               React.createElement(
                 'div',
-                { 'class': 'invalid-feedback' },
-                item.label + " is required."
+                { className: 'invalid-feedback' },
+                "This field is required."
               )
             );
           }),

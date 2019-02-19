@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var formName = getUrlVars()['name'];
 
   // try to fetch form from firebase
-  firebaseHelper.getUserForm(user, formName, function (formData) {
+  firebaseHelper.getPublicUserForm(user, formName, function (formData) {
 
     // header
     $('.form-header h4').html(formData.name);

@@ -27,3 +27,132 @@
 [debug] [2019-02-17T23:40:43.278Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-19T00:08:23.613Z] ----------------------------------------------------------------------
+[debug] [2019-02-19T00:08:23.615Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-19T00:08:23.616Z] CLI Version:   6.3.1
+[debug] [2019-02-19T00:08:23.616Z] Platform:      darwin
+[debug] [2019-02-19T00:08:23.616Z] Node Version:  v8.4.0
+[debug] [2019-02-19T00:08:23.616Z] Time:          Mon Feb 18 2019 19:08:23 GMT-0500 (EST)
+[debug] [2019-02-19T00:08:23.616Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-19T00:08:23.632Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-19T00:08:23.632Z] > authorizing via signed-in user
+[debug] [2019-02-19T00:08:23.632Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-19T00:08:23.633Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-02-19T00:08:23.634Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-02-19T00:08:23.951Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-19T00:08:23.965Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-19T00:08:24.459Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-19T00:08:24.460Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-19T00:08:24.635Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-19T00:08:24.638Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-19T00:08:25.120Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-19T00:15:43.007Z] Error: connect ETIMEDOUT 172.217.10.99:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T00:15:43.009Z] Error: connect ETIMEDOUT 172.217.10.99:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T00:15:43.010Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T00:15:43.011Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T00:15:43.093Z] Error: connect ETIMEDOUT 172.217.10.99:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T00:15:43.093Z] Error: connect ETIMEDOUT 172.217.10.99:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T00:15:43.095Z] Error: connect ETIMEDOUT 172.217.10.99:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T00:15:43.096Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T00:15:43.097Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T00:15:43.097Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T00:16:31.174Z] ----------------------------------------------------------------------
+[debug] [2019-02-19T00:16:31.177Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-19T00:16:31.177Z] CLI Version:   6.3.1
+[debug] [2019-02-19T00:16:31.177Z] Platform:      darwin
+[debug] [2019-02-19T00:16:31.177Z] Node Version:  v8.4.0
+[debug] [2019-02-19T00:16:31.178Z] Time:          Mon Feb 18 2019 19:16:31 GMT-0500 (EST)
+[debug] [2019-02-19T00:16:31.178Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-19T00:16:31.189Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-19T00:16:31.190Z] > authorizing via signed-in user
+[debug] [2019-02-19T00:16:31.190Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-19T00:16:31.191Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-19T00:16:31.501Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-19T00:16:31.502Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-19T00:16:31.763Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-19T00:16:31.765Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-19T00:16:32.143Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000

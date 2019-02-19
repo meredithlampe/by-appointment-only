@@ -91,6 +91,14 @@ var FirebaseHelper = function () {
         callback(snapshot.val());
       });
     }
+  }, {
+    key: 'getPublicUserForm',
+    value: function getPublicUserForm(userid, id, callback) {
+      var formRef = this.database.ref('/public/' + userid + "/" + id);
+      formRef.once('value').then(function (snapshot) {
+        callback(snapshot.val());
+      });
+    }
   }]);
 
   return FirebaseHelper;
