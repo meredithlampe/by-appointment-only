@@ -48,14 +48,27 @@ var FirebaseHelper = function () {
     }
   }, {
     key: 'setOnFormAdded',
-    value: function setOnFormAdded(onFormAdded, onFormRemoved) {
+    value: function setOnFormAdded(onFormAdded) {
       var formsRef = this.database.ref('/forms/' + this.auth.currentUser.uid);
       this.firebaseRefs.push(formsRef);
       formsRef.on('child_added', function (snapshot) {
         onFormAdded(snapshot.val());
       });
+    }
+  }, {
+    key: 'setOnFormRemoved',
+    value: function setOnFormRemoved(onFormRemoved) {
+      var formsRef = this.database.ref('/forms/' + this.auth.currentUser.uid);
       formsRef.on('child_removed', function (snapshot) {
         onFormRemoved(snapshot.val());
+      });
+    }
+  }, {
+    key: 'setOnFormChanged',
+    value: function setOnFormChanged(onFormChanged) {
+      var formsRef = this.database.ref('/forms/' + this.auth.currentUser.uid);
+      formsRef.on('child_changed', function (snapshot) {
+        onFormChanged(snapshot.val());
       });
     }
   }, {

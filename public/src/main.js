@@ -286,6 +286,8 @@ function startFormsLiveUpdaters() {
 	onFormAdded = onFormAdded.bind(this);
 	window.firebaseHelper.setOnFormAdded(
 		onFormAdded,
+	);
+	window.firebaseHelper.setOnFormRemoved(
 		(formData) => {
 			let tr = $('.form-table-row-' + formData.id);
 			if (tr) {
@@ -293,7 +295,12 @@ function startFormsLiveUpdaters() {
 			}
 		},
 	);
-
+	window.firebaseHelper.setOnFormChanged(
+		(formData) => {
+			let tr = $('.form-table-row-' + formData.id);
+			tr.remove();
+			onFormAdded(formData);
+		});
 }
 
 /**

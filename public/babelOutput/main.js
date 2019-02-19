@@ -283,11 +283,17 @@ function startFormsLiveUpdaters() {
 		formTable.append(tableRow);
 	};
 	onFormAdded = onFormAdded.bind(this);
-	window.firebaseHelper.setOnFormAdded(onFormAdded, function (formData) {
+	window.firebaseHelper.setOnFormAdded(onFormAdded);
+	window.firebaseHelper.setOnFormRemoved(function (formData) {
 		var tr = $('.form-table-row-' + formData.id);
 		if (tr) {
 			tr.remove();
 		}
+	});
+	window.firebaseHelper.setOnFormChanged(function (formData) {
+		var tr = $('.form-table-row-' + formData.id);
+		tr.remove();
+		onFormAdded(formData);
 	});
 }
 

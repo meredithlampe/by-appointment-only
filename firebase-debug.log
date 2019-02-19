@@ -378,3 +378,102 @@
 [debug] [2019-02-19T06:34:35.375Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-19T06:47:55.029Z] Error: getaddrinfo ENOTFOUND www.gstatic.com www.gstatic.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:47:55.030Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:47:55.032Z] Error: getaddrinfo ENOTFOUND www.gstatic.com www.gstatic.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:47:55.033Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:47:55.055Z] Error: getaddrinfo ENOTFOUND www.gstatic.com www.gstatic.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:47:55.056Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:47:55.057Z] Error: getaddrinfo ENOTFOUND www.gstatic.com www.gstatic.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:47:55.059Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:48:42.379Z] ----------------------------------------------------------------------
+[debug] [2019-02-19T06:48:42.381Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-19T06:48:42.381Z] CLI Version:   6.3.1
+[debug] [2019-02-19T06:48:42.381Z] Platform:      darwin
+[debug] [2019-02-19T06:48:42.381Z] Node Version:  v8.4.0
+[debug] [2019-02-19T06:48:42.381Z] Time:          Tue Feb 19 2019 01:48:42 GMT-0500 (EST)
+[debug] [2019-02-19T06:48:42.381Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-19T06:48:42.392Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-19T06:48:42.393Z] > authorizing via signed-in user
+[debug] [2019-02-19T06:48:42.393Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-19T06:48:42.394Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-19T06:49:42.435Z] Error: getaddrinfo ENOTFOUND cloudresourcemanager.googleapis.com cloudresourcemanager.googleapis.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: Server Error. getaddrinfo ENOTFOUND cloudresourcemanager.googleapis.com cloudresourcemanager.googleapis.com:443
+[debug] [2019-02-19T06:51:29.235Z] ----------------------------------------------------------------------
+[debug] [2019-02-19T06:51:29.237Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-19T06:51:29.237Z] CLI Version:   6.3.1
+[debug] [2019-02-19T06:51:29.237Z] Platform:      darwin
+[debug] [2019-02-19T06:51:29.237Z] Node Version:  v8.4.0
+[debug] [2019-02-19T06:51:29.238Z] Time:          Tue Feb 19 2019 01:51:29 GMT-0500 (EST)
+[debug] [2019-02-19T06:51:29.238Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-19T06:51:29.248Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-19T06:51:29.248Z] > authorizing via signed-in user
+[debug] [2019-02-19T06:51:29.249Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-19T06:51:29.251Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-19T06:51:29.527Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-19T06:51:29.529Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-19T06:51:29.757Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-19T06:51:29.759Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-19T06:51:30.316Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
