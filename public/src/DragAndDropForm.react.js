@@ -306,7 +306,7 @@ export class DragAndDropForm extends React.Component {
 	});	
 
     return (
-    	<div style={{display: "flex", margin: "auto"}} className="col-sm-12">
+    	<div style={{display: "flex", margin: "auto"}}>
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (

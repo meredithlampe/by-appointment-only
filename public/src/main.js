@@ -60,12 +60,12 @@ newFormButton.click(function() {
    const formInputArea = document.querySelector('.create-form-column');
 	ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
 	$('.home').addClass('hidden');
-	$('.create-form-input-area').removeClass('hidden');
+	$('.create-form').removeClass('hidden');
 });
 
 // cancel create new form
 let cancelNewForm = $('.create-form-cancel').click(function() {
-	$('.create-form-input-area').addClass('hidden');
+	$('.create-form').addClass('hidden');
 	$('.home').removeClass('hidden');
 	const formInputArea = document.querySelector('.create-form-column');
 	ReactDOM.unmountComponentAtNode(formInputArea);
@@ -91,7 +91,7 @@ function startFormsLiveUpdaters() {
 		   const formInputArea = document.querySelector('.create-form-column');
 			ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
 			$('.home').addClass('hidden');
-			$('.create-form-input-area').removeClass('hidden');
+			$('.create-form').removeClass('hidden');
 		};
 		let editFunctionWithParams = editFunction.bind(null, formData.id);
 		editLink.addEventListener('click', editFunctionWithParams);

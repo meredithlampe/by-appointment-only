@@ -350,7 +350,7 @@ export var DragAndDropForm = function (_React$Component) {
 
 			return React.createElement(
 				'div',
-				{ style: { display: "flex", margin: "auto" }, className: 'col-sm-12' },
+				{ style: { display: "flex", margin: "auto" } },
 				React.createElement(
 					DragDropContext,
 					{ onDragEnd: this.onDragEnd },
