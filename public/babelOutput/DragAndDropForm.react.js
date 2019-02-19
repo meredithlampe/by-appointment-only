@@ -420,7 +420,7 @@ export var DragAndDropForm = function (_React$Component) {
 							return React.createElement(
 								'div',
 								{
-									className: 'panel panel-default col-sm-7',
+									className: 'panel panel-default col-sm-7 card shadow',
 									style: { marginLeft: 40, height: "fit-content" } },
 								React.createElement(
 									'div',
@@ -470,7 +470,7 @@ export var DragAndDropForm = function (_React$Component) {
 									),
 									React.createElement(
 										'form',
-										{ className: 'col-sm-11 align-self-center' },
+										null,
 										_this4.state.items.map(function (item, index) {
 											var input = null;
 											var id = "input" + index;

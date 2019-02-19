@@ -17,3 +17,10 @@
   ### WEBPACK
 
   webpack -w viewForm/babelOutput/mainViewForm.js --debug -o viewForm/webpackOutput/mainViewForm.bundle.js
+
+  ## known bugs
+
+  - unpublish two forms in a row, modal OK should revert to 'unpublish' when it closes
+  - edit form while its published, updates aren't reflected in form
+  - delete form should delete from public database path
+  - unpublished forms still visible at public url?

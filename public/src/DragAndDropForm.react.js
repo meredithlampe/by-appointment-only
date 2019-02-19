@@ -356,7 +356,7 @@ export class DragAndDropForm extends React.Component {
     	 <Droppable droppableId="form">
           {(provided, snapshot) => (
           	<div 
-          		className="panel panel-default col-sm-7" 
+          		className="panel panel-default col-sm-7 card shadow" 
           		style={{marginLeft: 40, height: "fit-content"}}>
 	            <div
 	            className="panel-body new-form-panel-body d-flex flex-column"
@@ -386,7 +386,7 @@ export class DragAndDropForm extends React.Component {
 							<button disabled={!this.formHasPendingChanges()} onClick={this.saveForm} type="button" className="save-form-button btn btn-primary">Save</button>
 						</div>
 					</h4>
-				<form className="col-sm-11 align-self-center">
+				<form>
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "input" + index;
