@@ -156,3 +156,225 @@
 [debug] [2019-02-19T00:16:32.143Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-19T06:18:19.659Z] Error: connect ETIMEDOUT 172.217.7.3:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:18:19.660Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:18:19.667Z] Error: connect ETIMEDOUT 172.217.7.3:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:18:19.668Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:18:19.682Z] Error: connect ETIMEDOUT 172.217.7.3:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:18:19.683Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:18:19.684Z] Error: connect ETIMEDOUT 172.217.7.3:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:18:19.684Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:18:19.710Z] Error: connect ETIMEDOUT 172.217.7.3:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:18:19.711Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:20:40.850Z] ----------------------------------------------------------------------
+[debug] [2019-02-19T06:20:40.852Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-19T06:20:40.852Z] CLI Version:   6.3.1
+[debug] [2019-02-19T06:20:40.852Z] Platform:      darwin
+[debug] [2019-02-19T06:20:40.852Z] Node Version:  v8.4.0
+[debug] [2019-02-19T06:20:40.852Z] Time:          Tue Feb 19 2019 01:20:40 GMT-0500 (EST)
+[debug] [2019-02-19T06:20:40.852Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-19T06:20:40.864Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-19T06:20:40.865Z] > authorizing via signed-in user
+[debug] [2019-02-19T06:20:40.865Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-19T06:20:40.866Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-02-19T06:20:40.866Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-02-19T06:20:41.097Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-19T06:20:41.112Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-19T06:20:41.465Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-19T06:20:41.467Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-19T06:20:41.699Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-19T06:20:41.702Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-19T06:20:42.103Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2019-02-19T06:32:25.294Z] Error: connect ETIMEDOUT 172.217.12.163:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:32:25.295Z] Error: connect ETIMEDOUT 172.217.12.163:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:32:25.296Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:32:25.297Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:32:25.343Z] Error: connect ETIMEDOUT 172.217.12.163:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:32:25.343Z] Error: connect ETIMEDOUT 172.217.12.163:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:32:25.344Z] Error: connect ETIMEDOUT 172.217.12.163:443
+    at Object._errnoException (util.js:1041:11)
+    at _exceptionWithHostPort (util.js:1064:20)
+    at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1153:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:32:25.344Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:32:25.345Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:32:25.345Z] Error: socket hang up
+    at createHangUpError (_http_client.js:345:15)
+    at TLSSocket.socketCloseListener (_http_client.js:377:23)
+    at emitOne (events.js:120:20)
+    at TLSSocket.emit (events.js:210:7)
+    at _handle.close (net.js:545:12)
+    at TCP.done [as _onclose] (_tls_wrap.js:356:7)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2019-02-19T06:34:00.478Z] ----------------------------------------------------------------------
+[debug] [2019-02-19T06:34:00.480Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-19T06:34:00.480Z] CLI Version:   6.3.1
+[debug] [2019-02-19T06:34:00.480Z] Platform:      darwin
+[debug] [2019-02-19T06:34:00.480Z] Node Version:  v8.4.0
+[debug] [2019-02-19T06:34:00.481Z] Time:          Tue Feb 19 2019 01:34:00 GMT-0500 (EST)
+[debug] [2019-02-19T06:34:00.481Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-19T06:34:00.493Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-19T06:34:00.493Z] > authorizing via signed-in user
+[debug] [2019-02-19T06:34:00.493Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-19T06:34:00.495Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-19T06:34:30.690Z] Error: getaddrinfo ENOTFOUND cloudresourcemanager.googleapis.com cloudresourcemanager.googleapis.com:443
+    at errnoException (dns.js:53:10)
+    at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:95:26)
+[error] 
+[error] Error: Server Error. getaddrinfo ENOTFOUND cloudresourcemanager.googleapis.com cloudresourcemanager.googleapis.com:443
+[debug] [2019-02-19T06:34:34.388Z] ----------------------------------------------------------------------
+[debug] [2019-02-19T06:34:34.390Z] Command:       /usr/local/Cellar/node/8.4.0/bin/node /usr/local/bin/firebase serve
+[debug] [2019-02-19T06:34:34.390Z] CLI Version:   6.3.1
+[debug] [2019-02-19T06:34:34.390Z] Platform:      darwin
+[debug] [2019-02-19T06:34:34.390Z] Node Version:  v8.4.0
+[debug] [2019-02-19T06:34:34.391Z] Time:          Tue Feb 19 2019 01:34:34 GMT-0500 (EST)
+[debug] [2019-02-19T06:34:34.391Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-19T06:34:34.402Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-19T06:34:34.402Z] > authorizing via signed-in user
+[debug] [2019-02-19T06:34:34.402Z] [iam] checking project by-appointment-only for permissions ["firebase.projects.get"]
+[debug] [2019-02-19T06:34:34.404Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only:testIamPermissions  
+
+[debug] [2019-02-19T06:34:34.820Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-19T06:34:34.822Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/by-appointment-only  
+ 
+[debug] [2019-02-19T06:34:35.075Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/merlam/Personal/git/by-appointment-only'...
+[info] 
+[debug] [2019-02-19T06:34:35.077Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/885970159577/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-19T06:34:35.375Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000

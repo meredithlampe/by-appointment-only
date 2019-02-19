@@ -127,6 +127,8 @@ function startFormsLiveUpdaters() {
 					// set to done and show new URL
 					body.html(formData.name + " has been published!");
 					body.append('<a class="view-published-form" target="_blank" href="' + formData.publishURL + '">View Published Form</a>');
+					publishButton.remove();
+					modal.find('.modal-footer').append(getOkButtonToDismissModal('#unpublishFormModal'));
 				});
 			}
 			publishFormFunction = publishFormFunction.bind(null, formData.id);
@@ -167,7 +169,43 @@ function startFormsLiveUpdaters() {
 	}
 
 	let getUnpublishFormLink = (formData) => {
-		
+		let link = document.createElement('a');
+		link.setAttribute('data-toggle', "modal");
+		link.setAttribute('data-target', '#unpublishFormModal');
+		link.innerHTML = 'Unpublish';
+		let linkFunction = (id, name, event) => {
+			// set body of modal
+			let modal = $('#unpublishFormModal');
+			let body = modal.find('.modal-body');
+			body.html('Unpublish <b>' + name + '</b>? This will deactivate any links to the form.');
+			let submitButton = modal.find('.unpublish-form-button');
+			let submitFunction = (id) => {
+				// clear out this modal
+				let modal = $('#unpublishFormModal');
+				let body = modal.find('.modal-body');
+				body.empty();
+
+				// set publish modal to loading
+				body.append('<div class="d-flex justify-content-center loader-container"><div class="loader"></div></div>');
+				submitButton.prop('disabled', true);
+				firebaseHelper.unpublishForm(id, (formData) => {
+					// clear publish modal content
+					let modal = $('#unpublishFormModal');
+					let body = modal.find('.modal-body');
+					body.empty();
+
+					// show confirmation of unpublish form action
+					body.html(formData.name + " has been unpublished and is no longer active.");
+					submitButton.remove();
+					modal.find('.modal-footer').append(getOkButtonToDismissModal('#unpublishFormModal'));
+				});
+			}
+			submitFunction = submitFunction.bind(null, id);
+			submitButton.click(submitFunction);
+		}
+		linkFunction = linkFunction.bind(null, formData.id, formData.name);
+		link.addEventListener('click', linkFunction);
+		return link;	
 	}
 
 	// get delete form link
@@ -193,6 +231,17 @@ function startFormsLiveUpdaters() {
 		return deleteLink;
 	};
 
+	let getOkButtonToDismissModal = (modalId) => {
+		let okButton = $(document.createElement('button'));
+		okButton.html('OK');
+		okButton.click(null);
+		okButton.prop('disabled', false);
+		okButton.addClass('btn btn-primary');
+		okButton.attr('data-dismiss', "modal");
+		okButton.attr('data-target', modalId);
+		return okButton;		
+	}
+
 	let onFormAdded = (formData) => {
 		// configure edit link
 		let editLink = getEditFormLink(formData);
@@ -205,14 +254,21 @@ function startFormsLiveUpdaters() {
 		deleteTd.append(deleteLink);
 
 		//configure publish or view link
-		let link = null;
-		if (formData.publishStatus && formData.publishStatus === 'published') {
-			link = getViewFormLink(formData);
-		} else {
-			link = getPublishFormLink(formData);				
-		}
 		let publishTd = document.createElement('td');
-		publishTd.append(link);
+		if (formData.publishStatus && formData.publishStatus === 'published') {
+			let viewFormLink = getViewFormLink(formData);
+			let unpublishFormLink = getUnpublishFormLink(formData);
+			let orDiv = document.createElement('div');
+			orDiv.setAttribute('style', 'display: inline');
+			orDiv.innerHTML = ' or ';
+
+			publishTd.append(viewFormLink);
+			publishTd.append(orDiv);
+			publishTd.append(unpublishFormLink);
+		} else {
+			publishTd.append(getPublishFormLink(formData));
+		}
+
 
 		// append table data elements to row
 		let formTable = $('.applicant-forms-table-body');

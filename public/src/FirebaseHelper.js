@@ -72,6 +72,22 @@ export default class FirebaseHelper {
     
   }
 
+  unpublishForm(id, onFinish) {
+    let formPath = this.auth.currentUser.uid + '/' + id;
+
+    // set form status to published
+    const formRef = this.database.ref('/forms/' + formPath);
+    formRef.update({'publishStatus': 'unpublished', 'publishURL': ''});
+
+    // remove form from list of publish forms
+    let setPublicForm = function(onFinish, snapshot) {
+      this.database.ref('public/' + formPath).remove();
+      onFinish(snapshot.val());  
+    };
+    setPublicForm = setPublicForm.bind(this, onFinish);
+    formRef.once('value').then(setPublicForm);
+  }
+
   getUserForm(userid, id, callback) {
     const formRef = this.database.ref('/forms/' + userid + "/" + id);
     formRef.once('value').then(function(snapshot) {

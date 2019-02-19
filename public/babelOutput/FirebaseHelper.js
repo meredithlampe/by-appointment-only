@@ -84,6 +84,23 @@ var FirebaseHelper = function () {
       formRef.once('value').then(setPublicForm);
     }
   }, {
+    key: 'unpublishForm',
+    value: function unpublishForm(id, onFinish) {
+      var formPath = this.auth.currentUser.uid + '/' + id;
+
+      // set form status to published
+      var formRef = this.database.ref('/forms/' + formPath);
+      formRef.update({ 'publishStatus': 'unpublished', 'publishURL': '' });
+
+      // remove form from list of publish forms
+      var setPublicForm = function setPublicForm(onFinish, snapshot) {
+        this.database.ref('public/' + formPath).remove();
+        onFinish(snapshot.val());
+      };
+      setPublicForm = setPublicForm.bind(this, onFinish);
+      formRef.once('value').then(setPublicForm);
+    }
+  }, {
     key: 'getUserForm',
     value: function getUserForm(userid, id, callback) {
       var formRef = this.database.ref('/forms/' + userid + "/" + id);

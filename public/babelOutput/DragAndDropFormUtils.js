@@ -67,9 +67,7 @@ var DragAndDropFormUtils = function () {
 			if (type === "staticText") {
 				result = React.createElement(
 					'p',
-					{
-						className: 'text-muted',
-						id: id },
+					{ id: id },
 					item.content
 				);
 			}
@@ -81,15 +79,15 @@ var DragAndDropFormUtils = function () {
 						return React.createElement(
 							'div',
 							null,
-							React.createElement('input', { className: 'form-check-input', id: inputId, type: 'checkbox', value: '' }),
+							React.createElement('input', {
+								className: 'form-check-input',
+								id: inputId,
+								type: 'checkbox',
+								value: '' }),
 							React.createElement(
 								'label',
 								{ className: 'form-check-label', htmlFor: inputId },
-								React.createElement(
-									'div',
-									{ className: 'text-muted' },
-									option
-								)
+								option
 							)
 						);
 					})
