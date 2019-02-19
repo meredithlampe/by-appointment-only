@@ -26,27 +26,29 @@ export class ViewForm extends React.Component {
   render() {
     return (<div className="panel panel-default">
             <div
-            className="panel-body new-form-panel-body">
-              {this.state.items.map((item, index) => {
-              	let input = null;
-              	let id = "input" + index;
-              	input = DragAndDropFormUtils.getInputElementForType(item, id, false);
-              	return(
-   					<div className="form-group">
-	                    <div style={{display: "flex", flexDirection: "row"}}>
-		                    <div>
-							     <label className="form-component-label" htmlFor={id}>{item.label}</label>
-						    </div>
-					     </div>
-					     {input}
-					     <div className="invalid-feedback">{"This field is required."}</div>
-                   </div>
-	                  )}		                
-	             )
-	         }
-	       <div className="bottom-action-bar" style={{display: "flex", justifyContent: "flex-end"}}>
-              <button className="btn btn-primary btn-md" type="submit">Submit</button>
-          </div>	
+            	className="panel-body new-form-panel-body">
+            	<form class="needs-validation">
+	              {this.state.items.map((item, index) => {
+	              	let input = null;
+	              	let id = "input" + index;
+	              	input = DragAndDropFormUtils.getInputElementForType(item, id, false);
+	              	return(
+	   					<div className="form-group">
+		                    <div style={{display: "flex", flexDirection: "row"}}>
+			                    <div>
+								     <label className="form-component-label" htmlFor={id}>{item.label}</label>
+							    </div>
+						     </div>
+						     {input}
+						     <div className="invalid-feedback">{"This field is required."}</div>
+	                   </div>
+		                  )}		                
+		             )
+		         }
+		       <div className="bottom-action-bar" style={{display: "flex", justifyContent: "flex-end"}}>
+	              <button className="btn btn-primary btn-md" type="submit">Submit</button>
+	          </div>	
+	        </form>
      	</div>
      </div>
 	);

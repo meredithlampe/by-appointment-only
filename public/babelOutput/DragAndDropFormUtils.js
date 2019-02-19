@@ -35,39 +35,56 @@ var DragAndDropFormUtils = function () {
 		key: 'getInputElementForType',
 		value: function getInputElementForType(item, inputId) {
 			var disabled = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+			var required = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 
 			var type = item.inputType;
 			var placeholder = item.placeholder;
 			var id = inputId;
 			var result = null;
 			if (type === "shortText") {
-				result = React.createElement('input', { disabled: disabled, type: 'email', className: 'form-control', id: id, 'aria-describedby': 'emailHelp', placeholder: placeholder });
+				result = React.createElement('input', {
+					disabled: disabled,
+					required: required,
+					type: 'email',
+					className: 'form-control',
+					id: id, 'aria-describedby': 'emailHelp',
+					placeholder: placeholder });
 			}
 			if (type === "longText") {
-				result = React.createElement('textarea', { disabled: disabled, className: 'form-control', id: id, rows: '3', placeholder: placeholder });
+				result = React.createElement('textarea', {
+					disabled: disabled,
+					required: required,
+					className: 'form-control',
+					id: id, rows: '3',
+					placeholder: placeholder });
 			}
 			if (type === "fileInput") {
-				result = React.createElement('input', { disabled: disabled, id: id, type: 'file' });
+				result = React.createElement('input', {
+					disabled: disabled,
+					required: required,
+					id: id, type: 'file' });
 			}
 			if (type === "staticText") {
 				result = React.createElement(
 					'p',
-					{ className: 'text-muted', id: id },
+					{
+						className: 'text-muted',
+						id: id },
 					item.content
 				);
 			}
 			if (type === "checkboxes") {
 				result = React.createElement(
 					'div',
-					{ id: id },
+					{ 'class': 'form-check', id: id },
 					item.options.map(function (option) {
 						return React.createElement(
 							'div',
-							{ className: 'checkbox' },
-							React.createElement('input', { id: inputId, type: 'checkbox', value: '' }),
+							null,
+							React.createElement('input', { className: 'form-check-input', id: inputId, type: 'checkbox', value: '' }),
 							React.createElement(
 								'label',
-								{ className: 'mb-0 ml-2', htmlFor: inputId },
+								{ className: 'form-check-label', htmlFor: inputId },
 								React.createElement(
 									'div',
 									{ className: 'text-muted' },

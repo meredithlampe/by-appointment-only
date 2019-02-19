@@ -46,41 +46,45 @@ export var ViewForm = function (_React$Component) {
           'div',
           {
             className: 'panel-body new-form-panel-body' },
-          this.state.items.map(function (item, index) {
-            var input = null;
-            var id = "input" + index;
-            input = DragAndDropFormUtils.getInputElementForType(item, id, false);
-            return React.createElement(
-              'div',
-              { className: 'form-group' },
-              React.createElement(
+          React.createElement(
+            'form',
+            { 'class': 'needs-validation' },
+            this.state.items.map(function (item, index) {
+              var input = null;
+              var id = "input" + index;
+              input = DragAndDropFormUtils.getInputElementForType(item, id, false);
+              return React.createElement(
                 'div',
-                { style: { display: "flex", flexDirection: "row" } },
+                { className: 'form-group' },
                 React.createElement(
                   'div',
-                  null,
+                  { style: { display: "flex", flexDirection: "row" } },
                   React.createElement(
-                    'label',
-                    { className: 'form-component-label', htmlFor: id },
-                    item.label
+                    'div',
+                    null,
+                    React.createElement(
+                      'label',
+                      { className: 'form-component-label', htmlFor: id },
+                      item.label
+                    )
                   )
+                ),
+                input,
+                React.createElement(
+                  'div',
+                  { className: 'invalid-feedback' },
+                  "This field is required."
                 )
-              ),
-              input,
-              React.createElement(
-                'div',
-                { className: 'invalid-feedback' },
-                "This field is required."
-              )
-            );
-          }),
-          React.createElement(
-            'div',
-            { className: 'bottom-action-bar', style: { display: "flex", justifyContent: "flex-end" } },
+              );
+            }),
             React.createElement(
-              'button',
-              { className: 'btn btn-primary btn-md', type: 'submit' },
-              'Submit'
+              'div',
+              { className: 'bottom-action-bar', style: { display: "flex", justifyContent: "flex-end" } },
+              React.createElement(
+                'button',
+                { className: 'btn btn-primary btn-md', type: 'submit' },
+                'Submit'
+              )
             )
           )
         )

@@ -21,32 +21,56 @@ export default class DragAndDropFormUtils {
 		return null;
 	}
 
-	static getInputElementForType(item, inputId, disabled = true) {
+	static getInputElementForType(item, inputId, disabled = true, required = false) {
 		let type = item.inputType;
 		let placeholder = item.placeholder;
 		let id = inputId;
 		let result = null;
       	if (type === "shortText") {
-			result = (<input disabled={disabled} type="email" className="form-control" id={id} aria-describedby="emailHelp" placeholder={placeholder}/>);
+			result = (<input 
+				disabled={disabled} 
+				required={required} 
+				type="email" 
+				className="form-control" 
+				id={id} aria-describedby="emailHelp" 
+				placeholder={placeholder}/>
+			);
       	}
       	if (type === "longText") {
-      		result = (<textarea disabled={disabled} className="form-control" id={id} rows="3" placeholder={placeholder}></textarea>);
+      		result = (<textarea 
+      			disabled={disabled} 
+      			required={required}
+      			className="form-control" 
+      			id={id} rows="3" 
+      			placeholder={placeholder}>
+      		</textarea>);
       	}
       	if (type === "fileInput") {
-            result = (<input disabled={disabled} id={id} type="file"/>);
+            result = (<input 
+            	disabled={disabled} 
+            	required={required}
+            	id={id} type="file"/>);
       	}
       	if (type === "staticText") {
-      		result = (<p className="text-muted" id={id}>{item.content}</p>)
+      		result = (<p id={id}>
+      				{item.content}
+      			</p>)
       	}
       	if (type === "checkboxes") {
       		result = (
-      			<div id={id}>
+      			<div class="form-check" id={id}>
       				{
       				item.options.map(option => {
       					return (
-			        		<div className="checkbox">
-			                    <input id={inputId} type="checkbox" value=""/>
-			                    <label className="mb-0 ml-2" htmlFor={inputId}><div className="text-muted">{option}</div></label>
+			        		<div>
+			                    <input 
+			                    	className="form-check-input" 
+			                    	id={inputId} 
+			                    	type="checkbox" 
+			                    	value=""/>
+			                    <label className="form-check-label" htmlFor={inputId}>
+			                    	{option}
+			                    </label>
 			                </div>
 			             );
 			         })
