@@ -33,16 +33,14 @@ export class ViewForm extends React.Component {
 	              	let id = "input" + index;
 	              	input = DragAndDropFormUtils.getInputElementForType(item, id, false);
 	              	return(
-	   					<div className="form-group">
-		                    <div style={{display: "flex", flexDirection: "row"}}>
-			                    <div>
-								     <label className="form-component-label" htmlFor={id}>{item.label}</label>
-							    </div>
-						     </div>
-						     {input}
-						     <div className="invalid-feedback">{"This field is required."}</div>
-	                   </div>
-		                  )}		                
+	   					     <div className="form-group">
+		                  <div style={{display: "flex", flexDirection: "row"}}>
+								        <label className="form-component-label" htmlFor={id}>{item.label}</label>
+						          </div>
+						          {input}
+						          <div className="invalid-feedback">{"This field is required."}</div>
+	                 </div>
+		              );}		                
 		             )
 		         }
 		       <div className="bottom-action-bar" style={{display: "flex", justifyContent: "flex-end"}}>

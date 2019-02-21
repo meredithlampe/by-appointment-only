@@ -60,13 +60,9 @@ export var ViewForm = function (_React$Component) {
                   'div',
                   { style: { display: "flex", flexDirection: "row" } },
                   React.createElement(
-                    'div',
-                    null,
-                    React.createElement(
-                      'label',
-                      { className: 'form-component-label', htmlFor: id },
-                      item.label
-                    )
+                    'label',
+                    { className: 'form-component-label', htmlFor: id },
+                    item.label
                   )
                 ),
                 input,
