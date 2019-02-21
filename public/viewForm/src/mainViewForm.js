@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     firebaseHelper.getPublicUserForm(user, formName, function(formData) {
 
     	// header
-    	$('.form-header h4').html(formData.name);
+    	$('.form-header').html(formData.name);
 
     	// body
     	let props = {
