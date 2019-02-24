@@ -112,4 +112,10 @@ export default class FirebaseHelper {
       callback(snapshot.val());
     });     
   }
+
+  uploadFileForForm(formHostId, formID, submissionID, inputId, file) {
+    const submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formID + "/" + submissionID);
+    debugger;
+    submissionsRef.update({inputId: file});
+  }
 }

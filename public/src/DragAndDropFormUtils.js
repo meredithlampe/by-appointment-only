@@ -21,16 +21,16 @@ export default class DragAndDropFormUtils {
 		return null;
 	}
 
-	static getInputElementForType(item, inputId, disabled = true, required = false) {
+	static getInputElementForType(item, inputId, disabled = true, required = false, handleSelectedFile = null, handleFileUpload = null) {
 		let type = item.inputType;
 		let placeholder = item.placeholder;
 		let id = inputId;
 		let result = null;
       	if (type === "shortText") {
 			result = (<input 
-				disabled={disabled} 
+				name={"shortText" + inputId}
+				disabled={disabled}
 				required={required} 
-				type="email" 
 				className="form-control" 
 				id={id} aria-describedby="emailHelp" 
 				placeholder={placeholder}/>
@@ -38,6 +38,7 @@ export default class DragAndDropFormUtils {
       	}
       	if (type === "longText") {
       		result = (<textarea 
+      			name={"longText" + inputId}
       			disabled={disabled} 
       			required={required}
       			className="form-control" 
@@ -46,7 +47,10 @@ export default class DragAndDropFormUtils {
       		</textarea>);
       	}
       	if (type === "fileInput") {
-            result = (<input 
+            result = (<input
+				onChange={handleSelectedFile}
+				onClick={handleFileUpload}
+            	name={"fileInput" + inputId} 
             	disabled={disabled} 
             	required={required}
             	id={id} type="file"/>);
@@ -54,16 +58,17 @@ export default class DragAndDropFormUtils {
       	if (type === "staticText") {
       		result = (<p id={id}>
       				{item.content}
-      			</p>)
+      			</p>);
       	}
       	if (type === "checkboxes") {
       		result = (
-      			<div class="form-check" id={id}>
+      			<div className="form-check" id={id}>
       				{
-      				item.options.map(option => {
+      				item.options.map((option, index) => {
       					return (
 			        		<div>
 			                    <input 
+			                    	name={"checkbox" + inputId + '-' + index}
 			                    	className="form-check-input" 
 			                    	id={inputId} 
 			                    	type="checkbox" 

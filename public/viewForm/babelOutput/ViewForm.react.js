@@ -20,6 +20,8 @@ export var ViewForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ViewForm.__proto__ || Object.getPrototypeOf(ViewForm)).call(this, props));
 
     _this.firebaseHelper = props.firebaseHelper;
+    _this.formID = props.id;
+    _this.formHostId = props.formHostId;
     _this.state = {
       items: []
     };
@@ -30,58 +32,53 @@ export var ViewForm = function (_React$Component) {
         items: formData.items
       });
     });
+
+    // bind handlers
+    _this.handleFileUpload = _this.handleFileUpload.bind(_this);
     return _this;
   }
 
   _createClass(ViewForm, [{
-    key: 'onSubmit',
-    value: function onSubmit() {}
+    key: 'handleFileUpload',
+    value: function handleFileUpload(event) {
+      var file = event.target.files[0];
+      var id = event.target.id;
+      this.firebaseHelper.uploadFileForForm(this.formHostId, this.formID, 'testsubmissionID', id, file);
+    }
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return React.createElement(
         'div',
-        { className: 'panel panel-default' },
-        React.createElement(
-          'div',
-          {
-            className: 'panel-body new-form-panel-body' },
-          React.createElement(
-            'form',
-            { 'class': 'needs-validation' },
-            this.state.items.map(function (item, index) {
-              var input = null;
-              var id = "input" + index;
-              input = DragAndDropFormUtils.getInputElementForType(item, id, false);
-              return React.createElement(
-                'div',
-                { className: 'form-group' },
-                React.createElement(
-                  'div',
-                  { style: { display: "flex", flexDirection: "row" } },
-                  React.createElement(
-                    'label',
-                    { className: 'form-component-label', htmlFor: id },
-                    item.label
-                  )
-                ),
-                input,
-                React.createElement(
-                  'div',
-                  { className: 'invalid-feedback' },
-                  "This field is required."
-                )
-              );
-            }),
+        null,
+        this.state.items.map(function (item, index) {
+          var input = null;
+          var id = "input" + index;
+          input = DragAndDropFormUtils.getInputElementForType(item, id, false, _this2.handleSelectedFile, _this2.handleFileUpload);
+          return React.createElement(
+            'div',
+            { className: 'form-group' },
             React.createElement(
               'div',
-              { className: 'bottom-action-bar', style: { display: "flex", justifyContent: "flex-end" } },
+              { style: { display: "flex", flexDirection: "row" } },
               React.createElement(
-                'button',
-                { className: 'btn btn-primary btn-md', type: 'submit' },
-                'Submit'
+                'label',
+                { className: 'form-component-label', htmlFor: id },
+                item.label
               )
-            )
+            ),
+            input
+          );
+        }),
+        React.createElement(
+          'div',
+          { className: 'bottom-action-bar', style: { display: "flex", justifyContent: "flex-end" } },
+          React.createElement(
+            'button',
+            { className: 'btn btn-primary btn-md', type: 'submit' },
+            'Submit'
           )
         )
       );

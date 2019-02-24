@@ -1,0 +1,1 @@
+ webpack -w babelOutput/main.js --debug -o webpackOutput/main.bundle.js &  sass --watch scss/custom.scss css/custom.css & npx babel --watch src --out-dir babelOutput/ --presets react-app/prod 

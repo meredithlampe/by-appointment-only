@@ -36,6 +36,8 @@ var DragAndDropFormUtils = function () {
 		value: function getInputElementForType(item, inputId) {
 			var disabled = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 			var required = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+			var handleSelectedFile = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+			var handleFileUpload = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
 
 			var type = item.inputType;
 			var placeholder = item.placeholder;
@@ -43,15 +45,16 @@ var DragAndDropFormUtils = function () {
 			var result = null;
 			if (type === "shortText") {
 				result = React.createElement('input', {
+					name: "shortText" + inputId,
 					disabled: disabled,
 					required: required,
-					type: 'email',
 					className: 'form-control',
 					id: id, 'aria-describedby': 'emailHelp',
 					placeholder: placeholder });
 			}
 			if (type === "longText") {
 				result = React.createElement('textarea', {
+					name: "longText" + inputId,
 					disabled: disabled,
 					required: required,
 					className: 'form-control',
@@ -60,6 +63,9 @@ var DragAndDropFormUtils = function () {
 			}
 			if (type === "fileInput") {
 				result = React.createElement('input', {
+					onChange: handleSelectedFile,
+					onClick: handleFileUpload,
+					name: "fileInput" + inputId,
 					disabled: disabled,
 					required: required,
 					id: id, type: 'file' });
@@ -74,12 +80,13 @@ var DragAndDropFormUtils = function () {
 			if (type === "checkboxes") {
 				result = React.createElement(
 					'div',
-					{ 'class': 'form-check', id: id },
-					item.options.map(function (option) {
+					{ className: 'form-check', id: id },
+					item.options.map(function (option, index) {
 						return React.createElement(
 							'div',
 							null,
 							React.createElement('input', {
+								name: "checkbox" + inputId + '-' + index,
 								className: 'form-check-input',
 								id: inputId,
 								type: 'checkbox',

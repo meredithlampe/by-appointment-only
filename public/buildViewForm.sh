@@ -1,0 +1,1 @@
+webpack -w viewForm/babelOutput/mainViewForm.js --debug -o viewForm/webpackOutput/mainViewForm.bundle.js &  npx babel --watch viewForm/src --out-dir viewForm/babelOutput --presets react-app/prod 

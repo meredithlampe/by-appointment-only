@@ -7,6 +7,8 @@ export class ViewForm extends React.Component {
   constructor(props) {
     super(props);
     this.firebaseHelper = props.firebaseHelper;
+    this.formID = props.id;
+    this.formHostId = props.formHostId;
     this.state = { 
     		items: [],
     	};
@@ -17,28 +19,29 @@ export class ViewForm extends React.Component {
      		items: formData.items,
      	});
      }); 
+
+     // bind handlers
+     this.handleFileUpload = this.handleFileUpload.bind(this);
   }
 
-  onSubmit() {
-
+  handleFileUpload(event) {
+    let file = event.target.files[0];
+    let id = event.target.id;
+    this.firebaseHelper.uploadFileForForm(this.formHostId, this.formID, 'testsubmissionID', id, file);
   }
 
   render() {
-    return (<div className="panel panel-default">
-            <div
-            	className="panel-body new-form-panel-body">
-            	<form class="needs-validation">
+    return (<div>
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "input" + index;
-	              	input = DragAndDropFormUtils.getInputElementForType(item, id, false);
+	              	input = DragAndDropFormUtils.getInputElementForType(item, id, false, this.handleSelectedFile, this.handleFileUpload);
 	              	return(
 	   					     <div className="form-group">
 		                  <div style={{display: "flex", flexDirection: "row"}}>
 								        <label className="form-component-label" htmlFor={id}>{item.label}</label>
 						          </div>
 						          {input}
-						          <div className="invalid-feedback">{"This field is required."}</div>
 	                 </div>
 		              );}		                
 		             )
@@ -46,8 +49,6 @@ export class ViewForm extends React.Component {
 		       <div className="bottom-action-bar" style={{display: "flex", justifyContent: "flex-end"}}>
 	              <button className="btn btn-primary btn-md" type="submit">Submit</button>
 	          </div>	
-	        </form>
-     	</div>
      </div>
 	);
   }

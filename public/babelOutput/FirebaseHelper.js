@@ -129,6 +129,13 @@ var FirebaseHelper = function () {
         callback(snapshot.val());
       });
     }
+  }, {
+    key: 'uploadFileForForm',
+    value: function uploadFileForForm(formHostId, formID, submissionID, inputId, file) {
+      var submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formID + "/" + submissionID);
+      debugger;
+      submissionsRef.update({ inputId: file });
+    }
   }]);
 
   return FirebaseHelper;
