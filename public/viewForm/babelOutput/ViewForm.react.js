@@ -55,7 +55,7 @@ export var ViewForm = function (_React$Component) {
         null,
         this.state.items.map(function (item, index) {
           var input = null;
-          var id = "input" + index;
+          var id = "-id-" + item.id;
           input = DragAndDropFormUtils.getInputElementForType(item, id, false, _this2.handleSelectedFile, _this2.handleFileUpload);
           return React.createElement(
             'div',

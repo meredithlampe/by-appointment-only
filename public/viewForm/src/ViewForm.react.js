@@ -34,7 +34,7 @@ export class ViewForm extends React.Component {
     return (<div>
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
-	              	let id = "input" + index;
+	              	let id = "-id-" + item.id;
 	              	input = DragAndDropFormUtils.getInputElementForType(item, id, false, this.handleSelectedFile, this.handleFileUpload);
 	              	return(
 	   					     <div className="form-group">

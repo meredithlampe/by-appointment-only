@@ -29,7 +29,13 @@
             <div class="form-header m-0 font-weight-bold text-primary"></div>
           </div>
           <div class="card-body">
-              <form class="form-body needs-validation" method="POST" action="http://localhost:5001/by-appointment-only/us-central1/submitForm" novalidate>
+              <form class="needs-validation" method="POST" action="http://localhost:5001/by-appointment-only/us-central1/submitForm" novalidate>
+                <input 
+                  required
+                  class="hidden"
+                  name="formID"
+                  id="form-id-input-hidden" />
+                <div class="form-body" />
               </form>
           </div>
         </div>

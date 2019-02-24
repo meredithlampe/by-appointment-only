@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // header
     $('.form-header').html(formData.name);
+    $('#form-id-input-hidden').attr('value', formData.id);
 
     // body
     var props = {
