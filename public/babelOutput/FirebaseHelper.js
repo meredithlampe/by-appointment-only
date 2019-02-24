@@ -122,6 +122,14 @@ var FirebaseHelper = function () {
       });
     }
   }, {
+    key: 'getFormSubmissions',
+    value: function getFormSubmissions(formHostId, formId, callback) {
+      var formRef = this.database.ref('/submissions/' + formHostId + "/" + formId);
+      formRef.once('value').then(function (snapshot) {
+        callback(snapshot.val());
+      });
+    }
+  }, {
     key: 'getPublicUserForm',
     value: function getPublicUserForm(userid, id, callback) {
       var formRef = this.database.ref('/public/' + userid + "/" + id);
@@ -133,7 +141,6 @@ var FirebaseHelper = function () {
     key: 'uploadFileForForm',
     value: function uploadFileForForm(formHostId, formID, submissionID, inputId, file) {
       var submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formID + "/" + submissionID);
-      debugger;
       submissionsRef.update({ inputId: file });
     }
   }]);

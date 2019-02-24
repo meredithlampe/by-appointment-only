@@ -106,6 +106,13 @@ export default class FirebaseHelper {
     }); 
   }
 
+  getFormSubmissions(formHostId, formId, callback) {
+      const formRef = this.database.ref('/submissions/' + formHostId + "/" + formId);
+      formRef.once('value').then(function(snapshot) {
+        callback(snapshot.val());
+    });  
+  }
+
   getPublicUserForm(userid, id, callback) {
     const formRef = this.database.ref('/public/' + userid + "/" + id);
     formRef.once('value').then(function(snapshot) {
@@ -115,7 +122,6 @@ export default class FirebaseHelper {
 
   uploadFileForForm(formHostId, formID, submissionID, inputId, file) {
     const submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formID + "/" + submissionID);
-    debugger;
     submissionsRef.update({inputId: file});
   }
 }

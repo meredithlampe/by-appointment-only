@@ -69,7 +69,12 @@ let cancelNewForm = $('.create-form-cancel').click(function() {
 	$('.home').removeClass('hidden');
 	const formInputArea = document.querySelector('.create-form-column');
 	ReactDOM.unmountComponentAtNode(formInputArea);
-})
+});
+
+let cancelViewFormSubmission = $('.view-form-submissions-cancel').click(function() {
+	$('.view-form-submissions').addClass('hidden');
+	$('.home').removeClass('hidden');
+});
 
 /**
  * The ID of the currently signed-in User. We keep track of this to detect Auth state change events that are just
@@ -231,6 +236,26 @@ function startFormsLiveUpdaters() {
 		return deleteLink;
 	};
 
+	let getViewFormSubmissionLink = (formData) => {
+		let link = document.createElement('a');
+		link.setAttribute('id', 'view-form-submissions-link-' + formData.id);
+
+		// get count of submissions for form
+		firebaseHelper.getFormSubmissions(currentUID, formData.id, (submissions) => {
+			let link = $('#view-form-submissions-link-' + formData.id);
+			link.html(Object.keys(submissions).length);
+		});
+
+		link.innerHTML = '-';
+		let linkFunction = (id, name, event) => {
+			$('.home').addClass('hidden');
+			$('.view-form-submissions').removeClass('hidden');
+		}
+		linkFunction = linkFunction.bind(null, formData.id, formData.name);
+		link.addEventListener('click', linkFunction);
+		return link;
+	}
+
 	let getOkButtonToDismissModal = (modalId) => {
 		let okButton = $(document.createElement('button'));
 		okButton.html('OK');
@@ -252,6 +277,10 @@ function startFormsLiveUpdaters() {
 		let deleteLink = getDeleteFormLink(formData);
 		let deleteTd = document.createElement('td');
 		deleteTd.append(deleteLink);
+
+		// configure view submission link
+		let viewFormSubmissionTd = document.createElement('td');
+		viewFormSubmissionTd.append(getViewFormSubmissionLink(formData));
 
 		//configure publish or view link
 		let publishTd = document.createElement('td');
@@ -277,7 +306,7 @@ function startFormsLiveUpdaters() {
 		tableRow.addClass('form-table-row-' + formData.id);
 		tableRow.append("<td>" + formData.name + "</td>");
 		tableRow.append("<td>" + formData.lastEdited + "</td>");
-		tableRow.append("<td>Not available</td>");
+		tableRow.append(viewFormSubmissionTd);
 		tableRow.append(editTd);
 		tableRow.append(deleteTd);
 		tableRow.append(publishTd);
