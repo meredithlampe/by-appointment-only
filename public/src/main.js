@@ -242,8 +242,10 @@ function startFormsLiveUpdaters() {
 
 		// get count of submissions for form
 		firebaseHelper.getFormSubmissions(currentUID, formData.id, (submissions) => {
-			let link = $('#view-form-submissions-link-' + formData.id);
-			link.html(Object.keys(submissions).length);
+			if (submissions) {
+				let link = $('#view-form-submissions-link-' + formData.id);
+				link.html(Object.keys(submissions).length);	
+			}
 		});
 
 		link.innerHTML = '-';
@@ -343,11 +345,9 @@ function onAuthStateChanged(user) {
 
 	if (user) {
 		currentUID = user.uid;
-		console.log("changing auth state");
-
-    // listen for create/delete to user's forms
-    startFormsLiveUpdaters();
-    showUserInfo(user);
+	    // listen for create/delete to user's forms
+	    startFormsLiveUpdaters();
+	    showUserInfo(user);
 	} else {
 		showLoggedOut();
 	}
