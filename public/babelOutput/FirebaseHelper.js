@@ -139,9 +139,12 @@ var FirebaseHelper = function () {
     }
   }, {
     key: 'uploadFileForForm',
-    value: function uploadFileForForm(formHostId, formID, submissionID, inputId, file) {
-      var submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formID + "/" + submissionID);
-      submissionsRef.update({ inputId: file });
+    value: function uploadFileForForm(formHostId, formID, submissionID, inputId, file, callback) {
+      var storageRef = firebase.storage().ref();
+      var fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
+      fileRef.put(file).then(function (snapshot) {
+        callback(snapshot);
+      });
     }
   }]);
 

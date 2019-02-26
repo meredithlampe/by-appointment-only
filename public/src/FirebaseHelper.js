@@ -120,8 +120,11 @@ export default class FirebaseHelper {
     });     
   }
 
-  uploadFileForForm(formHostId, formID, submissionID, inputId, file) {
-    const submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formID + "/" + submissionID);
-    submissionsRef.update({inputId: file});
+  uploadFileForForm(formHostId, formID, submissionID, inputId, file, callback) {
+    const storageRef = firebase.storage().ref();
+    const fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
+    fileRef.put(file).then(function(snapshot) {
+      callback(snapshot);
+    });
   }
 }
