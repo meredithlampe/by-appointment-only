@@ -471,6 +471,11 @@ export var DragAndDropForm = function (_React$Component) {
 									React.createElement(
 										'form',
 										null,
+										_this4.state.items.length === 0 ? React.createElement(
+											'div',
+											{ className: 'drag-components-here' },
+											'Drag components from the left side here'
+										) : null,
 										_this4.state.items.map(function (item, index) {
 											var input = null;
 											var id = "input" + index;

@@ -387,6 +387,10 @@ export class DragAndDropForm extends React.Component {
 						</div>
 					</h4>
 				<form>
+					{this.state.items.length === 0 ? 
+						<div className="drag-components-here">
+							Drag components from the left side here
+						</div> : null}
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "input" + index;
