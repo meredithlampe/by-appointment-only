@@ -4,6 +4,7 @@ var ReactDOM = require('react-dom');
 import { DragAndDropForm } from './DragAndDropForm.react.js';
 import FirebaseHelper from './FirebaseHelper';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
+import SubmissionUtils from './submissions/SubmissionUtils.js';
 
 // handle page load
 document.addEventListener('DOMContentLoaded', function () {
@@ -252,6 +253,7 @@ function startFormsLiveUpdaters() {
 		var linkFunction = function linkFunction(id, name, event) {
 			$('.home').addClass('hidden');
 			$('.view-form-submissions').removeClass('hidden');
+			SubmissionUtils.renderSubmissions($('.view-form-submissions'), id);
 		};
 		linkFunction = linkFunction.bind(null, formData.id, formData.name);
 		link.addEventListener('click', linkFunction);
@@ -270,6 +272,7 @@ function startFormsLiveUpdaters() {
 	};
 
 	var onFormAdded = function onFormAdded(formData) {
+
 		// configure edit link
 		var editLink = getEditFormLink(formData);
 		var editTd = document.createElement('td');
@@ -299,6 +302,9 @@ function startFormsLiveUpdaters() {
 		} else {
 			publishTd.append(getPublishFormLink(formData));
 		}
+
+		// remove loading indicator (might already be removed)
+		$('.loading-submissions').empty();
 
 		// append table data elements to row
 		var formTable = $('.applicant-forms-table-body');
