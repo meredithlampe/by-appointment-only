@@ -130,6 +130,15 @@ var FirebaseHelper = function () {
       });
     }
   }, {
+    key: 'setOnSubmissionAdded',
+    value: function setOnSubmissionAdded(onSubmissionAdded, formHostId, formId) {
+      var submissionsRef = this.database.ref('/submissions/' + this.auth.currentUser.uid);
+      this.firebaseRefs.push(formsRef);
+      submissionsRef.on('child_added', function (snapshot) {
+        onSubmissionAdded(snapshot.val());
+      });
+    }
+  }, {
     key: 'getPublicUserForm',
     value: function getPublicUserForm(userid, id, callback) {
       var formRef = this.database.ref('/public/' + userid + "/" + id);

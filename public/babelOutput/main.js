@@ -304,7 +304,7 @@ function startFormsLiveUpdaters() {
 		}
 
 		// remove loading indicator (might already be removed)
-		$('.loading-submissions').empty();
+		$('.loading-forms').empty();
 
 		// append table data elements to row
 		var formTable = $('.applicant-forms-table-body');

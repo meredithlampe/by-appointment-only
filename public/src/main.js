@@ -303,9 +303,8 @@ function startFormsLiveUpdaters() {
 			publishTd.append(getPublishFormLink(formData));
 		}
 
-
 		// remove loading indicator (might already be removed)
-		$('.loading-submissions').empty();
+		$('.loading-forms').empty();
 
 		// append table data elements to row
 		let formTable = $('.applicant-forms-table-body');

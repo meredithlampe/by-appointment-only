@@ -113,6 +113,14 @@ export default class FirebaseHelper {
     });  
   }
 
+  setOnSubmissionAdded(onSubmissionAdded, formHostId, formId) {
+    const submissionsRef = this.database.ref('/submissions/' + this.auth.currentUser.uid);
+    this.firebaseRefs.push(formsRef);
+    submissionsRef.on('child_added', (snapshot) => {
+      onSubmissionAdded(snapshot.val());
+    });
+  }
+
   getPublicUserForm(userid, id, callback) {
     const formRef = this.database.ref('/public/' + userid + "/" + id);
     formRef.once('value').then(function(snapshot) {

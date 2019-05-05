@@ -8,16 +8,76 @@ var SubmissionUtils = function () {
 	}
 
 	_createClass(SubmissionUtils, null, [{
-		key: "renderSubmissions",
+		key: 'renderSubmissions',
 
 
 		// render form submissions in given container
 		value: function renderSubmissions(container, formID) {
-
-			// first put spinner in container
 			// then request submissions
+			startSubmissionLiveUpdaters(container, formID);
 			// then show submissions recieved from database
 		}
+	}, {
+		key: 'startSubmissionLiveUpdaters',
+		value: function startSubmissionLiveUpdaters(container, formID) {
+
+			var onSubmissionAdded = function onSubmissionAdded(submissionData) {
+
+				var getViewSubmissionLink = function getViewSubmissionLink(submissionData) {
+					var viewLink = document.createElement('a');
+					viewLink.setAttribute('data-toggle', "modal");
+					viewLink.setAttribute('data-target', '#viewSubmissionModal');
+					viewLink.innerHTML = 'View';
+					var viewFunction = function viewFunction(id, event) {
+						// set body of modal
+					};
+					viewFunction = viewFunction.bind(null, submissionData.id);
+					viewLink.addEventListener('click', viewFunction);
+					return viewLink;
+				};
+
+				// configure view link
+				var viewLink = getViewSubmissionLink(formData, submissionID);
+				var viewTd = document.createElement('td');
+				viewTd.append(viewLink);
+
+				// configure delete link
+				// let markAsDoneLink = getMarkAsDoneLink(formData);
+				// let deleteTd = document.createElement('td');
+				// deleteTd.append(deleteLink);
+
+				// remove loading indicator (might already be removed)
+				$('.loading-forms').empty();
+
+				// append table data elements to row
+				var formTable = $('.applicant-submissions-table-body');
+				var tableRow = $(document.createElement('tr'));
+				tableRow.addClass('odd gradeX');
+				tableRow.addClass('submission-table-row-' + submissionData.id);
+				tableRow.append("<td>" + submissionData.date + "</td>");
+				tableRow.append(viewTd);
+				// tableRow.append(markAsDoneLink);
+				formTable.append(tableRow);
+			};
+			onSubmissionAdded = onSubmissionAdded.bind(this);
+			window.firebaseHelper.setOnSubmissionAdded(onSubmissionAdded);
+		}
+		// window.firebaseHelper.setOnFormRemoved(
+		// 	(formData) => {
+		// 		let tr = $('.form-table-row-' + formData.id);
+		// 		if (tr) {
+		// 			tr.remove();
+		// 		}
+		// 	},
+		// );
+		// window.firebaseHelper.setOnFormChanged(
+		// 	(formData) => {
+		// 		let tr = $('.form-table-row-' + formData.id);
+		// 		tr.remove();
+		// 		onFormAdded(formData);
+		// 	});
+		// }
+
 	}]);
 
 	return SubmissionUtils;
