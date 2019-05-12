@@ -36,12 +36,19 @@ var SubmissionUtils = function () {
 					return viewLink;
 				};
 
-				console.log(submissionData);
-
 				// configure view link
 				var viewLink = getViewSubmissionLink(submissionData);
 				var viewTd = document.createElement('td');
 				viewTd.append(viewLink);
+
+				// configure notes section
+				var notesRaw = submissionData.notes;
+				var notesTd = document.createElement('td');
+				if (notesRaw !== undefined) {
+					var notesContent = document.createElement('div');
+					notesContent.innerHTML = notesRaw;
+					notesTd.append(notesContent);
+				}
 
 				// remove loading indicator (might already be removed)
 				$('.loading-submissions').empty();
@@ -52,9 +59,8 @@ var SubmissionUtils = function () {
 				tableRow.addClass('odd gradeX');
 				tableRow.addClass('submission-table-row-' + submissionData.id);
 
-				tableRow.append("<td>" + submissionData.name + "</td>");
 				tableRow.append("<td>" + submissionData.date + "</td>");
-				tableRow.append("<td>" + submissionData.notes + "</td>");
+				tableRow.append(notesTd);
 				tableRow.append(viewTd);
 				// tableRow.append(markAsDoneLink);
 				formTable.append(tableRow);
