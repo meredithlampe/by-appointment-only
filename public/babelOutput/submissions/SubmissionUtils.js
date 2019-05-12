@@ -8,7 +8,7 @@ var SubmissionUtils = function () {
 	}
 
 	_createClass(SubmissionUtils, null, [{
-		key: "renderSubmissions",
+		key: 'renderSubmissions',
 
 
 		// render form submissions in given container
@@ -18,10 +18,8 @@ var SubmissionUtils = function () {
 			// then show submissions recieved from database
 		}
 	}, {
-		key: "startSubmissionLiveUpdaters",
+		key: 'startSubmissionLiveUpdaters',
 		value: function startSubmissionLiveUpdaters(container, formHostID, formID) {
-
-			console.log("creating on submission added func w formHostID: " + formHostID + " and formID " + formID);
 
 			var onSubmissionAdded = function onSubmissionAdded(submissionData) {
 
@@ -38,15 +36,12 @@ var SubmissionUtils = function () {
 					return viewLink;
 				};
 
+				console.log(submissionData);
+
 				// configure view link
 				var viewLink = getViewSubmissionLink(submissionData);
 				var viewTd = document.createElement('td');
 				viewTd.append(viewLink);
-
-				// configure delete link
-				// let markAsDoneLink = getMarkAsDoneLink(formData);
-				// let deleteTd = document.createElement('td');
-				// deleteTd.append(deleteLink);
 
 				// remove loading indicator (might already be removed)
 				$('.loading-submissions').empty();
@@ -56,7 +51,10 @@ var SubmissionUtils = function () {
 				var tableRow = $(document.createElement('tr'));
 				tableRow.addClass('odd gradeX');
 				tableRow.addClass('submission-table-row-' + submissionData.id);
+
+				tableRow.append("<td>" + submissionData.name + "</td>");
 				tableRow.append("<td>" + submissionData.date + "</td>");
+				tableRow.append("<td>" + submissionData.notes + "</td>");
 				tableRow.append(viewTd);
 				// tableRow.append(markAsDoneLink);
 				formTable.append(tableRow);

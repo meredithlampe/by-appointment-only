@@ -135,7 +135,6 @@ var FirebaseHelper = function () {
       var submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formId);
       this.firebaseRefs.push(submissionsRef);
       submissionsRef.on('child_added', function (snapshot) {
-        console.log("child added" + snapshot.val());
         onSubmissionAdded(snapshot.val());
       });
     }

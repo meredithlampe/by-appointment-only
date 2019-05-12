@@ -8,8 +8,11 @@ exports.submitForm = functions.https.onRequest((req, res) => {
   console.log(req.body);
   console.log(req.query);
 
-  let submission = req.body;
-  admin.database().ref('/submissions/' + req.body.formHostID + "/" + req.body.formID).push(req.body).then((snapshot) => {
+  let submission = {
+  	timestamp: 'today',
+  	fields: req.body
+  };
+  return admin.database().ref('/submissions/' + req.body.formHostID + "/" + req.body.formID).push(submission).then((snapshot) => {
   	return res.redirect('http://localhost:5000/viewForm/formSubmitSuccess.html');
   });
 });

@@ -9,8 +9,6 @@ export default class SubmissionUtils {
 
 	static startSubmissionLiveUpdaters(container, formHostID, formID) {
 
-		console.log("creating on submission added func w formHostID: " + formHostID + " and formID " + formID);
-
 		let onSubmissionAdded = (submissionData) => {
 
 			let getViewSubmissionLink = (submissionData) => {
@@ -26,15 +24,12 @@ export default class SubmissionUtils {
 				return viewLink;
 			}
 
+			console.log(submissionData);
+
 			// configure view link
 			let viewLink = getViewSubmissionLink(submissionData);
 			let viewTd = document.createElement('td');
 			viewTd.append(viewLink);
-
-			// configure delete link
-			// let markAsDoneLink = getMarkAsDoneLink(formData);
-			// let deleteTd = document.createElement('td');
-			// deleteTd.append(deleteLink);
 
 			// remove loading indicator (might already be removed)
 			$('.loading-submissions').empty();
@@ -44,7 +39,10 @@ export default class SubmissionUtils {
 			let tableRow = $(document.createElement('tr'));
 			tableRow.addClass('odd gradeX');
 			tableRow.addClass('submission-table-row-' + submissionData.id);
+
+			tableRow.append("<td>" + submissionData.name + "</td>");
 			tableRow.append("<td>" + submissionData.date + "</td>");
+			tableRow.append("<td>" + submissionData.notes + "</td>");
 			tableRow.append(viewTd);
 			// tableRow.append(markAsDoneLink);
 			formTable.append(tableRow);	
