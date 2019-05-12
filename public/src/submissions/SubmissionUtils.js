@@ -1,13 +1,15 @@
 export default class SubmissionUtils {
 
 	// render form submissions in given container
-	static renderSubmissions(container, formID) {
+	static renderSubmissions(container, formHostID, formID) {
 		// then request submissions
-		startSubmissionLiveUpdaters(container, formID);
+		SubmissionUtils.startSubmissionLiveUpdaters(container, formHostID, formID);
 		// then show submissions recieved from database
 	}
 
-	static startSubmissionLiveUpdaters(container, formID) {
+	static startSubmissionLiveUpdaters(container, formHostID, formID) {
+
+		console.log("creating on submission added func w formHostID: " + formHostID + " and formID " + formID);
 
 		let onSubmissionAdded = (submissionData) => {
 
@@ -25,7 +27,7 @@ export default class SubmissionUtils {
 			}
 
 			// configure view link
-			let viewLink = getViewSubmissionLink(formData, submissionID);
+			let viewLink = getViewSubmissionLink(submissionData);
 			let viewTd = document.createElement('td');
 			viewTd.append(viewLink);
 
@@ -35,7 +37,7 @@ export default class SubmissionUtils {
 			// deleteTd.append(deleteLink);
 
 			// remove loading indicator (might already be removed)
-			$('.loading-forms').empty();
+			$('.loading-submissions').empty();
 
 			// append table data elements to row
 			let formTable = $('.applicant-submissions-table-body');
@@ -45,11 +47,13 @@ export default class SubmissionUtils {
 			tableRow.append("<td>" + submissionData.date + "</td>");
 			tableRow.append(viewTd);
 			// tableRow.append(markAsDoneLink);
-			formTable.append(tableRow);
+			formTable.append(tableRow);	
 		};
 		onSubmissionAdded = onSubmissionAdded.bind(this);
 		window.firebaseHelper.setOnSubmissionAdded(
 			onSubmissionAdded,
+			formHostID,
+			formID,
 		);
 	}
 		// window.firebaseHelper.setOnFormRemoved(

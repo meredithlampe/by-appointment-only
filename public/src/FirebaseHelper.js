@@ -114,9 +114,10 @@ export default class FirebaseHelper {
   }
 
   setOnSubmissionAdded(onSubmissionAdded, formHostId, formId) {
-    const submissionsRef = this.database.ref('/submissions/' + this.auth.currentUser.uid);
-    this.firebaseRefs.push(formsRef);
+    const submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formId);
+    this.firebaseRefs.push(submissionsRef);
     submissionsRef.on('child_added', (snapshot) => {
+      console.log("child added" + snapshot.val());
       onSubmissionAdded(snapshot.val());
     });
   }

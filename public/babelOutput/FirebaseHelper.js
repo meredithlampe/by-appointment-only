@@ -132,9 +132,10 @@ var FirebaseHelper = function () {
   }, {
     key: 'setOnSubmissionAdded',
     value: function setOnSubmissionAdded(onSubmissionAdded, formHostId, formId) {
-      var submissionsRef = this.database.ref('/submissions/' + this.auth.currentUser.uid);
-      this.firebaseRefs.push(formsRef);
+      var submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formId);
+      this.firebaseRefs.push(submissionsRef);
       submissionsRef.on('child_added', function (snapshot) {
+        console.log("child added" + snapshot.val());
         onSubmissionAdded(snapshot.val());
       });
     }

@@ -8,18 +8,20 @@ var SubmissionUtils = function () {
 	}
 
 	_createClass(SubmissionUtils, null, [{
-		key: 'renderSubmissions',
+		key: "renderSubmissions",
 
 
 		// render form submissions in given container
-		value: function renderSubmissions(container, formID) {
+		value: function renderSubmissions(container, formHostID, formID) {
 			// then request submissions
-			startSubmissionLiveUpdaters(container, formID);
+			SubmissionUtils.startSubmissionLiveUpdaters(container, formHostID, formID);
 			// then show submissions recieved from database
 		}
 	}, {
-		key: 'startSubmissionLiveUpdaters',
-		value: function startSubmissionLiveUpdaters(container, formID) {
+		key: "startSubmissionLiveUpdaters",
+		value: function startSubmissionLiveUpdaters(container, formHostID, formID) {
+
+			console.log("creating on submission added func w formHostID: " + formHostID + " and formID " + formID);
 
 			var onSubmissionAdded = function onSubmissionAdded(submissionData) {
 
@@ -37,7 +39,7 @@ var SubmissionUtils = function () {
 				};
 
 				// configure view link
-				var viewLink = getViewSubmissionLink(formData, submissionID);
+				var viewLink = getViewSubmissionLink(submissionData);
 				var viewTd = document.createElement('td');
 				viewTd.append(viewLink);
 
@@ -47,7 +49,7 @@ var SubmissionUtils = function () {
 				// deleteTd.append(deleteLink);
 
 				// remove loading indicator (might already be removed)
-				$('.loading-forms').empty();
+				$('.loading-submissions').empty();
 
 				// append table data elements to row
 				var formTable = $('.applicant-submissions-table-body');
@@ -60,7 +62,7 @@ var SubmissionUtils = function () {
 				formTable.append(tableRow);
 			};
 			onSubmissionAdded = onSubmissionAdded.bind(this);
-			window.firebaseHelper.setOnSubmissionAdded(onSubmissionAdded);
+			window.firebaseHelper.setOnSubmissionAdded(onSubmissionAdded, formHostID, formID);
 		}
 		// window.firebaseHelper.setOnFormRemoved(
 		// 	(formData) => {
