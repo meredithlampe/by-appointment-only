@@ -121,6 +121,17 @@ export default class FirebaseHelper {
     });
   }
 
+  setOnSubmissionFieldAdded(onFieldAdded, formHostId, formId, submissionId) {
+    debugger;
+    const fieldsRef = this.database.ref(
+      '/submissions/' + formHostId + "/" + formId + "/" + submissionId + "/fields/",
+    );
+    this.firebaseRefs.push(fieldsRef);
+    fieldsRef.on('child_added', (snapshot) => {
+      onFieldAdded(snapshot.val());
+    });
+  }
+
   getPublicUserForm(userid, id, callback) {
     const formRef = this.database.ref('/public/' + userid + "/" + id);
     formRef.once('value').then(function(snapshot) {

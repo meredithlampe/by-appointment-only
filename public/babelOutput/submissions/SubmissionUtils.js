@@ -13,10 +13,11 @@ var SubmissionUtils = function () {
 
 		// render form submissions in given container
 		value: function renderSubmissions(container, formHostID, formID) {
-			// then request submissions
 			SubmissionUtils.startSubmissionLiveUpdaters(container, formHostID, formID);
-			// then show submissions recieved from database
 		}
+	}, {
+		key: 'renderFormMetadata',
+		value: function renderFormMetadata(container, formHostID, formID) {}
 	}, {
 		key: 'startSubmissionLiveUpdaters',
 		value: function startSubmissionLiveUpdaters(container, formHostID, formID) {
@@ -28,10 +29,15 @@ var SubmissionUtils = function () {
 					viewLink.setAttribute('data-toggle', "modal");
 					viewLink.setAttribute('data-target', '#viewSubmissionModal');
 					viewLink.innerHTML = 'View';
-					var viewFunction = function viewFunction(id, event) {
-						// set body of modal
+					var viewFunction = function viewFunction(submissionData, container, event) {
+						var onFieldAdded = function onFieldAdded(fieldData, container) {
+							// append field to container
+							console.log(fieldData);
+						};
+						// TODO move form host ID and form ID out of fields
+						window.firebaseHelper.setOnSubmissionFieldAdded(onFieldAdded, submissionData.fields.formHostID, submissionData.fields.formID, submissionData.id);
 					};
-					viewFunction = viewFunction.bind(null, submissionData.id);
+					viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal'));
 					viewLink.addEventListener('click', viewFunction);
 					return viewLink;
 				};

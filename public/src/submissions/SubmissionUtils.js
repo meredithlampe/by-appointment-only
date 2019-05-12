@@ -2,9 +2,11 @@ export default class SubmissionUtils {
 
 	// render form submissions in given container
 	static renderSubmissions(container, formHostID, formID) {
-		// then request submissions
 		SubmissionUtils.startSubmissionLiveUpdaters(container, formHostID, formID);
-		// then show submissions recieved from database
+	}
+
+	static renderFormMetadata(container, formHostID, formID) {
+
 	}
 
 	static startSubmissionLiveUpdaters(container, formHostID, formID) {
@@ -16,10 +18,20 @@ export default class SubmissionUtils {
 				viewLink.setAttribute('data-toggle', "modal");
 				viewLink.setAttribute('data-target', '#viewSubmissionModal');
 				viewLink.innerHTML = 'View';
-				let viewFunction = (id, event) => {
-					// set body of modal
+				let viewFunction = (submissionData, container, event) => {
+					let onFieldAdded = (fieldData, container) => {
+						// append field to container
+						console.log(fieldData);
+					};
+					// TODO move form host ID and form ID out of fields
+					window.firebaseHelper.setOnSubmissionFieldAdded(
+						onFieldAdded, 
+						submissionData.fields.formHostID, 
+						submissionData.fields.formID, 
+						submissionData.id,
+					);
 				}
-				viewFunction = viewFunction.bind(null, submissionData.id);
+				viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal'));
 				viewLink.addEventListener('click', viewFunction);
 				return viewLink;
 			}
