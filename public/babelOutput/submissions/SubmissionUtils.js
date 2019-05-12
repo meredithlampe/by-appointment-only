@@ -30,12 +30,11 @@ var SubmissionUtils = function () {
 					viewLink.setAttribute('data-target', '#viewSubmissionModal');
 					viewLink.innerHTML = 'View';
 					var viewFunction = function viewFunction(submissionData, container, event) {
-						var onFieldAdded = function onFieldAdded(fieldData, container) {
+						var onFieldAdded = function onFieldAdded(fieldKeyAndData, container) {
 							// append field to container
-							console.log(fieldData);
+							console.log(fieldKeyAndData);
 						};
-						// TODO move form host ID and form ID out of fields
-						window.firebaseHelper.setOnSubmissionFieldAdded(onFieldAdded, submissionData.fields.formHostID, submissionData.fields.formID, submissionData.id);
+						window.firebaseHelper.setOnSubmissionFieldAdded(onFieldAdded, submissionData.formHostID, submissionData.formID, submissionData.submissionID);
 					};
 					viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal'));
 					viewLink.addEventListener('click', viewFunction);

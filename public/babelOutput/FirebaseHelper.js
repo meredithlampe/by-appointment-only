@@ -141,11 +141,10 @@ var FirebaseHelper = function () {
   }, {
     key: 'setOnSubmissionFieldAdded',
     value: function setOnSubmissionFieldAdded(onFieldAdded, formHostId, formId, submissionId) {
-      debugger;
       var fieldsRef = this.database.ref('/submissions/' + formHostId + "/" + formId + "/" + submissionId + "/fields/");
       this.firebaseRefs.push(fieldsRef);
       fieldsRef.on('child_added', function (snapshot) {
-        onFieldAdded(snapshot.val());
+        onFieldAdded(snapshot);
       });
     }
   }, {

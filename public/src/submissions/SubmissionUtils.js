@@ -19,16 +19,15 @@ export default class SubmissionUtils {
 				viewLink.setAttribute('data-target', '#viewSubmissionModal');
 				viewLink.innerHTML = 'View';
 				let viewFunction = (submissionData, container, event) => {
-					let onFieldAdded = (fieldData, container) => {
+					let onFieldAdded = (fieldKeyAndData, container) => {
 						// append field to container
-						console.log(fieldData);
+						console.log(fieldKeyAndData);
 					};
-					// TODO move form host ID and form ID out of fields
 					window.firebaseHelper.setOnSubmissionFieldAdded(
 						onFieldAdded, 
-						submissionData.fields.formHostID, 
-						submissionData.fields.formID, 
-						submissionData.id,
+						submissionData.formHostID, 
+						submissionData.formID, 
+						submissionData.submissionID,
 					);
 				}
 				viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal'));
