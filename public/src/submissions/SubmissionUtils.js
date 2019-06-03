@@ -9,6 +9,11 @@ export default class SubmissionUtils {
 
 	}
 
+	static parseInputTypeFromSubmissionKey(fieldKey) {
+		// submission fields have form <inputType>-"id"-<id relative to form>
+		return fieldKey.split("-")[0];
+	}
+
 	static startSubmissionLiveUpdaters(container, formHostID, formID) {
 
 		let onSubmissionAdded = (submissionData) => {
@@ -19,9 +24,12 @@ export default class SubmissionUtils {
 				viewLink.setAttribute('data-target', '#viewSubmissionModal');
 				viewLink.innerHTML = 'View';
 				let viewFunction = (submissionData, container, event) => {
+					console.log(submissionData);
 					let onFieldAdded = (fieldKeyAndData, container) => {
 						// append field to container
-						console.log(fieldKeyAndData);
+						let fieldData = fieldKeyAndData.val();
+						let inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key());
+						//let input = DragAndDropFormUtils.getInputElementForType()
 					};
 					window.firebaseHelper.setOnSubmissionFieldAdded(
 						onFieldAdded, 

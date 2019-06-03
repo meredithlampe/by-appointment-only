@@ -19,6 +19,12 @@ var SubmissionUtils = function () {
 		key: 'renderFormMetadata',
 		value: function renderFormMetadata(container, formHostID, formID) {}
 	}, {
+		key: 'parseInputTypeFromSubmissionKey',
+		value: function parseInputTypeFromSubmissionKey(fieldKey) {
+			// submission fields have form <inputType>-"id"-<id relative to form>
+			return fieldKey.split("-")[0];
+		}
+	}, {
 		key: 'startSubmissionLiveUpdaters',
 		value: function startSubmissionLiveUpdaters(container, formHostID, formID) {
 
@@ -30,9 +36,12 @@ var SubmissionUtils = function () {
 					viewLink.setAttribute('data-target', '#viewSubmissionModal');
 					viewLink.innerHTML = 'View';
 					var viewFunction = function viewFunction(submissionData, container, event) {
+						console.log(submissionData);
 						var onFieldAdded = function onFieldAdded(fieldKeyAndData, container) {
 							// append field to container
-							console.log(fieldKeyAndData);
+							var fieldData = fieldKeyAndData.val();
+							var inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key());
+							//let input = DragAndDropFormUtils.getInputElementForType()
 						};
 						window.firebaseHelper.setOnSubmissionFieldAdded(onFieldAdded, submissionData.formHostID, submissionData.formID, submissionData.submissionID);
 					};

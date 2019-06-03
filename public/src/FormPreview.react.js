@@ -32,7 +32,7 @@ class FormPreview extends React.Component {
         let component =  
           (<div className="form-group">
             <label className="form-component-label" htmlFor={id}>{item.label}</label>
-            {DragAndDropFormUtils.getInputElementForType(item, id)}
+            {DragAndDropFormUtils.getInputElementForType(item.inputType, item.placeholder, id)}
           </div>); 
         return component;
       });

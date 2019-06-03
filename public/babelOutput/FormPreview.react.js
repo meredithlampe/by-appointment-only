@@ -60,7 +60,7 @@ var FormPreview = function (_React$Component) {
               { className: 'form-component-label', htmlFor: id },
               item.label
             ),
-            DragAndDropFormUtils.getInputElementForType(item, id)
+            DragAndDropFormUtils.getInputElementForType(item.inputType, item.placeholder, id)
           );
           return component;
         });

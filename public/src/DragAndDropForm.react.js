@@ -321,7 +321,7 @@ export class DragAndDropForm extends React.Component {
 	            {COMPONENT_LIBRARY.map((item, index) => {
 	              	let input = null;
 	              	let id = "component-library-" + item.inputType;
-	              	input = DragAndDropFormUtils.getInputElementForType(item, id);
+	              	input = DragAndDropFormUtils.getInputElementForType(item.inputType, item.placeholder, id);
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (
@@ -394,7 +394,7 @@ export class DragAndDropForm extends React.Component {
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "input" + index;
-	              	input = DragAndDropFormUtils.getInputElementForType(item, id);
+	              	input = DragAndDropFormUtils.getInputElementForType(item.inputType, item.placeholder, id);
 	              	return(
 		                <Draggable key={item.id} draggableId={id} index={index}>
 		                  {(provided, snapshot) => (

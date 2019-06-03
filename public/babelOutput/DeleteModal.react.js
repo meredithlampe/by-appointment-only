@@ -50,7 +50,7 @@ var DeleteModal = function (_React$Component) {
               { className: 'form-component-label' },
               item ? item.label : null
             ),
-            item ? DragAndDropFormUtils.getInputElementForType(item, 100) : null
+            item ? DragAndDropFormUtils.getInputElementForType(item.inputType, item.placeholder, 100) : null
           )
         ),
         React.createElement('hr', null),

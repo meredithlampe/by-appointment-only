@@ -122,6 +122,9 @@ export default class FirebaseHelper {
   }
 
   setOnSubmissionFieldAdded(onFieldAdded, formHostId, formId, submissionId) {
+    console.log(formHostId);
+    console.log(formId);
+    console.log(submissionId);
     const fieldsRef = this.database.ref(
       '/submissions/' + formHostId + "/" + formId + "/" + submissionId + "/fields/",
     );

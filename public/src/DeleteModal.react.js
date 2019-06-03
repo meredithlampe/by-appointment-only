@@ -23,7 +23,7 @@ class DeleteModal extends React.Component {
         <div className="modal-body">
           <div className="edit-modal-input-preview">
             <label className="form-component-label">{item ? item.label : null}</label>
-            {item ? DragAndDropFormUtils.getInputElementForType(item, 100) : null}
+            {item ? DragAndDropFormUtils.getInputElementForType(item.inputType, item.placeholder, 100) : null}
           </div>
         </div>
         <hr/>

@@ -35,7 +35,7 @@ class EditModal extends React.Component {
             <div className="edit-modal-input-preview">
                 <div style={{margin: 20}}>
                   <label className="form-component-label">{editingItem ? editingItem.label : null}</label>
-                  {editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem, 100) : null}
+                  {editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem.inputType, editingItem.placeholder, 100) : null}
                 </div>
               <hr/>
               <div style={{margin: 20}}>

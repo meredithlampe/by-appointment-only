@@ -379,7 +379,7 @@ export var DragAndDropForm = function (_React$Component) {
 									COMPONENT_LIBRARY.map(function (item, index) {
 										var input = null;
 										var id = "component-library-" + item.inputType;
-										input = DragAndDropFormUtils.getInputElementForType(item, id);
+										input = DragAndDropFormUtils.getInputElementForType(item.inputType, item.placeholder, id);
 										return React.createElement(
 											Draggable,
 											{ key: item.id, draggableId: id, index: index },
@@ -479,7 +479,7 @@ export var DragAndDropForm = function (_React$Component) {
 										_this4.state.items.map(function (item, index) {
 											var input = null;
 											var id = "input" + index;
-											input = DragAndDropFormUtils.getInputElementForType(item, id);
+											input = DragAndDropFormUtils.getInputElementForType(item.inputType, item.placeholder, id);
 											return React.createElement(
 												Draggable,
 												{ key: item.id, draggableId: id, index: index },

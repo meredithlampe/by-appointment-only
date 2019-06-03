@@ -21,9 +21,15 @@ export default class DragAndDropFormUtils {
 		return null;
 	}
 
-	static getInputElementForType(item, inputId, disabled = true, required = false, handleSelectedFile = null, handleFileUpload = null) {
-		let type = item.inputType;
-		let placeholder = item.placeholder;
+	static getInputElementForType(
+		type,
+		placeholder, 
+		inputId, 
+		disabled = true, 
+		required = false, 
+		handleSelectedFile = null, 
+		handleFileUpload = null,
+	) {
 		let id = inputId;
 		let result = null;
       	if (type === "shortText") {
