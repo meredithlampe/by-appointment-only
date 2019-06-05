@@ -2,6 +2,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+import DragAndDropFormUtils from '../../babelOutput/DragAndDropFormUtils.js';
+
 var SubmissionUtils = function () {
 	function SubmissionUtils() {
 		_classCallCheck(this, SubmissionUtils);
@@ -37,15 +39,18 @@ var SubmissionUtils = function () {
 					viewLink.innerHTML = 'View';
 					var viewFunction = function viewFunction(submissionData, container, event) {
 						console.log(submissionData);
-						var onFieldAdded = function onFieldAdded(fieldKeyAndData, container) {
+						var onFieldAdded = function onFieldAdded(container, fieldKeyAndData) {
 							// append field to container
 							var fieldData = fieldKeyAndData.val();
-							var inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key());
-							//let input = DragAndDropFormUtils.getInputElementForType()
+							var inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
+							var input = DragAndDropFormUtils.getInputElementForType(inputType, fieldKeyAndData.key, fieldKeyAndData.val());
+							console.log(input);
+							container.append(input);
 						};
+						onFieldAdded = onFieldAdded.bind(null, container);
 						window.firebaseHelper.setOnSubmissionFieldAdded(onFieldAdded, submissionData.formHostID, submissionData.formID, submissionData.submissionID);
 					};
-					viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal'));
+					viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal .modal-body'));
 					viewLink.addEventListener('click', viewFunction);
 					return viewLink;
 				};
@@ -98,6 +103,9 @@ var SubmissionUtils = function () {
 		// 	});
 		// }
 
+	}, {
+		key: 'getSubmittedFieldForInputType',
+		value: function getSubmittedFieldForInputType(inputType, label, value) {}
 	}]);
 
 	return SubmissionUtils;

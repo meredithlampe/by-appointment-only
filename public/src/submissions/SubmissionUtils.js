@@ -1,3 +1,5 @@
+import DragAndDropFormUtils from '../../babelOutput/DragAndDropFormUtils.js';
+
 export default class SubmissionUtils {
 
 	// render form submissions in given container
@@ -25,12 +27,19 @@ export default class SubmissionUtils {
 				viewLink.innerHTML = 'View';
 				let viewFunction = (submissionData, container, event) => {
 					console.log(submissionData);
-					let onFieldAdded = (fieldKeyAndData, container) => {
+					let onFieldAdded = (container, fieldKeyAndData) => {
 						// append field to container
 						let fieldData = fieldKeyAndData.val();
-						let inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key());
-						//let input = DragAndDropFormUtils.getInputElementForType()
+						let inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
+						let input = DragAndDropFormUtils.getInputElementForType(
+							inputType, 
+							fieldKeyAndData.key,
+							fieldKeyAndData.val(), 
+						);
+						console.log(input);
+						container.append(input);
 					};
+					onFieldAdded = onFieldAdded.bind(null, container);
 					window.firebaseHelper.setOnSubmissionFieldAdded(
 						onFieldAdded, 
 						submissionData.formHostID, 
@@ -38,7 +47,7 @@ export default class SubmissionUtils {
 						submissionData.submissionID,
 					);
 				}
-				viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal'));
+				viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal .modal-body'));
 				viewLink.addEventListener('click', viewFunction);
 				return viewLink;
 			}
@@ -94,4 +103,8 @@ export default class SubmissionUtils {
 		// 		onFormAdded(formData);
 		// 	});
 		// }
+
+	static getSubmittedFieldForInputType(inputType, label, value) {
+
+	}
 }
