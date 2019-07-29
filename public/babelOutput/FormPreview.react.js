@@ -22,7 +22,8 @@ var FormPreview = function (_React$Component) {
 
     _this.fetchFormItems = _this.fetchFormItems.bind(_this);
     _this.firebaseHelper = _this.props.firebaseHelper;
-    _this.name = _this.props.formName;
+    _this.formHostID = _this.props.formHostID;
+    _this.id = _this.props.formID;
     _this.fetchFormItems();
     _this.state = {
       loading: true,
@@ -36,13 +37,14 @@ var FormPreview = function (_React$Component) {
     value: function fetchFormItems() {
       var _this2 = this;
 
-      firebaseHelper.getItemsForForm(this.name, function (items) {
-        _this2.setState({ items: items, loading: false });
+      firebaseHelper.getUserForm(this.formHostID, this.id, function (form) {
+        _this2.setState({ items: form.items, loading: false });
       });
     }
   }, {
     key: 'render',
     value: function render() {
+      console.log("rendering form preview");
       var content = React.createElement(
         'div',
         null,

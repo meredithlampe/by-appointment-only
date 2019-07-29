@@ -9,7 +9,8 @@ class FormPreview extends React.Component {
     super(props);
     this.fetchFormItems = this.fetchFormItems.bind(this);
     this.firebaseHelper = this.props.firebaseHelper;
-    this.name = this.props.formName;
+    this.formHostID = this.props.formHostID;
+    this.id = this.props.formID;
     this.fetchFormItems();
     this.state = {
       loading: true,
@@ -18,12 +19,13 @@ class FormPreview extends React.Component {
   }
 
   fetchFormItems() {
-    firebaseHelper.getItemsForForm(this.name, (items) => {
-      this.setState({items: items, loading: false});
+    firebaseHelper.getUserForm(this.formHostID, this.id, (form) => {
+      this.setState({items: form.items, loading: false});
     });
   }
 
   render() {
+    console.log("rendering form preview");
     let content = <div>loading</div>;
     if (!this.state.loading) {
       let items = this.state.items;

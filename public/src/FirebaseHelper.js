@@ -23,6 +23,10 @@ export default class FirebaseHelper {
     
   }
 
+  getCurrentUserID() {
+    return this.auth.currentUser.uid;
+  }
+
   generateFormID() {
     let test = this.auth.currentUser.uid + '' + Date.now();
     console.log(test);

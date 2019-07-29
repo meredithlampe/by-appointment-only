@@ -30,6 +30,11 @@ var FirebaseHelper = function () {
     key: 'isLoggedIn',
     value: function isLoggedIn() {}
   }, {
+    key: 'getCurrentUserID',
+    value: function getCurrentUserID() {
+      return this.auth.currentUser.uid;
+    }
+  }, {
     key: 'generateFormID',
     value: function generateFormID() {
       var test = this.auth.currentUser.uid + '' + Date.now();

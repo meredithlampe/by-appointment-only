@@ -221,19 +221,20 @@ export class DragAndDropForm extends React.Component {
 		// construct form preview
 		const formPreviewArea = document.querySelector('.applicant-forms-preview-form');
 		let props = {
-			formName: this.state.name,
+			formID: this.databaseID,
+			formHostID: this.firebaseHelper.getCurrentUserID(),
 			firebaseHelper: this.firebaseHelper,
 			onClose: this.hidePreview,
 		};
 		ReactDOM.render(React.createElement(FormPreview, props), formPreviewArea);
 
 		// show preview
-		$('.applicant-forms-create-form').hide();
+		$('.create-form').hide();
 		$('.applicant-forms-preview-form').show();
 	}
 	hidePreview() {
 		$('.applicant-forms-preview-form').hide();	
-		$('.applicant-forms-create-form').show();
+		$('.create-form').show();
 		const formPreviewArea = document.querySelector('.applicant-forms-preview-form');
 		ReactDOM.unmountComponentAtNode(formInputArea);
 	}
