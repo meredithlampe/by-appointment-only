@@ -62,7 +62,7 @@ var EditModal = function (_React$Component) {
             { className: 'form-component-label' },
             editingItem ? editingItem.label : null
           ),
-          editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem.inputType, editingItem.placeholder, 100) : null
+          editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem, 100) : null
         ),
         React.createElement('hr', null),
         React.createElement(

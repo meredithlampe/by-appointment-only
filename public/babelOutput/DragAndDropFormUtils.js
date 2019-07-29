@@ -33,12 +33,15 @@ var DragAndDropFormUtils = function () {
 		}
 	}, {
 		key: 'getInputElementForType',
-		value: function getInputElementForType(type, placeholder, inputId) {
-			var disabled = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
-			var required = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;
-			var handleSelectedFile = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
-			var handleFileUpload = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
+		value: function getInputElementForType(item, inputID) {
+			var disabled = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+			var required = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+			var handleSelectedFile = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+			var handleFileUpload = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
 
+			var placeholder = item.placeholder;
+			var inputId = item.inputId;
+			var type = item.inputType;
 			var id = inputId;
 			var result = null;
 			if (type === "shortText") {
@@ -72,7 +75,7 @@ var DragAndDropFormUtils = function () {
 				result = React.createElement(
 					'p',
 					{ id: id },
-					item.content
+					placeholder
 				);
 			}
 			if (type === "checkboxes") {

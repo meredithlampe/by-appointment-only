@@ -22,14 +22,16 @@ export default class DragAndDropFormUtils {
 	}
 
 	static getInputElementForType(
-		type,
-		placeholder, 
-		inputId, 
+		item,
+		inputID,
 		disabled = true, 
 		required = false, 
 		handleSelectedFile = null, 
 		handleFileUpload = null,
 	) {
+		let placeholder = item.placeholder;
+		let inputId = item.inputId;
+		let type = item.inputType;
 		let id = inputId;
 		let result = null;
       	if (type === "shortText") {
@@ -63,7 +65,7 @@ export default class DragAndDropFormUtils {
       	}
       	if (type === "staticText") {
       		result = (<p id={id}>
-      				{item.content}
+      				{placeholder}
       			</p>);
       	}
       	if (type === "checkboxes") {
