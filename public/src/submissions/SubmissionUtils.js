@@ -13,7 +13,14 @@ export default class SubmissionUtils {
 
 	static parseInputTypeFromSubmissionKey(fieldKey) {
 		// submission fields have form <inputType>-"id"-<id relative to form>
+		// return input type
 		return fieldKey.split("-")[0];
+	}
+
+	static parseInputIDFromSubmissionKey(fieldKey) {
+		// submission fields have form <inputType>-"id"-<id relative to form>
+		// return id relative to form
+		return parseInt(fieldKey.split("-")[2]);
 	}
 
 	static startSubmissionLiveUpdaters(container, formHostID, formID) {
@@ -29,18 +36,20 @@ export default class SubmissionUtils {
 				let viewFunction = (submissionData, container, event) => {
 					// configure logic for closing "view submission" window (clear content)
 					container.empty();
-					let onFieldAdded = (container, fieldKeyAndData) => {
+					let onFieldAdded = (container, formHostID,  formID, fieldKeyAndData) => {
 						// append field to container
 						let fieldData = fieldKeyAndData.val();
 						let inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
-						let input = SubmissionUtils.getSubmittedFieldForInputType(
+						let input = SubmissionUtils.appendSubmittedFieldForInputType(
 							inputType, 
-							fieldKeyAndData.key,
-							fieldKeyAndData.val(), 
+							formHostID,
+							formID,
+							fieldKeyAndData.key, // submission field ID
+							fieldKeyAndData.val(),  // submission field value (what the client wrote or indicated)
+							container,
 						);
-						container.append(input);
 					};
-					onFieldAdded = onFieldAdded.bind(null, container);
+					onFieldAdded = onFieldAdded.bind(null, container, submissionData.formHostID, submissionData.formID);
 					window.firebaseHelper.setOnSubmissionFieldAdded(
 						onFieldAdded, 
 						submissionData.formHostID, 
@@ -105,30 +114,52 @@ export default class SubmissionUtils {
 		// 	});
 		// }
 
-	static getSubmittedFieldForInputType(type, label, value) {
+	static appendSubmittedFieldForInputType(type, formHostID, formID, inputID, value, container) {
 		let result = null;
-		let container = document.createElement('div');
-		let labelContainer = document.createElement('div');
-		labelContainer.innerHTML = label;
-		let valueContainer = document.createElement('div');
-		container.append(labelContainer);
-		container.append(valueContainer);
 
-      	if (type === "shortText" || type === "longText") {
-			valueContainer.innerHTML = value;
-      	}
-      	if (type === "fileInput") {
-            // figure out how to display file input
-      	}
-      	if (type === "staticText") {
-      		// throw error? nobody should have submitted this
-      	}
-      	if (type === "checkboxes") {
-      		// figure out how to show checkboxes
-      	}
-      	if (type === 'selects') {
-      		// figure out how to show selects
-      	}
-      	return container;
+		// get label for input ID
+		SubmissionUtils.getLabelForInput(formHostID, formID, inputID, (label) => {
+			let labelContainer = document.createElement('div');
+			labelContainer.innerHTML = label;
+			let valueContainer = document.createElement('div');
+			container.append(labelContainer);
+			container.append(valueContainer);
+
+	      	if (type === "shortText" || type === "longText") {
+				valueContainer.innerHTML = value;
+	      	}
+	      	if (type === "fileInput") {
+	            // figure out how to display file input
+	      	}
+	      	if (type === "staticText") {
+	      		// throw error? nobody should have submitted this
+	      	}
+	      	if (type === "checkboxes") {
+	      		// figure out how to show checkboxes
+	      	}
+	      	if (type === 'selects') {
+	      		// figure out how to show selects
+	      	}
+	      	// have to append data to container here instead of returning it
+	      	return container;
+		});
+
 	}
+
+
+  	static getLabelForInput(formHostID, formID, submissionKey, callback) {
+	   firebaseHelper.getUserForm(formHostID, formID, (form) => {
+	   		// first, figure out what input ID we're looking for within form
+	   		let inputID = SubmissionUtils.parseInputIDFromSubmissionKey(submissionKey);
+
+	   		// then, using inputID, find input and look for label
+	   		let items = form.items;
+	   		for (let ii = 0; ii < items.length; ii++) {
+	   			if (items[ii].id === inputID) {
+	   				callback(items[ii].label);
+	   			}
+	   		}
+
+	   });
+  }
 }

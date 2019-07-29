@@ -10,7 +10,7 @@ var SubmissionUtils = function () {
 	}
 
 	_createClass(SubmissionUtils, null, [{
-		key: 'renderSubmissions',
+		key: "renderSubmissions",
 
 
 		// render form submissions in given container
@@ -18,16 +18,24 @@ var SubmissionUtils = function () {
 			SubmissionUtils.startSubmissionLiveUpdaters(container, formHostID, formID);
 		}
 	}, {
-		key: 'renderFormMetadata',
+		key: "renderFormMetadata",
 		value: function renderFormMetadata(container, formHostID, formID) {}
 	}, {
-		key: 'parseInputTypeFromSubmissionKey',
+		key: "parseInputTypeFromSubmissionKey",
 		value: function parseInputTypeFromSubmissionKey(fieldKey) {
 			// submission fields have form <inputType>-"id"-<id relative to form>
+			// return input type
 			return fieldKey.split("-")[0];
 		}
 	}, {
-		key: 'startSubmissionLiveUpdaters',
+		key: "parseInputIDFromSubmissionKey",
+		value: function parseInputIDFromSubmissionKey(fieldKey) {
+			// submission fields have form <inputType>-"id"-<id relative to form>
+			// return id relative to form
+			return parseInt(fieldKey.split("-")[2]);
+		}
+	}, {
+		key: "startSubmissionLiveUpdaters",
 		value: function startSubmissionLiveUpdaters(container, formHostID, formID) {
 
 			var onSubmissionAdded = function onSubmissionAdded(submissionData) {
@@ -41,14 +49,15 @@ var SubmissionUtils = function () {
 					var viewFunction = function viewFunction(submissionData, container, event) {
 						// configure logic for closing "view submission" window (clear content)
 						container.empty();
-						var onFieldAdded = function onFieldAdded(container, fieldKeyAndData) {
+						var onFieldAdded = function onFieldAdded(container, formHostID, formID, fieldKeyAndData) {
 							// append field to container
 							var fieldData = fieldKeyAndData.val();
 							var inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
-							var input = SubmissionUtils.getSubmittedFieldForInputType(inputType, fieldKeyAndData.key, fieldKeyAndData.val());
-							container.append(input);
+							var input = SubmissionUtils.appendSubmittedFieldForInputType(inputType, formHostID, formID, fieldKeyAndData.key, // submission field ID
+							fieldKeyAndData.val(), // submission field value (what the client wrote or indicated)
+							container);
 						};
-						onFieldAdded = onFieldAdded.bind(null, container);
+						onFieldAdded = onFieldAdded.bind(null, container, submissionData.formHostID, submissionData.formID);
 						window.firebaseHelper.setOnSubmissionFieldAdded(onFieldAdded, submissionData.formHostID, submissionData.formID, submissionData.submissionID);
 					};
 					viewFunction = viewFunction.bind(null, submissionData, viewSubmissionModalBody);
@@ -105,32 +114,52 @@ var SubmissionUtils = function () {
 		// }
 
 	}, {
-		key: 'getSubmittedFieldForInputType',
-		value: function getSubmittedFieldForInputType(type, label, value) {
+		key: "appendSubmittedFieldForInputType",
+		value: function appendSubmittedFieldForInputType(type, formHostID, formID, inputID, value, container) {
 			var result = null;
-			var container = document.createElement('div');
-			var labelContainer = document.createElement('div');
-			labelContainer.innerHTML = label;
-			var valueContainer = document.createElement('div');
-			container.append(labelContainer);
-			container.append(valueContainer);
 
-			if (type === "shortText" || type === "longText") {
-				valueContainer.innerHTML = value;
-			}
-			if (type === "fileInput") {
-				// figure out how to display file input
-			}
-			if (type === "staticText") {
-				// throw error? nobody should have submitted this
-			}
-			if (type === "checkboxes") {
-				// figure out how to show checkboxes
-			}
-			if (type === 'selects') {
+			// get label for input ID
+			SubmissionUtils.getLabelForInput(formHostID, formID, inputID, function (label) {
+				var labelContainer = document.createElement('div');
+				labelContainer.innerHTML = label;
+				var valueContainer = document.createElement('div');
+				container.append(labelContainer);
+				container.append(valueContainer);
+
+				if (type === "shortText" || type === "longText") {
+					valueContainer.innerHTML = value;
+				}
+				if (type === "fileInput") {
+					// figure out how to display file input
+				}
+				if (type === "staticText") {
+					// throw error? nobody should have submitted this
+				}
+				if (type === "checkboxes") {
+					// figure out how to show checkboxes
+				}
+				if (type === 'selects') {}
 				// figure out how to show selects
-			}
-			return container;
+
+				// have to append data to container here instead of returning it
+				return container;
+			});
+		}
+	}, {
+		key: "getLabelForInput",
+		value: function getLabelForInput(formHostID, formID, submissionKey, callback) {
+			firebaseHelper.getUserForm(formHostID, formID, function (form) {
+				// first, figure out what input ID we're looking for within form
+				var inputID = SubmissionUtils.parseInputIDFromSubmissionKey(submissionKey);
+
+				// then, using inputID, find input and look for label
+				var items = form.items;
+				for (var ii = 0; ii < items.length; ii++) {
+					if (items[ii].id === inputID) {
+						callback(items[ii].label);
+					}
+				}
+			});
 		}
 	}]);
 
