@@ -22,11 +22,13 @@ export default class SubmissionUtils {
 
 			let getViewSubmissionLink = (submissionData) => {
 				let viewLink = document.createElement('a');
+				let viewSubmissionModalBody = $('#viewSubmissionModal .modal-body');
 				viewLink.setAttribute('data-toggle', "modal");
 				viewLink.setAttribute('data-target', '#viewSubmissionModal');
 				viewLink.innerHTML = 'View';
 				let viewFunction = (submissionData, container, event) => {
-					console.log(submissionData);
+					// configure logic for closing "view submission" window (clear content)
+					container.empty();
 					let onFieldAdded = (container, fieldKeyAndData) => {
 						// append field to container
 						let fieldData = fieldKeyAndData.val();
@@ -36,21 +38,17 @@ export default class SubmissionUtils {
 							fieldKeyAndData.key,
 							fieldKeyAndData.val(), 
 						);
-						console.log(input);
 						container.append(input);
-						let test = document.createElement('div');
-						debugger;
-						container.append(test);
 					};
 					onFieldAdded = onFieldAdded.bind(null, container);
 					window.firebaseHelper.setOnSubmissionFieldAdded(
 						onFieldAdded, 
-						submissionData.fields.formHostID, 
-						submissionData.fields.formID, 
+						submissionData.formHostID, 
+						submissionData.formID, 
 						submissionData.submissionID,
 					);
 				}
-				viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal .modal-body'));
+				viewFunction = viewFunction.bind(null, submissionData, viewSubmissionModalBody);
 				viewLink.addEventListener('click', viewFunction);
 				return viewLink;
 			}

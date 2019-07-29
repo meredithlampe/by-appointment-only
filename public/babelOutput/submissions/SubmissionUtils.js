@@ -34,26 +34,24 @@ var SubmissionUtils = function () {
 
 				var getViewSubmissionLink = function getViewSubmissionLink(submissionData) {
 					var viewLink = document.createElement('a');
+					var viewSubmissionModalBody = $('#viewSubmissionModal .modal-body');
 					viewLink.setAttribute('data-toggle', "modal");
 					viewLink.setAttribute('data-target', '#viewSubmissionModal');
 					viewLink.innerHTML = 'View';
 					var viewFunction = function viewFunction(submissionData, container, event) {
-						console.log(submissionData);
+						// configure logic for closing "view submission" window (clear content)
+						container.empty();
 						var onFieldAdded = function onFieldAdded(container, fieldKeyAndData) {
 							// append field to container
 							var fieldData = fieldKeyAndData.val();
 							var inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
 							var input = SubmissionUtils.getSubmittedFieldForInputType(inputType, fieldKeyAndData.key, fieldKeyAndData.val());
-							console.log(input);
 							container.append(input);
-							var test = document.createElement('div');
-							debugger;
-							container.append(test);
 						};
 						onFieldAdded = onFieldAdded.bind(null, container);
-						window.firebaseHelper.setOnSubmissionFieldAdded(onFieldAdded, submissionData.fields.formHostID, submissionData.fields.formID, submissionData.submissionID);
+						window.firebaseHelper.setOnSubmissionFieldAdded(onFieldAdded, submissionData.formHostID, submissionData.formID, submissionData.submissionID);
 					};
-					viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal .modal-body'));
+					viewFunction = viewFunction.bind(null, submissionData, viewSubmissionModalBody);
 					viewLink.addEventListener('click', viewFunction);
 					return viewLink;
 				};
