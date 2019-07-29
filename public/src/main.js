@@ -66,15 +66,22 @@ newFormButton.click(function() {
 
 // cancel create new form
 let cancelNewForm = $('.create-form-cancel').click(function() {
+	// navigate back to main screen
 	$('.create-form').addClass('hidden');
 	$('.home').removeClass('hidden');
+
+	// clear new form page
 	const formInputArea = document.querySelector('.create-form-column');
 	ReactDOM.unmountComponentAtNode(formInputArea);
 });
 
 let cancelViewFormSubmission = $('.view-form-submissions-cancel').click(function() {
+	// navigate back to main screen
 	$('.view-form-submissions').addClass('hidden');
 	$('.home').removeClass('hidden');
+
+	// clear submissions page
+	$('.applicant-submissions-table-body').empty();
 });
 
 /**
