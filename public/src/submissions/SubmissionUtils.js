@@ -31,19 +31,22 @@ export default class SubmissionUtils {
 						// append field to container
 						let fieldData = fieldKeyAndData.val();
 						let inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
-						let input = DragAndDropFormUtils.getInputElementForType(
+						let input = SubmissionUtils.getSubmittedFieldForInputType(
 							inputType, 
 							fieldKeyAndData.key,
 							fieldKeyAndData.val(), 
 						);
 						console.log(input);
 						container.append(input);
+						let test = document.createElement('div');
+						debugger;
+						container.append(test);
 					};
 					onFieldAdded = onFieldAdded.bind(null, container);
 					window.firebaseHelper.setOnSubmissionFieldAdded(
 						onFieldAdded, 
-						submissionData.formHostID, 
-						submissionData.formID, 
+						submissionData.fields.formHostID, 
+						submissionData.fields.formID, 
 						submissionData.submissionID,
 					);
 				}
@@ -104,7 +107,30 @@ export default class SubmissionUtils {
 		// 	});
 		// }
 
-	static getSubmittedFieldForInputType(inputType, label, value) {
+	static getSubmittedFieldForInputType(type, label, value) {
+		let result = null;
+		let container = document.createElement('div');
+		let labelContainer = document.createElement('div');
+		labelContainer.innerHTML = label;
+		let valueContainer = document.createElement('div');
+		container.append(labelContainer);
+		container.append(valueContainer);
 
+      	if (type === "shortText" || type === "longText") {
+			valueContainer.innerHTML = value;
+      	}
+      	if (type === "fileInput") {
+            // figure out how to display file input
+      	}
+      	if (type === "staticText") {
+      		// throw error? nobody should have submitted this
+      	}
+      	if (type === "checkboxes") {
+      		// figure out how to show checkboxes
+      	}
+      	if (type === 'selects') {
+      		// figure out how to show selects
+      	}
+      	return container;
 	}
 }

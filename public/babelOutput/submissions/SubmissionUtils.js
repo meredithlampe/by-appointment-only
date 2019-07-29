@@ -43,12 +43,15 @@ var SubmissionUtils = function () {
 							// append field to container
 							var fieldData = fieldKeyAndData.val();
 							var inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
-							var input = DragAndDropFormUtils.getInputElementForType(inputType, fieldKeyAndData.key, fieldKeyAndData.val());
+							var input = SubmissionUtils.getSubmittedFieldForInputType(inputType, fieldKeyAndData.key, fieldKeyAndData.val());
 							console.log(input);
 							container.append(input);
+							var test = document.createElement('div');
+							debugger;
+							container.append(test);
 						};
 						onFieldAdded = onFieldAdded.bind(null, container);
-						window.firebaseHelper.setOnSubmissionFieldAdded(onFieldAdded, submissionData.formHostID, submissionData.formID, submissionData.submissionID);
+						window.firebaseHelper.setOnSubmissionFieldAdded(onFieldAdded, submissionData.fields.formHostID, submissionData.fields.formID, submissionData.submissionID);
 					};
 					viewFunction = viewFunction.bind(null, submissionData, $('#viewSubmissionModal .modal-body'));
 					viewLink.addEventListener('click', viewFunction);
@@ -105,7 +108,32 @@ var SubmissionUtils = function () {
 
 	}, {
 		key: 'getSubmittedFieldForInputType',
-		value: function getSubmittedFieldForInputType(inputType, label, value) {}
+		value: function getSubmittedFieldForInputType(type, label, value) {
+			var result = null;
+			var container = document.createElement('div');
+			var labelContainer = document.createElement('div');
+			labelContainer.innerHTML = label;
+			var valueContainer = document.createElement('div');
+			container.append(labelContainer);
+			container.append(valueContainer);
+
+			if (type === "shortText" || type === "longText") {
+				valueContainer.innerHTML = value;
+			}
+			if (type === "fileInput") {
+				// figure out how to display file input
+			}
+			if (type === "staticText") {
+				// throw error? nobody should have submitted this
+			}
+			if (type === "checkboxes") {
+				// figure out how to show checkboxes
+			}
+			if (type === 'selects') {
+				// figure out how to show selects
+			}
+			return container;
+		}
 	}]);
 
 	return SubmissionUtils;
