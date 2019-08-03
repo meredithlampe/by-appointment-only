@@ -8,6 +8,10 @@
 
  webpack -w babelOutput/main.js --debug -o webpackOutput/main.bundle.js
 
+### SCSS
+
+ sass --watch scss/custom.scss css/custom.css
+
  ~~viewForm~~
 
  ## BABEL
@@ -24,3 +28,7 @@
   - edit form while its published, updates aren't reflected in form
   - delete form should delete from public database path
   - unpublished forms still visible at public url?
+	- edit invidividual fields, modal doesn't update properly when editing one field after the other
+	- in 'view form' let host view form no matter if its published or not?
+	- spinner on view form page while form loads
+	- spinner after submitting form

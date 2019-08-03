@@ -9,9 +9,16 @@ class EditModal extends React.Component {
   constructor(props) {
     super(props);
     let item = props.item;
+    this.props = props;
     this.state = { 
       item: props.item, 
     };
+
+    let onCloseFunction = function (props, e) {
+      props.onClose();
+    };
+    onCloseFunction = onCloseFunction.bind(null, props);
+    $('#editFormComponentModal').on('hidden.bs.modal', onCloseFunction);
   }
 
   getHelpTextForField(field) {
@@ -61,7 +68,7 @@ class EditModal extends React.Component {
                 }) : null}
               </div>
         <div className="modal-footer">
-          <Button data-dismiss="modal" onClick={this.props.onClose}>Close</Button>
+          <Button data-dismiss="modal">Close</Button>
           <Button data-dismiss="modal" onClick={() => {this.props.onSave(this.state.item)}} bsStyle="primary">Save changes</Button>
         </div>
       </div>

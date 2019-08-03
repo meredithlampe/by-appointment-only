@@ -125,6 +125,7 @@ var SubmissionUtils = function () {
 			// get label for input ID
 			SubmissionUtils.getLabelForInput(formHostID, formID, inputID, function (label) {
 				var labelContainer = document.createElement('div');
+				labelContainer.className = "submission-field-label";
 				labelContainer.innerHTML = label;
 				var valueContainer = document.createElement('div');
 				container.append(labelContainer);
@@ -138,6 +139,7 @@ var SubmissionUtils = function () {
 				}
 				if (type === "staticText") {
 					// throw error? nobody should have submitted this
+					// but at least we could show it here? for context?
 				}
 				if (type === "checkboxes") {
 					// figure out how to show checkboxes

@@ -124,6 +124,7 @@ export default class SubmissionUtils {
 		// get label for input ID
 		SubmissionUtils.getLabelForInput(formHostID, formID, inputID, (label) => {
 			let labelContainer = document.createElement('div');
+			labelContainer.className= "submission-field-label";
 			labelContainer.innerHTML = label;
 			let valueContainer = document.createElement('div');
 			container.append(labelContainer);
@@ -137,6 +138,7 @@ export default class SubmissionUtils {
 	      	}
 	      	if (type === "staticText") {
 	      		// throw error? nobody should have submitted this
+	      		// but at least we could show it here? for context?
 	      	}
 	      	if (type === "checkboxes") {
 	      		// figure out how to show checkboxes

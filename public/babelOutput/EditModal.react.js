@@ -22,9 +22,16 @@ var EditModal = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (EditModal.__proto__ || Object.getPrototypeOf(EditModal)).call(this, props));
 
     var item = props.item;
+    _this.props = props;
     _this.state = {
       item: props.item
     };
+
+    var onCloseFunction = function onCloseFunction(props, e) {
+      props.onClose();
+    };
+    onCloseFunction = onCloseFunction.bind(null, props);
+    $('#editFormComponentModal').on('hidden.bs.modal', onCloseFunction);
     return _this;
   }
 
@@ -102,7 +109,7 @@ var EditModal = function (_React$Component) {
           { className: 'modal-footer' },
           React.createElement(
             Button,
-            { 'data-dismiss': 'modal', onClick: this.props.onClose },
+            { 'data-dismiss': 'modal' },
             'Close'
           ),
           React.createElement(
