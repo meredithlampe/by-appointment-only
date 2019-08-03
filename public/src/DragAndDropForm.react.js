@@ -67,6 +67,12 @@ export class DragAndDropForm extends React.Component {
     }
   }
 
+  componentDidMount() {
+    // configure preview link
+    let previewLink = $('.preview-form-link');
+    previewLink.attr("href", "/viewForm/viewForm.html?u=" + this.firebaseHelper.getCurrentUserID() + "&name=" + this.databaseID);
+  }
+
  onDragEnd(result) {
     // dropped outside the list
     if (!result.destination) {
@@ -219,18 +225,20 @@ export class DragAndDropForm extends React.Component {
 
 	showPreview() {
 		// construct form preview
-		const formPreviewArea = document.querySelector('.applicant-forms-preview-form');
-		let props = {
-			formID: this.databaseID,
-			formHostID: this.firebaseHelper.getCurrentUserID(),
-			firebaseHelper: this.firebaseHelper,
-			onClose: this.hidePreview,
-		};
-		ReactDOM.render(React.createElement(FormPreview, props), formPreviewArea);
+		// const formPreviewArea = document.querySelector('.applicant-forms-preview-form');
+		// let props = {
+		// 	formID: this.databaseID,
+		// 	formHostID: this.firebaseHelper.getCurrentUserID(),
+		// 	firebaseHelper: this.firebaseHelper,
+		// 	onClose: this.hidePreview,
+		// };
+		// ReactDOM.render(React.createElement(ViewForm, props), formPreviewArea);
+		// go to http://localhost:5000/viewForm/viewForm.html?u=As3xH2RCU0d5D5ZArsTGOhIesBc2&name=As3xH2RCU0d5D5ZArsTGOhIesBc21550559958606
+		s
 
 		// show preview
-		$('.create-form').hide();
-		$('.applicant-forms-preview-form').show();
+		// $('.create-form').hide();
+		// $('.applicant-forms-preview-form').show();
 	}
 	hidePreview() {
 		$('.applicant-forms-preview-form').hide();	
@@ -378,12 +386,13 @@ export class DragAndDropForm extends React.Component {
 							</div>
 						</small>
 						<div style={{float: "right"}}>
-							<button 
-								onClick={this.showPreview}
+							<a
 								className="preview-form-link btn btn-outline btn-default" 
+								target="_blank"
+								href=""
 								style={{display: "inline", marginLeft: 15}}>
 									Preview
-							</button>
+							</a>
 							<button disabled={!this.formHasPendingChanges()} onClick={this.saveForm} type="button" className="save-form-button btn btn-primary">Save</button>
 						</div>
 					</h4>

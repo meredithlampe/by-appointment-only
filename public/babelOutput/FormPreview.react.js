@@ -44,7 +44,6 @@ var FormPreview = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      console.log("rendering form preview");
       var content = React.createElement(
         'div',
         null,

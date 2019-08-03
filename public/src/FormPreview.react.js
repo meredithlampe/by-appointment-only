@@ -25,7 +25,6 @@ class FormPreview extends React.Component {
   }
 
   render() {
-    console.log("rendering form preview");
     let content = <div>loading</div>;
     if (!this.state.loading) {
       let items = this.state.items;

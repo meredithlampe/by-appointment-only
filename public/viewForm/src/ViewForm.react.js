@@ -2,7 +2,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 import DragAndDropFormUtils from '../../babelOutput/DragAndDropFormUtils.js';
 
-// drag and drop form creation for client forms
 export class ViewForm extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +17,7 @@ export class ViewForm extends React.Component {
      	this.setState({
      		items: formData.items,
      	});
-     }); 
+     });
 
      // bind handlers
      this.handleFileUpload = this.handleFileUpload.bind(this);

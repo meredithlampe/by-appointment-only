@@ -89,6 +89,13 @@ export var DragAndDropForm = function (_React$Component) {
 	}
 
 	_createClass(DragAndDropForm, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			// configure preview link
+			var previewLink = $('.preview-form-link');
+			previewLink.attr("href", "/viewForm/viewForm.html?u=" + this.firebaseHelper.getCurrentUserID() + "&name=" + this.databaseID);
+		}
+	}, {
 		key: 'onDragEnd',
 		value: function onDragEnd(result) {
 			// dropped outside the list
@@ -253,18 +260,20 @@ export var DragAndDropForm = function (_React$Component) {
 		key: 'showPreview',
 		value: function showPreview() {
 			// construct form preview
-			var formPreviewArea = document.querySelector('.applicant-forms-preview-form');
-			var props = {
-				formID: this.databaseID,
-				formHostID: this.firebaseHelper.getCurrentUserID(),
-				firebaseHelper: this.firebaseHelper,
-				onClose: this.hidePreview
-			};
-			ReactDOM.render(React.createElement(FormPreview, props), formPreviewArea);
+			// const formPreviewArea = document.querySelector('.applicant-forms-preview-form');
+			// let props = {
+			// 	formID: this.databaseID,
+			// 	formHostID: this.firebaseHelper.getCurrentUserID(),
+			// 	firebaseHelper: this.firebaseHelper,
+			// 	onClose: this.hidePreview,
+			// };
+			// ReactDOM.render(React.createElement(ViewForm, props), formPreviewArea);
+			// go to http://localhost:5000/viewForm/viewForm.html?u=As3xH2RCU0d5D5ZArsTGOhIesBc2&name=As3xH2RCU0d5D5ZArsTGOhIesBc21550559958606
+			s;
 
 			// show preview
-			$('.create-form').hide();
-			$('.applicant-forms-preview-form').show();
+			// $('.create-form').hide();
+			// $('.applicant-forms-preview-form').show();
 		}
 	}, {
 		key: 'hidePreview',
@@ -455,10 +464,11 @@ export var DragAndDropForm = function (_React$Component) {
 											'div',
 											{ style: { float: "right" } },
 											React.createElement(
-												'button',
+												'a',
 												{
-													onClick: _this4.showPreview,
 													className: 'preview-form-link btn btn-outline btn-default',
+													target: '_blank',
+													href: '',
 													style: { display: "inline", marginLeft: 15 } },
 												'Preview'
 											),
