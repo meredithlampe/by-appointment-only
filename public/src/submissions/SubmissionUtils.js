@@ -3,7 +3,11 @@ import DragAndDropFormUtils from '../../babelOutput/DragAndDropFormUtils.js';
 export default class SubmissionUtils {
 
 	// render form submissions in given container
-	static renderSubmissions(container, formHostID, formID) {
+	static renderSubmissions(container, formHostID, formID, formName) {
+		// update header
+		$('.view-submissions-subheader').html('Submissions from <b>' + formName + '</b>');
+
+		// populate table of submissions
 		SubmissionUtils.startSubmissionLiveUpdaters(container, formHostID, formID);
 	}
 

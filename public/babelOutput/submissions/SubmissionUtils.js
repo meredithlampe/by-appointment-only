@@ -10,32 +10,36 @@ var SubmissionUtils = function () {
 	}
 
 	_createClass(SubmissionUtils, null, [{
-		key: "renderSubmissions",
+		key: 'renderSubmissions',
 
 
 		// render form submissions in given container
-		value: function renderSubmissions(container, formHostID, formID) {
+		value: function renderSubmissions(container, formHostID, formID, formName) {
+			// update header
+			$('.view-submissions-subheader').html('Submissions from <b>' + formName + '</b>');
+
+			// populate table of submissions
 			SubmissionUtils.startSubmissionLiveUpdaters(container, formHostID, formID);
 		}
 	}, {
-		key: "renderFormMetadata",
+		key: 'renderFormMetadata',
 		value: function renderFormMetadata(container, formHostID, formID) {}
 	}, {
-		key: "parseInputTypeFromSubmissionKey",
+		key: 'parseInputTypeFromSubmissionKey',
 		value: function parseInputTypeFromSubmissionKey(fieldKey) {
 			// submission fields have form <inputType>-"id"-<id relative to form>
 			// return input type
 			return fieldKey.split("-")[0];
 		}
 	}, {
-		key: "parseInputIDFromSubmissionKey",
+		key: 'parseInputIDFromSubmissionKey',
 		value: function parseInputIDFromSubmissionKey(fieldKey) {
 			// submission fields have form <inputType>-"id"-<id relative to form>
 			// return id relative to form
 			return parseInt(fieldKey.split("-")[2]);
 		}
 	}, {
-		key: "startSubmissionLiveUpdaters",
+		key: 'startSubmissionLiveUpdaters',
 		value: function startSubmissionLiveUpdaters(container, formHostID, formID) {
 
 			var onSubmissionAdded = function onSubmissionAdded(submissionData) {
@@ -114,7 +118,7 @@ var SubmissionUtils = function () {
 		// }
 
 	}, {
-		key: "appendSubmittedFieldForInputType",
+		key: 'appendSubmittedFieldForInputType',
 		value: function appendSubmittedFieldForInputType(type, formHostID, formID, inputID, value, container) {
 			var result = null;
 
@@ -146,7 +150,7 @@ var SubmissionUtils = function () {
 			});
 		}
 	}, {
-		key: "getLabelForInput",
+		key: 'getLabelForInput',
 		value: function getLabelForInput(formHostID, formID, submissionKey, callback) {
 			firebaseHelper.getUserForm(formHostID, formID, function (form) {
 				// first, figure out what input ID we're looking for within form

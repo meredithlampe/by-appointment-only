@@ -260,7 +260,7 @@ function startFormsLiveUpdaters() {
 		let linkFunction = (id, name, event) => {
 			$('.home').addClass('hidden');
 			$('.view-form-submissions').removeClass('hidden');
-			SubmissionUtils.renderSubmissions($('.view-form-submissions'), currentUID, id);
+			SubmissionUtils.renderSubmissions($('.view-form-submissions'), currentUID, id, name);
 		}
 		linkFunction = linkFunction.bind(null, formData.id, formData.name);
 		link.addEventListener('click', linkFunction);
