@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // try to fetch form from firebase
     firebaseHelper.getPublicUserForm(user, formName, function(formData) {
 
+        $('.loading-form').html('');
+
     	// header
     	$('.form-header').html(formData.name);
         $('#form-id-input-hidden').attr('value', formData.id);

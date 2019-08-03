@@ -30,5 +30,6 @@
   - unpublished forms still visible at public url?
 	- edit invidividual fields, modal doesn't update properly when editing one field after the other
 	- in 'view form' let host view form no matter if its published or not?
+	- "please save before you preview"
 	- spinner on view form page while form loads
 	- spinner after submitting form

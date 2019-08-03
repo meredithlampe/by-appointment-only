@@ -10,7 +10,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 import DragAndDropFormUtils from '../../babelOutput/DragAndDropFormUtils.js';
 
-// drag and drop form creation for client forms
 export var ViewForm = function (_React$Component) {
   _inherits(ViewForm, _React$Component);
 
