@@ -441,15 +441,23 @@ export var DragAndDropForm = function (_React$Component) {
 											background: snapshot.isDraggingOver ? '#eaf7ed' : 'white'
 										} },
 									React.createElement(
-										'h4',
-										null,
-										_this4.state.name,
+										'div',
+										{ className: 'row d-flex' },
 										React.createElement(
-											'small',
-											{ style: { marginLeft: 20 } },
+											'div',
+											{ className: 'form-title' },
+											React.createElement(
+												'h4',
+												null,
+												_this4.state.name
+											)
+										),
+										React.createElement(
+											'div',
+											{ className: 'form-controls-container' },
 											React.createElement(
 												'div',
-												{ style: { display: "inline" },
+												{ className: 'rename-form-link',
 													onClick: _this4.openModalRenameForm,
 													'data-toggle': 'modal',
 													'data-target': '#renameFormModal' },
@@ -458,18 +466,12 @@ export var DragAndDropForm = function (_React$Component) {
 													null,
 													'Rename'
 												)
-											)
-										),
-										React.createElement(
-											'div',
-											{ style: { float: "right" } },
+											),
 											React.createElement(
 												'a',
-												{
-													className: 'preview-form-link btn btn-outline btn-default',
+												{ className: 'preview-form-link btn btn-outline-secondary',
 													target: '_blank',
-													href: '',
-													style: { display: "inline", marginLeft: 15 } },
+													href: '' },
 												'Preview'
 											),
 											React.createElement(

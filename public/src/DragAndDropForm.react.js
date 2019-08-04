@@ -375,27 +375,24 @@ export class DragAndDropForm extends React.Component {
 					  background: snapshot.isDraggingOver ? '#eaf7ed' : 'white',
 					}
 					}>
-					<h4>
-						{this.state.name}
-						<small style={{marginLeft: 20}}>
-							<div style={{display: "inline"}}
+					<div className="row d-flex">
+						<div className="form-title"><h4>{this.state.name}</h4></div>
+						<div className="form-controls-container">
+							<div className="rename-form-link"
 								onClick={this.openModalRenameForm}
 								data-toggle="modal"
 								data-target="#renameFormModal">
 								<a>Rename</a>
 							</div>
-						</small>
-						<div style={{float: "right"}}>
-							<a
-								className="preview-form-link btn btn-outline btn-default" 
+							<a className="preview-form-link btn btn-outline-secondary" 
 								target="_blank"
-								href=""
-								style={{display: "inline", marginLeft: 15}}>
-									Preview
+								href="">
+								Preview
 							</a>
 							<button disabled={!this.formHasPendingChanges()} onClick={this.saveForm} type="button" className="save-form-button btn btn-primary">Save</button>
 						</div>
-					</h4>
+
+					</div>
 				<form>
 					{this.state.items.length === 0 ? 
 						<div className="drag-components-here">

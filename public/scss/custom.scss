@@ -34,7 +34,8 @@ a {
 }
 
 .save-form-button {
-	margin-left: 20px;
+	margin-left: 10px;
+	height: fit-content;
 }
 
 .form-component-label {
@@ -60,6 +61,33 @@ a {
 .form-component-edit-delete-move-icons-container {
 }
 
+.form-preview-save-container {
+	display: inline;
+}
+
+.form-controls-container {
+	display: flex;
+	flex-basis: 50%;
+	justify-content: flex-end;
+	height:  fit-content;
+}
+
+.form-title {
+	display: flex;
+	flex-basis: 50%;
+}
+
+.rename-form-link {
+	margin-left: 10px;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+}
+
+.preview-form-link {
+	margin-left: 10px;
+	height: fit-content;
+}
 
 .loader {
 	border: 8px solid #f3f3f3;
