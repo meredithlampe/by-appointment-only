@@ -81,7 +81,6 @@ var EditModal = function (_React$Component) {
             'Change the fields below to see how the form element will look above.'
           ),
           editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(function (editableField) {
-            debugger;
             var helpText = _this2.getHelpTextForField(editableField);
             var onInputChange = function onInputChange(event) {
               var newValue = event.nativeEvent.target.value;

@@ -33,8 +33,23 @@ export default class FirebaseHelper {
     return test;
   }
 
-  saveForm(formData) {
-	   return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + formData.id).set(formData);
+  saveForm(formData, callback = null) {
+	   let savedForm = this.database.ref('forms/' + this.auth.currentUser.uid + '/' + formData.id)
+      .set(formData, (error) => {
+        if (error) {
+          // do something
+        } else {
+          // update published form
+          getCurrentUserForm(formData.id, (newFormData) => {
+            if (newFormData.published) {
+              // update published form
+              let path = this.getFormPathForUserAndFormID(this.auth.currentUser.uid, newFormData.id);
+              const formRef = this.database.ref('/forms/' + formPath);
+              this.updatePublishedForm(path, formRef, callback);
+            }
+          });
+        }
+      });
   }
 
   removeForm(id) {
@@ -67,8 +82,12 @@ export default class FirebaseHelper {
     this.getUserForm(this.auth.currentUser.uid, id, callback);
   }
 
+  getFormPathForUserAndFormID(formHostID, formID) {
+    return formHostID + '/' + formID;
+  }
+
   publishForm(id, onFinish) {
-    let formPath = this.auth.currentUser.uid + '/' + id;
+    let formPath = this.getFormPathForUserAndFormID(this.auth.currentUser.uid, id);
 
     // generate URL to publish form at
     let formURL = 'viewForm/viewForm.html?u=' + this.auth.currentUser.uid + "&name=" + id;
@@ -76,15 +95,17 @@ export default class FirebaseHelper {
     // set form status to published
     const formRef = this.database.ref('/forms/' + formPath);
     formRef.update({'publishStatus': 'published', 'publishURL': formURL});
+    this.updatePublishedForm(formPath, formRef, onFinish);
+  }
 
+  updatePublishedForm(formPath, formRef, callback) {
     // add form to list of publish forms
     let setPublicForm = function(onFinish, snapshot) {
       this.database.ref('public/' + formPath).set(snapshot.val());
       onFinish(snapshot.val());  
     };
-    setPublicForm = setPublicForm.bind(this, onFinish);
-    formRef.once('value').then(setPublicForm);
-    
+    setPublicForm = setPublicForm.bind(this, callback);
+    formRef.once('value').then(setPublicForm);     
   }
 
   unpublishForm(id, onFinish) {
@@ -150,5 +171,11 @@ export default class FirebaseHelper {
     });
   }
 
+  getFileForForm(formHostId, formID, submissionID, inputId, callback) {
+    const storageRef = firebase.storage().ref();
+    const fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
+    debugger;
+    fileRef.getDownloadURL().then((url) => {callback(url); });
+  }
   
 }

@@ -25,7 +25,6 @@ function showForm(formData, user, firebaseHelper, isUnpublished = false) {
     if (isUnpublished) {
         // show notice that form isn't published
         $('.view-form-unpublished-alert').removeAttr("hidden");
-
     }
 
     // body

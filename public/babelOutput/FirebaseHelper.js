@@ -44,7 +44,25 @@ var FirebaseHelper = function () {
   }, {
     key: 'saveForm',
     value: function saveForm(formData) {
-      return this.database.ref('forms/' + this.auth.currentUser.uid + '/' + formData.id).set(formData);
+      var _this = this;
+
+      var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+      var savedForm = this.database.ref('forms/' + this.auth.currentUser.uid + '/' + formData.id).set(formData, function (error) {
+        if (error) {
+          // do something
+        } else {
+          // update published form
+          getCurrentUserForm(formData.id, function (newFormData) {
+            if (newFormData.published) {
+              // update published form
+              var path = _this.getFormPathForUserAndFormID(_this.auth.currentUser.uid, newFormData.id);
+              var formRef = _this.database.ref('/forms/' + formPath);
+              _this.updatePublishedForm(path, formRef, callback);
+            }
+          });
+        }
+      });
     }
   }, {
     key: 'removeForm',
@@ -82,9 +100,14 @@ var FirebaseHelper = function () {
       this.getUserForm(this.auth.currentUser.uid, id, callback);
     }
   }, {
+    key: 'getFormPathForUserAndFormID',
+    value: function getFormPathForUserAndFormID(formHostID, formID) {
+      return formHostID + '/' + formID;
+    }
+  }, {
     key: 'publishForm',
     value: function publishForm(id, onFinish) {
-      var formPath = this.auth.currentUser.uid + '/' + id;
+      var formPath = this.getFormPathForUserAndFormID(this.auth.currentUser.uid, id);
 
       // generate URL to publish form at
       var formURL = 'viewForm/viewForm.html?u=' + this.auth.currentUser.uid + "&name=" + id;
@@ -92,13 +115,17 @@ var FirebaseHelper = function () {
       // set form status to published
       var formRef = this.database.ref('/forms/' + formPath);
       formRef.update({ 'publishStatus': 'published', 'publishURL': formURL });
-
+      this.updatePublishedForm(formPath, formRef, onFinish);
+    }
+  }, {
+    key: 'updatePublishedForm',
+    value: function updatePublishedForm(formPath, formRef, callback) {
       // add form to list of publish forms
       var setPublicForm = function setPublicForm(onFinish, snapshot) {
         this.database.ref('public/' + formPath).set(snapshot.val());
         onFinish(snapshot.val());
       };
-      setPublicForm = setPublicForm.bind(this, onFinish);
+      setPublicForm = setPublicForm.bind(this, callback);
       formRef.once('value').then(setPublicForm);
     }
   }, {
@@ -167,6 +194,16 @@ var FirebaseHelper = function () {
       var fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
       fileRef.put(file).then(function (snapshot) {
         callback(snapshot);
+      });
+    }
+  }, {
+    key: 'getFileForForm',
+    value: function getFileForForm(formHostId, formID, submissionID, inputId, callback) {
+      var storageRef = firebase.storage().ref();
+      var fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
+      debugger;
+      fileRef.getDownloadURL().then(function (url) {
+        callback(url);
       });
     }
   }]);

@@ -64,8 +64,6 @@ export var DragAndDropForm = function (_React$Component) {
 		_this.hideModalDeleteComponent = _this.hideModalDeleteComponent.bind(_this);
 		_this.setFormName = _this.setFormName.bind(_this);
 		_this.saveForm = _this.saveForm.bind(_this);
-		_this.showPreview = _this.showPreview.bind(_this);
-		_this.hidePreview = _this.hidePreview.bind(_this);
 
 		// get items in form from databae
 		if (!props.newForm) {
@@ -255,33 +253,6 @@ export var DragAndDropForm = function (_React$Component) {
 		key: 'setFormName',
 		value: function setFormName(name) {
 			this.setState({ name: name });
-		}
-	}, {
-		key: 'showPreview',
-		value: function showPreview() {
-			// construct form preview
-			// const formPreviewArea = document.querySelector('.applicant-forms-preview-form');
-			// let props = {
-			// 	formID: this.databaseID,
-			// 	formHostID: this.firebaseHelper.getCurrentUserID(),
-			// 	firebaseHelper: this.firebaseHelper,
-			// 	onClose: this.hidePreview,
-			// };
-			// ReactDOM.render(React.createElement(ViewForm, props), formPreviewArea);
-			// go to http://localhost:5000/viewForm/viewForm.html?u=As3xH2RCU0d5D5ZArsTGOhIesBc2&name=As3xH2RCU0d5D5ZArsTGOhIesBc21550559958606
-			s;
-
-			// show preview
-			// $('.create-form').hide();
-			// $('.applicant-forms-preview-form').show();
-		}
-	}, {
-		key: 'hidePreview',
-		value: function hidePreview() {
-			$('.applicant-forms-preview-form').hide();
-			$('.create-form').show();
-			var formPreviewArea = document.querySelector('.applicant-forms-preview-form');
-			ReactDOM.unmountComponentAtNode(formInputArea);
 		}
 	}, {
 		key: 'getItemForId',

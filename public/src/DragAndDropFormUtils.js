@@ -54,13 +54,19 @@ export default class DragAndDropFormUtils {
       		</textarea>);
       	}
       	if (type === "fileInput") {
-            result = (<input
-				onChange={handleSelectedFile}
-				onClick={handleFileUpload}
-            	name={"fileInput" + inputID} 
-            	disabled={disabled} 
-            	required={required}
-            	id={inputID} type="file"/>);
+      		// wrapping file input in a div so that it line breaks
+            result = (
+            	<div>
+	            	<input
+						onChange={handleSelectedFile}
+						onClick={handleFileUpload}
+		            	name={"fileInput" + inputID} 
+		            	disabled={disabled} 
+		            	required={required}
+		            	id={inputID} type="file"
+		            />
+		         </div>
+		     );
       	}
       	if (type === "staticText") {
       		result = null; // static text is just the label

@@ -62,13 +62,19 @@ var DragAndDropFormUtils = function () {
 					placeholder: placeholder });
 			}
 			if (type === "fileInput") {
-				result = React.createElement('input', {
-					onChange: handleSelectedFile,
-					onClick: handleFileUpload,
-					name: "fileInput" + inputID,
-					disabled: disabled,
-					required: required,
-					id: inputID, type: 'file' });
+				// wrapping file input in a div so that it line breaks
+				result = React.createElement(
+					'div',
+					null,
+					React.createElement('input', {
+						onChange: handleSelectedFile,
+						onClick: handleFileUpload,
+						name: "fileInput" + inputID,
+						disabled: disabled,
+						required: required,
+						id: inputID, type: 'file'
+					})
+				);
 			}
 			if (type === "staticText") {
 				result = null; // static text is just the label

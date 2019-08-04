@@ -49,8 +49,6 @@ var SubmissionUtils = function () {
 	}, {
 		key: 'startSubmissionLiveUpdaters',
 		value: function startSubmissionLiveUpdaters(container, formHostID, formID) {
-			console.log("in submission live updates");
-
 			var onSubmissionAdded = function onSubmissionAdded(submissionData) {
 
 				var getViewSubmissionLink = function getViewSubmissionLink(submissionData) {
@@ -116,7 +114,10 @@ var SubmissionUtils = function () {
 												valueContainer.innerHTML = submissionData.fields[keys[ii]];
 											}
 											if (type === "fileInput") {
-												valueContainer.innerHTML = "File unavailable";
+												window.firebaseHelper.getFileForForm(formHostID, formID, submissionData.id, keys[ii], function (url) {
+													console.log(url);
+													valueContainer.innerHTML = url;
+												});
 											}
 											if (type === "staticText") {
 												// return nothing here --  we just show the label
@@ -130,7 +131,6 @@ var SubmissionUtils = function () {
 					};
 					viewFunction = viewFunction.bind(null, submissionData, viewSubmissionModalBody);
 					viewLink.addEventListener('click', viewFunction);
-					console.log("returning view link");
 					return viewLink;
 				};
 
@@ -157,7 +157,6 @@ var SubmissionUtils = function () {
 				tableRow.addClass('odd gradeX');
 				tableRow.addClass('submission-table-row-' + submissionData.id);
 
-				console.log("appending submission td");
 				tableRow.append("<td>" + submissionData.date + "</td>");
 				tableRow.append(notesTd);
 				tableRow.append(viewTd);

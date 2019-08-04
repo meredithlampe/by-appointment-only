@@ -190,8 +190,14 @@ function startFormsLiveUpdaters() {
 			// set body of modal
 			let modal = $('#unpublishFormModal');
 			let body = modal.find('.modal-body');
+			let footer = modal.find('.modal-footer');
 			body.html('Unpublish <b>' + name + '</b>? This will deactivate any links to the form.');
-			let submitButton = modal.find('.unpublish-form-button');
+
+			// create unpublish button
+			let submitButton = document.createElement('button');
+			submitButton.innerHTML = 'Unpublish';
+			submitButton.className = "btn btn-primary unpublish-form-button";
+			submitButton.setAttribute("type", "button");
 			let submitFunction = (id) => {
 				// clear out this modal
 				let modal = $('#unpublishFormModal');
@@ -214,7 +220,9 @@ function startFormsLiveUpdaters() {
 				});
 			}
 			submitFunction = submitFunction.bind(null, id);
+			submitButton = $(submitButton);
 			submitButton.click(submitFunction);
+			footer.append(submitButton);
 		}
 		linkFunction = linkFunction.bind(null, formData.id, formData.name);
 		link.addEventListener('click', linkFunction);
@@ -270,9 +278,13 @@ function startFormsLiveUpdaters() {
 	let getOkButtonToDismissModal = (modalId) => {
 		let okButton = $(document.createElement('button'));
 		okButton.html('OK');
+    	$(modalId).on('hidden.bs.modal', (e) => {
+			// remove this button after its clicked
+			$('.ok-dismiss-unpublish-modal').remove();
+		});
 		okButton.click(null);
 		okButton.prop('disabled', false);
-		okButton.addClass('btn btn-primary');
+		okButton.addClass('btn btn-primary ok-dismiss-unpublish-modal');
 		okButton.attr('data-dismiss', "modal");
 		okButton.attr('data-target', modalId);
 		return okButton;		
