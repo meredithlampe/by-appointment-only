@@ -21,9 +21,11 @@ export class ViewForm extends React.Component {
       } else {
          // form not found. possibly because form hasn't been published.
         // check if viewer is form host
-        this.firebaseHelper.getCurrentUserForm(formName, function(formData) {
+        this.firebaseHelper.getCurrentUserForm(props.id, (formData) => {
             if (formData) {
-                showForm(formData, user, firebaseHelper, true);                    
+              this.setState({
+                items: formData.items,
+              });                  
             } else {
                 // show error message
             }

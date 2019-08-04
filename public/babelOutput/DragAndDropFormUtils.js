@@ -70,16 +70,11 @@ var DragAndDropFormUtils = function () {
 					id: inputID, type: 'file' });
 			}
 			if (type === "staticText") {
-				result = React.createElement(
-					'p',
-					{ id: inputID },
-					placeholder
-				);
+				result = null; // static text is just the label
 			}
 			if (type === "checkboxes") {
 				var checkboxFunc = function checkboxFunc(inputID, option, index) {
 					var checkboxName = "checkbox" + inputID + ":" + index;
-					console.log(checkboxName);
 					return React.createElement(
 						'div',
 						null,

@@ -62,28 +62,25 @@ export default class DragAndDropFormUtils {
             	id={inputID} type="file"/>);
       	}
       	if (type === "staticText") {
-      		result = (<p id={inputID}>
-      				{placeholder}
-      			</p>);
+      		result = null; // static text is just the label
       	}
       	if (type === "checkboxes") {
       		let checkboxFunc = (inputID, option, index) => {
-      					let checkboxName = "checkbox" + inputID + ":" + index;
-      					console.log(checkboxName);
-      					return (
-			        		<div>
-			                    <input 
-			                    	name={checkboxName}
-			                    	className="form-check-input" 
-			                    	id={inputID} 
-			                    	type="checkbox" 
-			                    	value={option}/>
-			                    <label className="form-check-label" htmlFor={inputID}>
-			                    	{option}
-			                    </label>
-			                </div>
-			             );
-			         };
+				let checkboxName = "checkbox" + inputID + ":" + index;
+				return (
+	        		<div>
+	                    <input 
+	                    	name={checkboxName}
+	                    	className="form-check-input" 
+	                    	id={inputID} 
+	                    	type="checkbox" 
+	                    	value={option}/>
+	                    <label className="form-check-label" htmlFor={inputID}>
+	                    	{option}
+	                    </label>
+	                </div>
+	             );
+	         };
 			checkboxFunc = checkboxFunc.bind(null, inputID);
       		result = (
       			<div className="form-check" id={inputID}>
