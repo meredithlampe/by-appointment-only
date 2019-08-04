@@ -30,27 +30,25 @@ export default class DragAndDropFormUtils {
 		handleFileUpload = null,
 	) {
 		let placeholder = item.placeholder;
-		let inputId = item.inputId;
 		let type = item.inputType;
-		let id = inputId;
 		let result = null;
       	if (type === "shortText") {
 			result = (<input 
-				name={"shortText" + inputId}
+				name={"shortText" + inputID}
 				disabled={disabled}
 				required={required} 
 				className="form-control" 
-				id={id} aria-describedby="emailHelp" 
+				id={inputID} aria-describedby="emailHelp" 
 				placeholder={placeholder}/>
 			);
       	}
       	if (type === "longText") {
       		result = (<textarea 
-      			name={"longText" + inputId}
+      			name={"longText" + inputID}
       			disabled={disabled} 
       			required={required}
       			className="form-control" 
-      			id={id} rows="3" 
+      			id={inputID} rows="3" 
       			placeholder={placeholder}>
       		</textarea>);
       	}
@@ -58,42 +56,46 @@ export default class DragAndDropFormUtils {
             result = (<input
 				onChange={handleSelectedFile}
 				onClick={handleFileUpload}
-            	name={"fileInput" + inputId} 
+            	name={"fileInput" + inputID} 
             	disabled={disabled} 
             	required={required}
-            	id={id} type="file"/>);
+            	id={inputID} type="file"/>);
       	}
       	if (type === "staticText") {
-      		result = (<p id={id}>
+      		result = (<p id={inputID}>
       				{placeholder}
       			</p>);
       	}
       	if (type === "checkboxes") {
-      		result = (
-      			<div className="form-check" id={id}>
-      				{
-      				item.options.map((option, index) => {
+      		let checkboxFunc = (inputID, option, index) => {
+      					let checkboxName = "checkbox" + inputID + ":" + index;
+      					console.log(checkboxName);
       					return (
 			        		<div>
 			                    <input 
-			                    	name={"checkbox" + inputId + '-' + index}
+			                    	name={checkboxName}
 			                    	className="form-check-input" 
-			                    	id={inputId} 
+			                    	id={inputID} 
 			                    	type="checkbox" 
-			                    	value=""/>
-			                    <label className="form-check-label" htmlFor={inputId}>
+			                    	value={option}/>
+			                    <label className="form-check-label" htmlFor={inputID}>
 			                    	{option}
 			                    </label>
 			                </div>
 			             );
-			         })
+			         };
+			checkboxFunc = checkboxFunc.bind(null, inputID);
+      		result = (
+      			<div className="form-check" id={inputID}>
+      				{
+      				item.options.map(checkboxFunc)
 			     }
 			   </div>
 			  );
       	}
       	if (type === 'selects') {
       		result = (                                         
-      			<select id={id} className="form-control">
+      			<select id={inputID} className="form-control">
 	                <option>1</option>
 	                <option>2</option>
 	                <option>3</option>

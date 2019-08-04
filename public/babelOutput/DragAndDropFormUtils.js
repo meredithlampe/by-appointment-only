@@ -40,71 +40,73 @@ var DragAndDropFormUtils = function () {
 			var handleFileUpload = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
 
 			var placeholder = item.placeholder;
-			var inputId = item.inputId;
 			var type = item.inputType;
-			var id = inputId;
 			var result = null;
 			if (type === "shortText") {
 				result = React.createElement('input', {
-					name: "shortText" + inputId,
+					name: "shortText" + inputID,
 					disabled: disabled,
 					required: required,
 					className: 'form-control',
-					id: id, 'aria-describedby': 'emailHelp',
+					id: inputID, 'aria-describedby': 'emailHelp',
 					placeholder: placeholder });
 			}
 			if (type === "longText") {
 				result = React.createElement('textarea', {
-					name: "longText" + inputId,
+					name: "longText" + inputID,
 					disabled: disabled,
 					required: required,
 					className: 'form-control',
-					id: id, rows: '3',
+					id: inputID, rows: '3',
 					placeholder: placeholder });
 			}
 			if (type === "fileInput") {
 				result = React.createElement('input', {
 					onChange: handleSelectedFile,
 					onClick: handleFileUpload,
-					name: "fileInput" + inputId,
+					name: "fileInput" + inputID,
 					disabled: disabled,
 					required: required,
-					id: id, type: 'file' });
+					id: inputID, type: 'file' });
 			}
 			if (type === "staticText") {
 				result = React.createElement(
 					'p',
-					{ id: id },
+					{ id: inputID },
 					placeholder
 				);
 			}
 			if (type === "checkboxes") {
+				var checkboxFunc = function checkboxFunc(inputID, option, index) {
+					var checkboxName = "checkbox" + inputID + ":" + index;
+					console.log(checkboxName);
+					return React.createElement(
+						'div',
+						null,
+						React.createElement('input', {
+							name: checkboxName,
+							className: 'form-check-input',
+							id: inputID,
+							type: 'checkbox',
+							value: option }),
+						React.createElement(
+							'label',
+							{ className: 'form-check-label', htmlFor: inputID },
+							option
+						)
+					);
+				};
+				checkboxFunc = checkboxFunc.bind(null, inputID);
 				result = React.createElement(
 					'div',
-					{ className: 'form-check', id: id },
-					item.options.map(function (option, index) {
-						return React.createElement(
-							'div',
-							null,
-							React.createElement('input', {
-								name: "checkbox" + inputId + '-' + index,
-								className: 'form-check-input',
-								id: inputId,
-								type: 'checkbox',
-								value: '' }),
-							React.createElement(
-								'label',
-								{ className: 'form-check-label', htmlFor: inputId },
-								option
-							)
-						);
-					})
+					{ className: 'form-check', id: inputID },
+					item.options.map(checkboxFunc)
 				);
 			}
 			if (type === 'selects') {
 				result = React.createElement(
 					'select',
-					{ id: id, className: 'form-control' },
+					{ id: inputID, className: 'form-control' },
 					React.createElement(
 						'option',
 						null,

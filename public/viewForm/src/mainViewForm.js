@@ -13,6 +13,31 @@ function getUrlVars() {
     return vars;
 }
 
+function showForm(formData, user, firebaseHelper, isUnpublished = false) {
+
+    $('.loading-form').html('');
+
+    // header
+    $('.form-header').html(formData.name);
+    $('#form-id-input-hidden').attr('value', formData.id);
+    $('#form-host-id-input-hidden').attr('value', user);
+
+    if (isUnpublished) {
+        // show notice that form isn't published
+        $('.view-form-unpublished-alert').show();
+    }
+
+    // body
+    let viewFormProps = {
+        firebaseHelper: firebaseHelper,
+        id: formData.id,
+        name: formData.name,
+        formHostId: user,
+    }
+    const formContainer = document.querySelector('.form-body');
+    ReactDOM.render(React.createElement(ViewForm, viewFormProps), formContainer);
+}
+
 // handle page load
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -51,22 +76,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // try to fetch form from firebase
     firebaseHelper.getPublicUserForm(user, formName, function(formData) {
 
-        $('.loading-form').html('');
-
-    	// header
-    	$('.form-header').html(formData.name);
-        $('#form-id-input-hidden').attr('value', formData.id);
-        $('#form-host-id-input-hidden').attr('value', user);
-
-    	// body
-    	let props = {
-    		firebaseHelper: firebaseHelper,
-            id: formData.id,
-    		name: formData.name,
-    		formHostId: user,
-    	}
-    	const formContainer = document.querySelector('.form-body');
-		ReactDOM.render(React.createElement(ViewForm, props), formContainer);
+        if (!formData) {
+            // form not found. possibly because form hasn't been published.
+            // check if viewer is form host
+            firebaseHelper.getCurrentUserForm(formName, function(formData) {
+                if (formData) {
+                    showForm(formData, user, firebaseHelper, true);                    
+                } else {
+                    // show error message
+                }
+            });
+        } else {
+            showForm(formData, user, firebaseHelper);
+        }
     });
-
   });

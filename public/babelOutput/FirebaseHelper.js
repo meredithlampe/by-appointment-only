@@ -146,9 +146,6 @@ var FirebaseHelper = function () {
   }, {
     key: 'setOnSubmissionFieldAdded',
     value: function setOnSubmissionFieldAdded(onFieldAdded, formHostId, formId, submissionId) {
-      console.log(formHostId);
-      console.log(formId);
-      console.log(submissionId);
       var fieldsRef = this.database.ref('/submissions/' + formHostId + "/" + formId + "/" + submissionId + "/fields/");
       this.firebaseRefs.push(fieldsRef);
       fieldsRef.on('child_added', function (snapshot) {

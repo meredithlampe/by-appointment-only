@@ -25,11 +25,23 @@ export var ViewForm = function (_React$Component) {
       items: []
     };
 
-    // get items in form from databae
+    // get items in form from databsae
     _this.firebaseHelper.getPublicUserForm(props.formHostId, props.id, function (formData) {
-      _this.setState({
-        items: formData.items
-      });
+      if (formData) {
+        _this.setState({
+          items: formData.items
+        });
+      } else {
+        // form not found. possibly because form hasn't been published.
+        // check if viewer is form host
+        _this.firebaseHelper.getCurrentUserForm(formName, function (formData) {
+          if (formData) {
+            showForm(formData, user, firebaseHelper, true);
+          } else {
+            // show error message
+          }
+        });
+      }
     });
 
     // bind handlers

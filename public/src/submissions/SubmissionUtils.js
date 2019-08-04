@@ -27,7 +27,15 @@ export default class SubmissionUtils {
 		return parseInt(fieldKey.split("-")[2]);
 	}
 
+	static parseInputIDFromMultiAnswerSubmissionKey(fieldKey) {
+		// multi-answer submission fields have form <inputType>-"id"-<id relative to form>:<id relative to field>
+		// return id relative to form
+		let idRelativeToFormAndField = fieldKey.split("-")[2]; // should be like, 3:4
+		return parseInt(idRelativeToFormAndField.split(":")[0]); // return  id relative to form
+	}
+
 	static startSubmissionLiveUpdaters(container, formHostID, formID) {
+		console.log("in submission live updates");
 
 		let onSubmissionAdded = (submissionData) => {
 
@@ -40,36 +48,82 @@ export default class SubmissionUtils {
 				let viewFunction = (submissionData, container, event) => {
 					// configure logic for closing "view submission" window (clear content)
 					container.empty();
-					let onFieldAdded = (container, formHostID,  formID, fieldKeyAndData) => {
-						// append field to container
-						let fieldData = fieldKeyAndData.val();
-						let inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
-						let input = SubmissionUtils.appendSubmittedFieldForInputType(
-							inputType, 
-							formHostID,
-							formID,
-							fieldKeyAndData.key, // submission field ID
-							fieldKeyAndData.val(),  // submission field value (what the client wrote or indicated)
-							container,
-						);
-					};
-					onFieldAdded = onFieldAdded.bind(null, container, submissionData.formHostID, submissionData.formID);
-					window.firebaseHelper.setOnSubmissionFieldAdded(
-						onFieldAdded, 
-						submissionData.formHostID, 
-						submissionData.formID, 
-						submissionData.submissionID,
-					);
-				}
+					// let onFieldAdded = (container, formHostID,  formID, fieldKeyAndData) => {
+						// debugger;
+						// // append field to container
+						// let fieldData = fieldKeyAndData.val();
+						// let inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
+						// let input = SubmissionUtils.appendSubmittedFieldForInputType(
+						// 	inputType, 
+						// 	formHostID,
+						// 	formID,
+						// 	fieldKeyAndData.key, // submission field ID
+						// 	fieldKeyAndData.val(),  // submission field value (what the client wrote or indicated)
+						// 	container,
+						// );
+					// };
+					// onFieldAdded = onFieldAdded.bind(null, container, submissionData.formHostID, submissionData.formID);
+					// window.firebaseHelper.setOnSubmissionFieldAdded(
+					// 	onFieldAdded, 
+					// 	submissionData.formHostID, 
+					// 	submissionData.formID, 
+					// 	submissionData.submissionID,
+					// );
+
+					// instead of looping through submitted fields, loop through form fields and look in submission for answer
+					window.firebaseHelper.getUserForm(formHostID, formID, (formData) => {
+						let items = formData.items;
+		              	items.map((item, index) => {
+          					let labelContainer = document.createElement('div');
+          					let valueContainer = document.createElement('div');
+          					let type = item.inputType;
+
+							labelContainer.className= "submission-field-label";
+							labelContainer.innerHTML = item.label;
+							container.append(labelContainer);
+							container.append(valueContainer);
+
+							// get value for field from submission data
+							let value = "Input unavailable";
+							let keys = Object.keys(submissionData.fields);
+							for (let ii = 0; ii < keys.length; ii++) {
+								if (type === "checkboxes" || type === 'selects') {
+									let thing = SubmissionUtils.parseInputIDFromMultiAnswerSubmissionKey(keys[ii]);
+									if (item.id === thing) {
+										let selectedOption = document.createElement('div');
+										selectedOption.innerHTML = submissionData.fields[keys[ii]];
+										valueContainer.appendChild(selectedOption);
+									}
+						      	} else {
+							      	if (item.id === SubmissionUtils.parseInputIDFromSubmissionKey(keys[ii])) {
+										
+										if (type === "shortText" || type === "longText") {		
+											// look up actual value in submission data
+											valueContainer.innerHTML = submissionData.fields[keys[ii]];
+								      	}
+								      	if (type === "fileInput") {
+								            valueContainer.innerHTML = "File unavailable";
+								      	}
+								      	if (type === "staticText") {
+								      		// throw error? nobody should have submitted this
+								      		// but at least we could show it here? for context?
+								      	}
+									}	
+						      	}
+							}
+			          	});
+					});
+				};
 				viewFunction = viewFunction.bind(null, submissionData, viewSubmissionModalBody);
 				viewLink.addEventListener('click', viewFunction);
+				console.log("returning view link");
 				return viewLink;
 			}
 
 			// configure view link
-			let viewLink = getViewSubmissionLink(submissionData);
+			let viewSubmissionLink = getViewSubmissionLink(submissionData);
 			let viewTd = document.createElement('td');
-			viewTd.append(viewLink);
+			viewTd.append(viewSubmissionLink);
 
 			// configure notes section
 			let notesRaw = submissionData.notes;
@@ -89,6 +143,7 @@ export default class SubmissionUtils {
 			tableRow.addClass('odd gradeX');
 			tableRow.addClass('submission-table-row-' + submissionData.id);
 
+			console.log("appending submission td");
 			tableRow.append("<td>" + submissionData.date + "</td>");
 			tableRow.append(notesTd);
 			tableRow.append(viewTd);
@@ -100,8 +155,8 @@ export default class SubmissionUtils {
 			onSubmissionAdded,
 			formHostID,
 			formID,
-		);
-	}
+			);
+		}
 		// window.firebaseHelper.setOnFormRemoved(
 		// 	(formData) => {
 		// 		let tr = $('.form-table-row-' + formData.id);
@@ -117,55 +172,4 @@ export default class SubmissionUtils {
 		// 		onFormAdded(formData);
 		// 	});
 		// }
-
-	static appendSubmittedFieldForInputType(type, formHostID, formID, inputID, value, container) {
-		let result = null;
-
-		// get label for input ID
-		SubmissionUtils.getLabelForInput(formHostID, formID, inputID, (label) => {
-			let labelContainer = document.createElement('div');
-			labelContainer.className= "submission-field-label";
-			labelContainer.innerHTML = label;
-			let valueContainer = document.createElement('div');
-			container.append(labelContainer);
-			container.append(valueContainer);
-
-	      	if (type === "shortText" || type === "longText") {
-				valueContainer.innerHTML = value;
-	      	}
-	      	if (type === "fileInput") {
-	            // figure out how to display file input
-	      	}
-	      	if (type === "staticText") {
-	      		// throw error? nobody should have submitted this
-	      		// but at least we could show it here? for context?
-	      	}
-	      	if (type === "checkboxes") {
-	      		// figure out how to show checkboxes
-	      	}
-	      	if (type === 'selects') {
-	      		// figure out how to show selects
-	      	}
-	      	// have to append data to container here instead of returning it
-	      	return container;
-		});
-
-	}
-
-
-  	static getLabelForInput(formHostID, formID, submissionKey, callback) {
-	   firebaseHelper.getUserForm(formHostID, formID, (form) => {
-	   		// first, figure out what input ID we're looking for within form
-	   		let inputID = SubmissionUtils.parseInputIDFromSubmissionKey(submissionKey);
-
-	   		// then, using inputID, find input and look for label
-	   		let items = form.items;
-	   		for (let ii = 0; ii < items.length; ii++) {
-	   			if (items[ii].id === inputID) {
-	   				callback(items[ii].label);
-	   			}
-	   		}
-
-	   });
-  }
 }

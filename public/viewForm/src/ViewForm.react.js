@@ -12,11 +12,23 @@ export class ViewForm extends React.Component {
     		items: [],
     	};
 
-    // get items in form from databae
+    // get items in form from databsae
      this.firebaseHelper.getPublicUserForm(props.formHostId, props.id, (formData) => {
-     	this.setState({
-     		items: formData.items,
-     	});
+      if (formData) {
+        this.setState({
+          items: formData.items,
+        });        
+      } else {
+         // form not found. possibly because form hasn't been published.
+        // check if viewer is form host
+        this.firebaseHelper.getCurrentUserForm(formName, function(formData) {
+            if (formData) {
+                showForm(formData, user, firebaseHelper, true);                    
+            } else {
+                // show error message
+            }
+        });
+      }
      });
 
      // bind handlers
