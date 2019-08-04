@@ -24,7 +24,8 @@ function showForm(formData, user, firebaseHelper, isUnpublished = false) {
 
     if (isUnpublished) {
         // show notice that form isn't published
-        $('.view-form-unpublished-alert').show();
+        $('.view-form-unpublished-alert').removeAttr("hidden");
+
     }
 
     // body
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let features = ['database', 'storage'].filter(feature => typeof app[feature] === 'function');
 
     } catch (e) {
-      console.error(e);
+      console.error(e); 
     }
 
     // get form info from URL

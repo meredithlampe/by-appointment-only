@@ -384,12 +384,18 @@ export class DragAndDropForm extends React.Component {
 								data-target="#renameFormModal">
 								<a>Rename</a>
 							</div>
-							<a className="preview-form-link btn btn-outline-secondary" 
+							<a className="preview-form-link btn btn-outline-secondary"
 								target="_blank"
 								href="">
 								Preview
 							</a>
-							<button disabled={!this.formHasPendingChanges()} onClick={this.saveForm} type="button" className="save-form-button btn btn-primary">Save</button>
+							<button 
+								disabled={!this.formHasPendingChanges()} 
+								onClick={this.saveForm} 
+								type="button" 
+								className="save-form-button btn btn-primary">
+								Save
+							</button>
 						</div>
 
 					</div>

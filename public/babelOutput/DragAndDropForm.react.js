@@ -476,7 +476,11 @@ export var DragAndDropForm = function (_React$Component) {
 											),
 											React.createElement(
 												'button',
-												{ disabled: !_this4.formHasPendingChanges(), onClick: _this4.saveForm, type: 'button', className: 'save-form-button btn btn-primary' },
+												{
+													disabled: !_this4.formHasPendingChanges(),
+													onClick: _this4.saveForm,
+													type: 'button',
+													className: 'save-form-button btn btn-primary' },
 												'Save'
 											)
 										)
