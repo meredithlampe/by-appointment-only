@@ -38,6 +38,7 @@ var DragAndDropFormUtils = function () {
 			var required = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
 			var handleSelectedFile = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
 			var handleFileUpload = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
+			var formDOMID = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
 
 			var placeholder = item.placeholder;
 			var type = item.inputType;
@@ -99,34 +100,25 @@ var DragAndDropFormUtils = function () {
 				);
 			}
 			if (type === 'selects') {
+				var selectsFunc = function selectsFunc(inputID, option, index) {
+					return React.createElement(
+						'option',
+						{
+							className: 'form-check-input',
+							id: inputID,
+							value: option },
+						option
+					);
+				};
+				selectsFunc = selectsFunc.bind(null, inputID);
 				result = React.createElement(
 					'select',
-					{ id: inputID, className: 'form-control' },
-					React.createElement(
-						'option',
-						null,
-						'1'
-					),
-					React.createElement(
-						'option',
-						null,
-						'2'
-					),
-					React.createElement(
-						'option',
-						null,
-						'3'
-					),
-					React.createElement(
-						'option',
-						null,
-						'4'
-					),
-					React.createElement(
-						'option',
-						null,
-						'5'
-					)
+					{
+						name: "selects" + inputID,
+						form: formDOMID,
+						id: inputID,
+						className: 'form-control' },
+					item.options.map(selectsFunc)
 				);
 			}
 			return result;

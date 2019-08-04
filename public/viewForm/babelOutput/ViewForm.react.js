@@ -69,7 +69,7 @@ export var ViewForm = function (_React$Component) {
         this.state.items.map(function (item, index) {
           var input = null;
           var id = "-id-" + item.id;
-          input = DragAndDropFormUtils.getInputElementForType(item, id, false, _this2.handleSelectedFile, _this2.handleFileUpload);
+          input = DragAndDropFormUtils.getInputElementForType(item, id, false, false, _this2.handleSelectedFile, _this2.handleFileUpload, "view-form");
           return React.createElement(
             'div',
             { className: 'form-group' },

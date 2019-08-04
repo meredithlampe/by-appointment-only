@@ -12,12 +12,12 @@ export class ViewForm extends React.Component {
     		items: [],
     	};
 
-    // get items in form from databsae
+     // get items in form from databsae
      this.firebaseHelper.getPublicUserForm(props.formHostId, props.id, (formData) => {
       if (formData) {
         this.setState({
           items: formData.items,
-        });        
+        });
       } else {
          // form not found. possibly because form hasn't been published.
         // check if viewer is form host
@@ -54,7 +54,16 @@ export class ViewForm extends React.Component {
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
 	              	let id = "-id-" + item.id;
-	              	input = DragAndDropFormUtils.getInputElementForType(item, id, false, this.handleSelectedFile, this.handleFileUpload);
+	              	input = 
+                    DragAndDropFormUtils.getInputElementForType(
+                      item, 
+                      id, 
+                      false, 
+                      false,
+                      this.handleSelectedFile, 
+                      this.handleFileUpload, 
+                      "view-form"
+                    );
 	              	return(
 	   					     <div className="form-group">
 		                  <div style={{display: "flex", flexDirection: "row"}}>

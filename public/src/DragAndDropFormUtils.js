@@ -28,6 +28,7 @@ export default class DragAndDropFormUtils {
 		required = false, 
 		handleSelectedFile = null, 
 		handleFileUpload = null,
+		formDOMID = null,
 	) {
 		let placeholder = item.placeholder;
 		let type = item.inputType;
@@ -91,13 +92,24 @@ export default class DragAndDropFormUtils {
 			  );
       	}
       	if (type === 'selects') {
+      		let selectsFunc = (inputID, option, index) => {
+				return (
+        			<option
+                    	className="form-check-input" 
+                    	id={inputID} 
+                    	value={option}>
+        				{option}
+        			</option>
+	             );
+	         };
+			selectsFunc = selectsFunc.bind(null, inputID);
       		result = (                                         
-      			<select id={inputID} className="form-control">
-	                <option>1</option>
-	                <option>2</option>
-	                <option>3</option>
-	                <option>4</option>
-	                <option>5</option>
+      			<select 
+      				name={"selects" + inputID} 
+      				form={formDOMID}
+      				id={inputID} 
+      				className="form-control">
+	                {item.options.map(selectsFunc)}
                 </select>
             );
       	}

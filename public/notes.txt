@@ -33,3 +33,6 @@
 	- "please save before you preview"
 	- spinner on view form page while form loads
 	- spinner after submitting form
+	- "are you  sure you want to go back? you'll lose your changes" from drag and drop editor
+	- selector doesn't update in form field editor
+	- select submit doesn't work

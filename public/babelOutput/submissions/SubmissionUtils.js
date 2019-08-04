@@ -101,7 +101,7 @@ var SubmissionUtils = function () {
 								var value = "Input unavailable";
 								var keys = Object.keys(submissionData.fields);
 								for (var ii = 0; ii < keys.length; ii++) {
-									if (type === "checkboxes" || type === 'selects') {
+									if (type === "checkboxes") {
 										var thing = SubmissionUtils.parseInputIDFromMultiAnswerSubmissionKey(keys[ii]);
 										if (item.id === thing) {
 											var selectedOption = document.createElement('div');
@@ -111,7 +111,7 @@ var SubmissionUtils = function () {
 									} else {
 										if (item.id === SubmissionUtils.parseInputIDFromSubmissionKey(keys[ii])) {
 
-											if (type === "shortText" || type === "longText") {
+											if (type === "shortText" || type === "longText" || type === "selects") {
 												// look up actual value in submission data
 												valueContainer.innerHTML = submissionData.fields[keys[ii]];
 											}
@@ -119,8 +119,8 @@ var SubmissionUtils = function () {
 												valueContainer.innerHTML = "File unavailable";
 											}
 											if (type === "staticText") {
-												// throw error? nobody should have submitted this
-												// but at least we could show it here? for context?
+												// return nothing here --  we just show the label
+												// because nobody can submit anything for static text
 											}
 										}
 									}
