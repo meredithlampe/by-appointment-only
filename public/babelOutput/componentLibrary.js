@@ -2,12 +2,12 @@ export default [{
 	inputType: 'shortText',
 	label: 'Short Text',
 	placeholder: 'Placeholder text',
-	editable: ['placeholder', 'label']
+	editable: ['label', 'placeholder']
 }, {
 	inputType: 'longText',
 	label: 'Long Text',
 	placeholder: 'Placeholder text',
-	editable: ['placeholder', 'label']
+	editable: ['label', 'placeholder']
 }, {
 	inputType: 'fileInput',
 	label: 'File Input',
