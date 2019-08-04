@@ -49,6 +49,18 @@ a {
 	cursor: default;
 }
 
+.form-component-label-and-links-container {
+	width: 100%;
+}
+
+.form-component-links {
+	display: inline-flex;
+}
+
+.form-component-edit-delete-move-icons-container {
+}
+
+
 .loader {
 	border: 8px solid #f3f3f3;
     border-top: 8px solid #4e73df;

@@ -506,13 +506,14 @@ export var DragAndDropForm = function (_React$Component) {
 															'div',
 															{ style: { display: "flex", flexDirection: "row" } },
 															React.createElement(
+																'label',
+																{ className: 'form-component-label', htmlFor: id },
+																item.label
+															),
+															React.createElement('div', { style: { flexGrow: 1 } }),
+															React.createElement(
 																'div',
-																null,
-																React.createElement(
-																	'label',
-																	{ className: 'form-component-label', htmlFor: id },
-																	item.label
-																),
+																{ className: 'form-component-edit-delete-move-icons-container' },
 																React.createElement(
 																	'div',
 																	{
@@ -544,12 +545,7 @@ export var DragAndDropForm = function (_React$Component) {
 																		{ id: 'delete-' + item.id },
 																		'Delete'
 																	)
-																)
-															),
-															React.createElement('div', { style: { flexGrow: 1 } }),
-															React.createElement(
-																'div',
-																null,
+																),
 																React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrows-alt fa-fw' })
 															)
 														),

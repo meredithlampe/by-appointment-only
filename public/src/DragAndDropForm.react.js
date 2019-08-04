@@ -418,9 +418,10 @@ export class DragAndDropForm extends React.Component {
 		                      )}
 		                    >
 		                    <div style={{display: "flex", flexDirection: "row"}}>
-			                    <div>
-								     <label className="form-component-label" htmlFor={id}>{item.label}</label>
-								     <div 
+								<label className="form-component-label" htmlFor={id}>{item.label}</label>
+							    <div style={{flexGrow: 1}} />
+							    <div className="form-component-edit-delete-move-icons-container">
+							    	<div 
 								     	className="form-component-link" 
 								     	data-toggle="modal" 
 								     	data-target="#editFormComponentModal" 
@@ -438,9 +439,6 @@ export class DragAndDropForm extends React.Component {
 								   		}}>
 								   		<a id={'delete-' + item.id}>Delete</a>
 								   	</div>
-							    </div>
-							    <div style={{flexGrow: 1}} />
-							    <div>
 								     <i style={{marginLeft: 5}} className="fa fa-arrows-alt fa-fw"></i>
 							    </div>
 						     </div>
