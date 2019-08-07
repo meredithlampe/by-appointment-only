@@ -121,8 +121,12 @@ function startFormsLiveUpdaters() {
 			// set body of modal
 			let modal = $('#publishFormModal');
 			let body = modal.find('.modal-body');
+			let footer = modal.find('.modal-footer');
 			body.html('Ready to publish <b>' + name + "</b>?");
-			let publishButton = modal.find('.publish-form-button');
+			let publishButton = document.createElement('button');
+			publishButton.innerHTML = 'Publish';
+			publishButton.className = "btn btn-primary publish-form-button";
+			publishButton.setAttribute("type", "button");
 			let publishFormFunction = (id) => {
 				// clear publish modal content
 				let modal = $('#publishFormModal');
@@ -145,7 +149,9 @@ function startFormsLiveUpdaters() {
 				});
 			}
 			publishFormFunction = publishFormFunction.bind(null, formData.id);
+			publishButton = $(publishButton);
 			publishButton.click(publishFormFunction);
+			footer.append(publishButton);
 		};
 		let publishFunctionWithParams = publishFunction.bind(null, formData.id, formData.name);
 		publishLink.addEventListener('click', publishFunctionWithParams);

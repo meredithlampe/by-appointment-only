@@ -84,6 +84,7 @@ export default class SubmissionUtils {
 							// get value for field from submission data
 							let value = "Input unavailable";
 							let keys = Object.keys(submissionData.fields);
+							let foundAnswer = false;
 							for (let ii = 0; ii < keys.length; ii++) {
 								if (type === "checkboxes") {
 									let thing = SubmissionUtils.parseInputIDFromMultiAnswerSubmissionKey(keys[ii]);
@@ -91,13 +92,22 @@ export default class SubmissionUtils {
 										let selectedOption = document.createElement('div');
 										selectedOption.innerHTML = submissionData.fields[keys[ii]];
 										valueContainer.appendChild(selectedOption);
+										foundAnswer = true;
+										break;
 									}
 						      	} else {
 							      	if (item.id === SubmissionUtils.parseInputIDFromSubmissionKey(keys[ii])) {
-										
+										debugger;
 										if (type === "shortText" || type === "longText" || type === "selects") {		
 											// look up actual value in submission data
-											valueContainer.innerHTML = submissionData.fields[keys[ii]];
+											if (submissionData.fields[keys[ii]] !== "") {
+												valueContainer.innerHTML = submissionData.fields[keys[ii]];	
+											} else {
+												valueContainer.innerHTML = "No input provided";
+											}
+											foundAnswer = true;
+											break;
+											
 								      	}
 								      	if (type === "fileInput") {
 								            window.firebaseHelper.getFileForForm(
@@ -110,14 +120,22 @@ export default class SubmissionUtils {
 								            		valueContainer.innerHTML = url;
 								            	}
 								            );
+								            foundAnswer = true;
+								            break;
 								      	}
 								      	if (type === "staticText") {
 								      		// return nothing here --  we just show the label
 								      		// because nobody can submit anything for static text
+								      		foundAnswer = true;
+								      		break;
 								      	}
 									}	
 						      	}
 							}
+							if (!foundAnswer) {
+								valueContainer.innerHTML = "No input provided";
+							}
+
 			          	});
 					});
 				};

@@ -98,6 +98,7 @@ var SubmissionUtils = function () {
 								// get value for field from submission data
 								var value = "Input unavailable";
 								var keys = Object.keys(submissionData.fields);
+								var foundAnswer = false;
 								for (var ii = 0; ii < keys.length; ii++) {
 									if (type === "checkboxes") {
 										var thing = SubmissionUtils.parseInputIDFromMultiAnswerSubmissionKey(keys[ii]);
@@ -105,26 +106,41 @@ var SubmissionUtils = function () {
 											var selectedOption = document.createElement('div');
 											selectedOption.innerHTML = submissionData.fields[keys[ii]];
 											valueContainer.appendChild(selectedOption);
+											foundAnswer = true;
+											break;
 										}
 									} else {
 										if (item.id === SubmissionUtils.parseInputIDFromSubmissionKey(keys[ii])) {
-
+											debugger;
 											if (type === "shortText" || type === "longText" || type === "selects") {
 												// look up actual value in submission data
-												valueContainer.innerHTML = submissionData.fields[keys[ii]];
+												if (submissionData.fields[keys[ii]] !== "") {
+													valueContainer.innerHTML = submissionData.fields[keys[ii]];
+												} else {
+													valueContainer.innerHTML = "No input provided";
+												}
+												foundAnswer = true;
+												break;
 											}
 											if (type === "fileInput") {
 												window.firebaseHelper.getFileForForm(formHostID, formID, submissionData.id, keys[ii], function (url) {
 													console.log(url);
 													valueContainer.innerHTML = url;
 												});
+												foundAnswer = true;
+												break;
 											}
 											if (type === "staticText") {
 												// return nothing here --  we just show the label
 												// because nobody can submit anything for static text
+												foundAnswer = true;
+												break;
 											}
 										}
 									}
+								}
+								if (!foundAnswer) {
+									valueContainer.innerHTML = "No input provided";
 								}
 							});
 						});

@@ -48,12 +48,12 @@ var FirebaseHelper = function () {
 
       var callback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-      var savedForm = this.database.ref('forms/' + this.auth.currentUser.uid + '/' + formData.id).set(formData, function (error) {
+      var savedForm = this.database.ref('forms/' + this.auth.currentUser.uid + '/' + formData.id).update(formData, function (error) {
         if (error) {
           // do something
         } else {
           // update published form
-          getCurrentUserForm(formData.id, function (newFormData) {
+          _this.getCurrentUserForm(formData.id, function (newFormData) {
             if (newFormData.published) {
               // update published form
               var path = _this.getFormPathForUserAndFormID(_this.auth.currentUser.uid, newFormData.id);

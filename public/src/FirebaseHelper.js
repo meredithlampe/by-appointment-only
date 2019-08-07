@@ -35,12 +35,12 @@ export default class FirebaseHelper {
 
   saveForm(formData, callback = null) {
 	   let savedForm = this.database.ref('forms/' + this.auth.currentUser.uid + '/' + formData.id)
-      .set(formData, (error) => {
+      .update(formData, (error) => {
         if (error) {
           // do something
         } else {
           // update published form
-          getCurrentUserForm(formData.id, (newFormData) => {
+          this.getCurrentUserForm(formData.id, (newFormData) => {
             if (newFormData.published) {
               // update published form
               let path = this.getFormPathForUserAndFormID(this.auth.currentUser.uid, newFormData.id);

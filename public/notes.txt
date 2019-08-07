@@ -24,8 +24,8 @@
 
   ## known bugs
 
-  - unpublish two forms in a row, modal OK should revert to 'unpublish' when it closes
-  - edit form while its published, updates aren't reflected in form
+  - edit form while its published, save form. form is updated from admin view but old form remains published.
+		New form is unpublished and old form is still published at same URL.
   - delete form should delete from public database path
   - unpublished forms still visible at public url?
 	- edit invidividual fields, modal doesn't update properly when editing one field after the other
