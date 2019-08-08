@@ -43,7 +43,7 @@ export class ViewForm extends React.Component {
     this.firebaseHelper.uploadFileForForm(
       this.formHostId, 
       this.formID, 
-      'testsubmissionID', 
+      'newsubmission', 
       id, 
       file,
       (snapshot) => {});

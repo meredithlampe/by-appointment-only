@@ -107,7 +107,6 @@ export default class SubmissionUtils {
 											}
 											foundAnswer = true;
 											break;
-											
 								      	}
 								      	if (type === "fileInput") {
 								            window.firebaseHelper.getFileForForm(

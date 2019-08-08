@@ -165,8 +165,10 @@ export default class FirebaseHelper {
 
   uploadFileForForm(formHostId, formID, submissionID, inputId, file, callback) {
     const storageRef = firebase.storage().ref();
+    debugger;
     const fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
     fileRef.put(file).then(function(snapshot) {
+      debugger;
       callback(snapshot);
     });
   }

@@ -67,8 +67,7 @@ var DragAndDropFormUtils = function () {
 					'div',
 					null,
 					React.createElement('input', {
-						onChange: handleSelectedFile,
-						onClick: handleFileUpload,
+						onChange: handleFileUpload,
 						name: "fileInput" + inputID,
 						disabled: disabled,
 						required: required,

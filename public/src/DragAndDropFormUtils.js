@@ -58,8 +58,7 @@ export default class DragAndDropFormUtils {
             result = (
             	<div>
 	            	<input
-						onChange={handleSelectedFile}
-						onClick={handleFileUpload}
+						onChange={handleFileUpload}
 		            	name={"fileInput" + inputID} 
 		            	disabled={disabled} 
 		            	required={required}

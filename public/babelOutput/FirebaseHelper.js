@@ -191,8 +191,10 @@ var FirebaseHelper = function () {
     key: 'uploadFileForForm',
     value: function uploadFileForForm(formHostId, formID, submissionID, inputId, file, callback) {
       var storageRef = firebase.storage().ref();
+      debugger;
       var fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
       fileRef.put(file).then(function (snapshot) {
+        debugger;
         callback(snapshot);
       });
     }
