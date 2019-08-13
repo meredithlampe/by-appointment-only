@@ -22,6 +22,11 @@ function showForm(formData, user, firebaseHelper, isUnpublished = false) {
     $('#form-id-input-hidden').attr('value', formData.id);
     $('#form-host-id-input-hidden').attr('value', user);
 
+    // get timestamp for submissoin
+    let date = new Date();
+    let submissionID = user + '' + formData.id + '' + date.getMilliseconds();
+    $('#submission-id-input-hidden').attr('value', submissionID);
+
     if (isUnpublished) {
         // show notice that form isn't published
         $('.view-form-unpublished-alert').removeAttr("hidden");
@@ -32,6 +37,7 @@ function showForm(formData, user, firebaseHelper, isUnpublished = false) {
         firebaseHelper: firebaseHelper,
         id: formData.id,
         name: formData.name,
+        submissionID: submissionID,
         formHostId: user,
     }
     const formContainer = document.querySelector('.form-body');

@@ -36,9 +36,8 @@ var DragAndDropFormUtils = function () {
 		value: function getInputElementForType(item, inputID) {
 			var disabled = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 			var required = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-			var handleSelectedFile = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-			var handleFileUpload = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
-			var formDOMID = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : null;
+			var handleFileUpload = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
+			var formDOMID = arguments.length > 5 && arguments[5] !== undefined ? arguments[5] : null;
 
 			var placeholder = item.placeholder;
 			var type = item.inputType;

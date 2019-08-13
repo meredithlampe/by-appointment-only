@@ -24,6 +24,11 @@ function showForm(formData, user, firebaseHelper) {
     $('#form-id-input-hidden').attr('value', formData.id);
     $('#form-host-id-input-hidden').attr('value', user);
 
+    // get timestamp for submissoin
+    var date = new Date();
+    var submissionID = user + '' + formData.id + '' + date.getMilliseconds();
+    $('#submission-id-input-hidden').attr('value', submissionID);
+
     if (isUnpublished) {
         // show notice that form isn't published
         $('.view-form-unpublished-alert').removeAttr("hidden");
@@ -34,6 +39,7 @@ function showForm(formData, user, firebaseHelper) {
         firebaseHelper: firebaseHelper,
         id: formData.id,
         name: formData.name,
+        submissionID: submissionID,
         formHostId: user
     };
     var formContainer = document.querySelector('.form-body');

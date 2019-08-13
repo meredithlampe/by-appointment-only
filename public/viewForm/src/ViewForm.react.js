@@ -7,6 +7,7 @@ export class ViewForm extends React.Component {
     super(props);
     this.firebaseHelper = props.firebaseHelper;
     this.formID = props.id;
+    this.submissionID = props.submissionID;
     this.formHostId = props.formHostId;
     this.state = { 
     		items: [],
@@ -43,8 +44,8 @@ export class ViewForm extends React.Component {
     this.firebaseHelper.uploadFileForForm(
       this.formHostId, 
       this.formID, 
-      'newsubmission', 
-      id, 
+      this.submissionID, 
+      "fileInput" + id, 
       file,
       (snapshot) => {});
   }
@@ -60,7 +61,6 @@ export class ViewForm extends React.Component {
                       id, 
                       false, 
                       false,
-                      this.handleSelectedFile, 
                       this.handleFileUpload, 
                       "view-form"
                     );

@@ -97,7 +97,6 @@ export default class SubmissionUtils {
 									}
 						      	} else {
 							      	if (item.id === SubmissionUtils.parseInputIDFromSubmissionKey(keys[ii])) {
-										debugger;
 										if (type === "shortText" || type === "longText" || type === "selects") {		
 											// look up actual value in submission data
 											if (submissionData.fields[keys[ii]] !== "") {
@@ -112,11 +111,14 @@ export default class SubmissionUtils {
 								            window.firebaseHelper.getFileForForm(
 								            	formHostID, 
 								            	formID, 
-								            	submissionData.id, 
+								            	submissionData.submissionID, 
 								            	keys[ii], 
 								            	(url) => {
-								            		console.log(url);
-								            		valueContainer.innerHTML = url;
+								            		let downloadLink = document.createElement('a');
+								            		downloadLink.setAttribute('href', url);
+								            		downloadLink.setAttribute('target', '_blank');
+								            		downloadLink.innerHTML = "Open in New Tab";
+								            		valueContainer.appendChild(downloadLink);
 								            	}
 								            );
 								            foundAnswer = true;

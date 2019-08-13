@@ -111,7 +111,6 @@ var SubmissionUtils = function () {
 										}
 									} else {
 										if (item.id === SubmissionUtils.parseInputIDFromSubmissionKey(keys[ii])) {
-											debugger;
 											if (type === "shortText" || type === "longText" || type === "selects") {
 												// look up actual value in submission data
 												if (submissionData.fields[keys[ii]] !== "") {
@@ -123,9 +122,12 @@ var SubmissionUtils = function () {
 												break;
 											}
 											if (type === "fileInput") {
-												window.firebaseHelper.getFileForForm(formHostID, formID, submissionData.id, keys[ii], function (url) {
-													console.log(url);
-													valueContainer.innerHTML = url;
+												window.firebaseHelper.getFileForForm(formHostID, formID, submissionData.submissionID, keys[ii], function (url) {
+													var downloadLink = document.createElement('a');
+													downloadLink.setAttribute('href', url);
+													downloadLink.setAttribute('target', '_blank');
+													downloadLink.innerHTML = "Open in New Tab";
+													valueContainer.appendChild(downloadLink);
 												});
 												foundAnswer = true;
 												break;

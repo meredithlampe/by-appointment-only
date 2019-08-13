@@ -26,7 +26,6 @@ export default class DragAndDropFormUtils {
 		inputID,
 		disabled = true, 
 		required = false, 
-		handleSelectedFile = null, 
 		handleFileUpload = null,
 		formDOMID = null,
 	) {
