@@ -122,12 +122,25 @@ var SubmissionUtils = function () {
 												break;
 											}
 											if (type === "fileInput") {
+												var loading = document.createElement('div');
+												loading.innerHTML = "Loading file...";
+												valueContainer.appendChild(loading);
 												window.firebaseHelper.getFileForForm(formHostID, formID, submissionData.submissionID, keys[ii], function (url) {
-													var downloadLink = document.createElement('a');
-													downloadLink.setAttribute('href', url);
-													downloadLink.setAttribute('target', '_blank');
-													downloadLink.innerHTML = "Open in New Tab";
-													valueContainer.appendChild(downloadLink);
+													valueContainer.removeChild(valueContainer.lastElementChild);
+													if (url) {
+														var downloadLink = document.createElement('a');
+														downloadLink.setAttribute('href', url);
+														downloadLink.setAttribute('target', '_blank');
+														downloadLink.innerHTML = "Open in New Tab";
+														valueContainer.appendChild(downloadLink);
+													}
+												}, function (error) {
+													debugger;
+													valueContainer.removeChild(valueContainer.lastElementChild);
+													var fileError = document.createElement('div');
+													fileError.innerHTML = 'No file found';
+													fileError.style.fontStyle = 'italic';
+													valueContainer.appendChild(fileError);
 												});
 												foundAnswer = true;
 												break;

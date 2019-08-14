@@ -165,19 +165,16 @@ export default class FirebaseHelper {
 
   uploadFileForForm(formHostId, formID, submissionID, inputId, file, callback) {
     const storageRef = firebase.storage().ref();
-    debugger;
     const fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
     fileRef.put(file).then(function(snapshot) {
-      debugger;
       callback(snapshot);
     });
   }
 
-  getFileForForm(formHostId, formID, submissionID, inputId, callback) {
+  getFileForForm(formHostId, formID, submissionID, inputId, callback, errorHandler) {
     const storageRef = firebase.storage().ref();
     const fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
-    debugger;
-    fileRef.getDownloadURL().then((url) => {callback(url); });
+    fileRef.getDownloadURL().then((url) => {callback(url); }, errorHandler);
   }
   
 }

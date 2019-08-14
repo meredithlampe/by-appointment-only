@@ -191,22 +191,19 @@ var FirebaseHelper = function () {
     key: 'uploadFileForForm',
     value: function uploadFileForForm(formHostId, formID, submissionID, inputId, file, callback) {
       var storageRef = firebase.storage().ref();
-      debugger;
       var fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
       fileRef.put(file).then(function (snapshot) {
-        debugger;
         callback(snapshot);
       });
     }
   }, {
     key: 'getFileForForm',
-    value: function getFileForForm(formHostId, formID, submissionID, inputId, callback) {
+    value: function getFileForForm(formHostId, formID, submissionID, inputId, callback, errorHandler) {
       var storageRef = firebase.storage().ref();
       var fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
-      debugger;
       fileRef.getDownloadURL().then(function (url) {
         callback(url);
-      });
+      }, errorHandler);
     }
   }]);
 
