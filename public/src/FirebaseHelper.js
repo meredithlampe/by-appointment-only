@@ -139,7 +139,7 @@ export default class FirebaseHelper {
   }
 
   setOnSubmissionAdded(onSubmissionAdded, formHostId, formId) {
-    const submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formId);
+    const submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formId).orderByChild('time');
     this.firebaseRefs.push(submissionsRef);
     submissionsRef.on('child_added', (snapshot) => {
       onSubmissionAdded(snapshot.val());
@@ -164,6 +164,7 @@ export default class FirebaseHelper {
   }
 
   uploadFileForForm(formHostId, formID, submissionID, inputId, file, callback) {
+    console.log("saving file to " + formHostId + "/" + formID + "/" + submissionID + "/" + inputId)
     const storageRef = firebase.storage().ref();
     const fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
     fileRef.put(file).then(function(snapshot) {

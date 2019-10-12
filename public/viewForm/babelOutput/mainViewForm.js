@@ -29,6 +29,8 @@ function showForm(formData, user, firebaseHelper) {
     var submissionID = user + '' + formData.id + '' + date.getMilliseconds();
     $('#submission-id-input-hidden').attr('value', submissionID);
 
+    console.log("submission ID created in mainViewForm.showForm:" + submissionID);
+
     if (isUnpublished) {
         // show notice that form isn't published
         $('.view-form-unpublished-alert').removeAttr("hidden");

@@ -21,6 +21,7 @@ exports.submitForm = functions.https.onRequest((req, res) => {
 
 	let submission = {
 		date: date.toString(),
+		time: date.getTime(),
 		fields: body,
 		formHostID: hostID,
 		formID: formID,

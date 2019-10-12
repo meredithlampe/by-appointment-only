@@ -164,7 +164,7 @@ var FirebaseHelper = function () {
   }, {
     key: 'setOnSubmissionAdded',
     value: function setOnSubmissionAdded(onSubmissionAdded, formHostId, formId) {
-      var submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formId);
+      var submissionsRef = this.database.ref('/submissions/' + formHostId + "/" + formId).orderByChild('time');
       this.firebaseRefs.push(submissionsRef);
       submissionsRef.on('child_added', function (snapshot) {
         onSubmissionAdded(snapshot.val());
@@ -190,6 +190,7 @@ var FirebaseHelper = function () {
   }, {
     key: 'uploadFileForForm',
     value: function uploadFileForForm(formHostId, formID, submissionID, inputId, file, callback) {
+      console.log("saving file to " + formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
       var storageRef = firebase.storage().ref();
       var fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
       fileRef.put(file).then(function (snapshot) {

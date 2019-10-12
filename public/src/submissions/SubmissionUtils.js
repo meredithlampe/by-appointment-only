@@ -30,8 +30,71 @@ export default class SubmissionUtils {
 	static parseInputIDFromMultiAnswerSubmissionKey(fieldKey) {
 		// multi-answer submission fields have form <inputType>-"id"-<id relative to form>:<id relative to field>
 		// return id relative to form
-		let idRelativeToFormAndField = fieldKey.split("-")[2]; // should be like, 3:4
+		let idRelativeToFormAndField = fieldKey.split("-");
+		if (idRelativeToFormAndField.length < 3) {
+			return null;
+		}
+		idRelativeToFormAndField = idRelativeToFormAndField[2]; // should be like, 3:4
+		if (!idRelativeToFormAndField) {
+			return null;
+		}
 		return parseInt(idRelativeToFormAndField.split(":")[0]); // return  id relative to form
+	}
+
+	static appendFieldToValueContainer(type, keys, ii, submissionData, valueContainer, item, formHostID, formID) {
+		if (type === "checkboxes") {
+			let thing = SubmissionUtils.parseInputIDFromMultiAnswerSubmissionKey(keys[ii]);
+			if (item.id === thing) {
+				let selectedOption = document.createElement('div');
+				selectedOption.innerHTML = submissionData.fields[keys[ii]];
+				valueContainer.innerHTML = "";
+				valueContainer.appendChild(selectedOption);
+			}
+	  	} else {
+	      	if (item.id === SubmissionUtils.parseInputIDFromSubmissionKey(keys[ii])) {
+				if (type === "shortText" || type === "longText" || type === "selects") {		
+					// look up actual value in submission data
+					if (submissionData.fields[keys[ii]] !== "") {
+						valueContainer.innerHTML = submissionData.fields[keys[ii]];	
+					} else {
+						valueContainer.innerHTML = "No input provided";
+					}
+					return;
+		      	}
+		      	if (type === "fileInput") {
+		      		valueContainer.innerHTML = "Loading file...";
+		            window.firebaseHelper.getFileForForm(
+		            	formHostID, 
+		            	formID, 
+		            	submissionData.submissionID, 
+		            	keys[ii], 
+		            	(url) => {
+		            		valueContainer.innerHTML = "";
+		            		if (url) {
+			            		let downloadLink = document.createElement('a');
+			            		downloadLink.setAttribute('href', url);
+			            		downloadLink.setAttribute('target', '_blank');
+			            		downloadLink.innerHTML = "Open in New Tab";
+			            		valueContainer.appendChild(downloadLink);	
+		            		}
+		            	},
+		            	(error) => {
+		            		valueContainer.innerHTML = "";
+	            			let fileError = document.createElement('div');
+	            			fileError.innerHTML = 'No file found';
+	            			fileError.style.fontStyle = 'italic';
+	            			valueContainer.appendChild(fileError);
+		            	}
+		            );
+		            return;
+		      	}
+		      	if (type === "staticText") {
+		      		// return nothing here --  we just show the label
+		      		// because nobody can submit anything for static text
+		      		return;
+		      	}
+			}
+		}	
 	}
 
 	static startSubmissionLiveUpdaters(container, formHostID, formID) {
@@ -84,71 +147,11 @@ export default class SubmissionUtils {
 							// get value for field from submission data
 							let value = "Input unavailable";
 							let keys = Object.keys(submissionData.fields);
-							let foundAnswer = false;
+							valueContainer.innerHTML = "No answer provided";
 							for (let ii = 0; ii < keys.length; ii++) {
-								if (type === "checkboxes") {
-									let thing = SubmissionUtils.parseInputIDFromMultiAnswerSubmissionKey(keys[ii]);
-									if (item.id === thing) {
-										let selectedOption = document.createElement('div');
-										selectedOption.innerHTML = submissionData.fields[keys[ii]];
-										valueContainer.appendChild(selectedOption);
-									}
-						      	} else {
-							      	if (item.id === SubmissionUtils.parseInputIDFromSubmissionKey(keys[ii])) {
-										if (type === "shortText" || type === "longText" || type === "selects") {		
-											// look up actual value in submission data
-											if (submissionData.fields[keys[ii]] !== "") {
-												valueContainer.innerHTML = submissionData.fields[keys[ii]];	
-											} else {
-												valueContainer.innerHTML = "No input provided";
-											}
-											foundAnswer = true;
-											break;
-								      	}
-								      	if (type === "fileInput") {
-								      		let loading = document.createElement('div');
-								      		loading.innerHTML = "Loading file...";
-								      		valueContainer.appendChild(loading);
-								            window.firebaseHelper.getFileForForm(
-								            	formHostID, 
-								            	formID, 
-								            	submissionData.submissionID, 
-								            	keys[ii], 
-								            	(url) => {
-								            		valueContainer.removeChild(valueContainer.lastElementChild);
-								            		if (url) {
-									            		let downloadLink = document.createElement('a');
-									            		downloadLink.setAttribute('href', url);
-									            		downloadLink.setAttribute('target', '_blank');
-									            		downloadLink.innerHTML = "Open in New Tab";
-									            		valueContainer.appendChild(downloadLink);	
-								            		}
-								            	},
-								            	(error) => {
-								            		debugger;
-								            		valueContainer.removeChild(valueContainer.lastElementChild);
-							            			let fileError = document.createElement('div');
-							            			fileError.innerHTML = 'No file found';
-							            			fileError.style.fontStyle = 'italic';
-							            			valueContainer.appendChild(fileError);
-								            	}
-								            );
-								            foundAnswer = true;
-								            break;
-								      	}
-								      	if (type === "staticText") {
-								      		// return nothing here --  we just show the label
-								      		// because nobody can submit anything for static text
-								      		foundAnswer = true;
-								      		break;
-								      	}
-									}	
-						      	}
+								SubmissionUtils.appendFieldToValueContainer(
+									type, keys, ii, submissionData, valueContainer, item, formHostID, formID);
 							}
-							if (!foundAnswer) {
-								valueContainer.innerHTML = "No input provided";
-							}
-
 			          	});
 					});
 				};
@@ -174,13 +177,17 @@ export default class SubmissionUtils {
 			// remove loading indicator (might already be removed)
 			$('.loading-submissions').empty();
 
+			// configure time submitted
+			let submitTime = new Date(submissionData.time);
+			let submitDateString = submitTime.getMonth() + " / " + submitTime.getDay() + " / " + (submitTime.getYear() - 100 + 2000);
+
 			// append table data elements to row
 			let formTable = $('.applicant-submissions-table-body');
 			let tableRow = $(document.createElement('tr'));
 			tableRow.addClass('odd gradeX');
 			tableRow.addClass('submission-table-row-' + submissionData.id);
 
-			tableRow.append("<td>" + submissionData.date + "</td>");
+			tableRow.append("<td>" + submitDateString + "</td>");
 			tableRow.append(notesTd);
 			tableRow.append(viewTd);
 			// tableRow.append(markAsDoneLink);

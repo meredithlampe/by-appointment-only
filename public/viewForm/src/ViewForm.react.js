@@ -41,13 +41,18 @@ export class ViewForm extends React.Component {
   handleFileUpload(event) {
     let file = event.target.files[0];
     let id = event.target.id;
+
+    console.log("submission ID used in react handleFileUpload:" + this.submissionID);
+    debugger;
     this.firebaseHelper.uploadFileForForm(
       this.formHostId, 
       this.formID, 
       this.submissionID, 
       "fileInput" + id, 
       file,
-      (snapshot) => {});
+      (snapshot) => {
+        debugger;
+      });
   }
 
   render() {

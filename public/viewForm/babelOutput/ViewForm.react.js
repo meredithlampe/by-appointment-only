@@ -57,7 +57,12 @@ export var ViewForm = function (_React$Component) {
     value: function handleFileUpload(event) {
       var file = event.target.files[0];
       var id = event.target.id;
-      this.firebaseHelper.uploadFileForForm(this.formHostId, this.formID, this.submissionID, "fileInput" + id, file, function (snapshot) {});
+
+      console.log("submission ID used in react handleFileUpload:" + this.submissionID);
+      debugger;
+      this.firebaseHelper.uploadFileForForm(this.formHostId, this.formID, this.submissionID, "fileInput" + id, file, function (snapshot) {
+        debugger;
+      });
     }
   }, {
     key: 'render',
