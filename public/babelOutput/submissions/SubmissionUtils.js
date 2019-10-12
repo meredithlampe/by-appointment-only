@@ -106,8 +106,6 @@ var SubmissionUtils = function () {
 											var selectedOption = document.createElement('div');
 											selectedOption.innerHTML = submissionData.fields[keys[ii]];
 											valueContainer.appendChild(selectedOption);
-											foundAnswer = true;
-											break;
 										}
 									} else {
 										if (item.id === SubmissionUtils.parseInputIDFromSubmissionKey(keys[ii])) {

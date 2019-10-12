@@ -86,7 +86,7 @@ var DragAndDropFormUtils = function () {
 						React.createElement('input', {
 							name: checkboxName,
 							className: 'form-check-input',
-							id: inputID,
+							id: inputID + "-" + index,
 							type: 'checkbox',
 							value: option }),
 						React.createElement(

@@ -402,18 +402,17 @@ export var DragAndDropForm = function (_React$Component) {
 								'div',
 								{
 									className: 'panel panel-default col-sm-7 card shadow',
-									style: { marginLeft: 40, height: "fit-content" } },
+									id: 'form-drop-zone',
+									style: { marginLeft: 40, height: "fit-content", background: snapshot.isDraggingOver ? '#eaf7ed' : 'white' } },
 								React.createElement(
 									'div',
 									{
 										className: 'panel-body new-form-panel-body d-flex flex-column',
 										ref: provided.innerRef,
-										style: {
-											background: snapshot.isDraggingOver ? '#eaf7ed' : 'white'
-										} },
+										style: {} },
 									React.createElement(
 										'div',
-										{ className: 'row d-flex' },
+										{ className: 'd-flex' },
 										React.createElement(
 											'div',
 											{ className: 'form-title' },

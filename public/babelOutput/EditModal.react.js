@@ -77,7 +77,7 @@ var EditModal = function (_React$Component) {
           { style: { margin: 20 } },
           React.createElement(
             'p',
-            { className: 'text-muted' },
+            { className: 'text-muted', style: { fontSize: "14px" } },
             'Change the fields below to see how the form element will look above.'
           ),
           editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(function (editableField) {

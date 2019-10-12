@@ -45,6 +45,6 @@ function onAuthStateChanged(user) {
 		currentUID = user.uid;
 
 		// uesr has just signed in. redirect to home page.
-		window.location.href = "index2.html";
+		window.location.href = "index.html";
 	}
 }

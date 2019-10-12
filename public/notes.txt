@@ -36,3 +36,31 @@
 	- "are you  sure you want to go back? you'll lose your changes" from drag and drop editor
 	- selector doesn't update in form field editor
 	- select submit doesn't work
+
+## known bugs (10/12)
+
+
+
+## copy of firebase rules
+
+  "rules": {
+    "forms": {
+      	"$uid": {
+     		".read": "$uid === auth.uid",
+        ".write": "$uid === auth.uid"
+        }
+    },
+    "public": {
+      "$uid": {
+     		".read": true,
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "submissions": {
+      "$uid": {
+        ".read": "$uid === auth.uid",
+        ".write": true
+      }
+    }
+  }
+}

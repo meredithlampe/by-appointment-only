@@ -24,7 +24,7 @@
   <script defer src="/__/firebase/5.7.0/firebase-messaging.js"></script>
   <script defer src="/__/firebase/5.7.0/firebase-storage.js"></script>
   <!-- initialize the SDK after all desired features are loaded -->
-  <script defer src="/__/firebase/init.js"></script>
+  <script defer src="/__/firebase/init.js"></script>  
 
 </head>
 
@@ -110,7 +110,7 @@
           <div class="row home justify-content-center">
 
             <!-- Forms -->
-            <div class="col-xl-8 col-lg-7">
+            <div class="col-lg-11">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -175,16 +175,16 @@
                 </div>
               </div>
               <div class="col-sm-6 mb-4">
-                Drag elements from the form component library on the right to your form on the left.
+                Drag elements from the form component library on the left to your form on the right.
                 You many also rearrange components within your form by dragging them.
               </div>
               <div class="col-sm-4"></div>
             </div>
             <div class="row create-form-input-area">
-              <div class="col-sm-2">
+              <div class="col-sm-1">
               </div>
-              <div class="col-sm-8 create-form-column"></div>
-              <div class="col-sm-2"></div>
+              <div class="col-sm-10 create-form-column"></div>
+              <div class="col-sm-1"></div>
             </div>
           </div>
 
@@ -377,7 +377,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a id="sign-out-button" class="btn btn-primary" href="login.html">Logout</a>
+          <button id="sign-out-button" class="btn btn-primary" href="login.html">Logout</a>
         </div>
       </div>
     </div>
@@ -412,6 +412,7 @@
       </div>
     </div>
   </div>
+
 
     <!-- Delete form component dialog -->
     <div class="modal fade" id="deleteFormComponentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

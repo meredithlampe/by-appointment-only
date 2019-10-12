@@ -46,7 +46,7 @@ class EditModal extends React.Component {
                 </div>
               <hr/>
               <div style={{margin: 20}}>
-                <p className="text-muted">Change the fields below to see how the form element will look above.</p>
+                <p className="text-muted" style={{fontSize: "14px"}}>Change the fields below to see how the form element will look above.</p>
                 {editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(editableField => {
                   let helpText = this.getHelpTextForField(editableField);
                   let onInputChange = (event) => {

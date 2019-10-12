@@ -26,7 +26,7 @@ a {
 }
 
 .new-form-panel-body {
-	padding: 19px !important;
+	margin: 25px;
 }
 
 .test {
@@ -75,6 +75,10 @@ a {
 .form-title {
 	display: flex;
 	flex-basis: 50%;
+}
+
+#form-drop-zone {
+	padding: 0 !important;
 }
 
 .rename-form-link {

@@ -77,7 +77,7 @@ export default class DragAndDropFormUtils {
 	                    <input 
 	                    	name={checkboxName}
 	                    	className="form-check-input" 
-	                    	id={inputID} 
+	                    	id={inputID + "-" + index} 
 	                    	type="checkbox" 
 	                    	value={option}/>
 	                    <label className="form-check-label" htmlFor={inputID}>

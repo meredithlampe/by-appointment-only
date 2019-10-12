@@ -1,4 +1,4 @@
-var React = require('react');	
+	var React = require('react');	
 var ReactDOM = require('react-dom');
 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -340,16 +340,17 @@ export class DragAndDropForm extends React.Component {
           {(provided, snapshot) => (
           	<div 
           		className="panel panel-default col-sm-7 card shadow" 
-          		style={{marginLeft: 40, height: "fit-content"}}>
+          		id="form-drop-zone"
+          		style={{marginLeft: 40, height: "fit-content",  background: snapshot.isDraggingOver ? '#eaf7ed' : 'white',}}>
 	            <div
 	            className="panel-body new-form-panel-body d-flex flex-column"
 	              ref={provided.innerRef}
 	              style={
 	              	{
-					  background: snapshot.isDraggingOver ? '#eaf7ed' : 'white',
+					 
 					}
 					}>
-					<div className="row d-flex">
+					<div className="d-flex">
 						<div className="form-title"><h4>{this.state.name}</h4></div>
 						<div className="form-controls-container">
 							<div className="rename-form-link"

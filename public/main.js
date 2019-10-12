@@ -4,9 +4,11 @@ var ReactDOM = require('react-dom');
 import { DragAndDropForm } from './DragAndDropForm.react.js';
 import FirebaseHelper from './FirebaseHelper';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
+console.log("loading page");
 
 // handle page load
 document.addEventListener('DOMContentLoaded', function () {
+	console.log("loading");
 
 	//TODO: move this to file on server
 	var config = {
@@ -82,6 +84,7 @@ var cancelNewForm = $('.create-form-cancel').click(function () {
 var currentUID;
 
 function startFormsLiveUpdaters() {
+	debugger;
 	window.firebaseHelper.setOnFormAdded(function (formData) {
 		var name = formData.name;
 		var lastEdited = formData.lastEdited;
