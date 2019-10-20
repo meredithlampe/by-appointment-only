@@ -104,73 +104,48 @@ var SubmissionUtils = function () {
 			}
 		}
 	}, {
+		key: 'getViewSubmissionLink',
+		value: function getViewSubmissionLink(submissionData) {
+			var viewLink = document.createElement('a');
+			var viewSubmissionModalBody = $('#viewSubmissionModal .modal-body');
+			viewLink.setAttribute('data-toggle', "modal");
+			viewLink.setAttribute('data-target', '#viewSubmissionModal');
+			viewLink.innerHTML = 'View';
+			var viewFunction = function viewFunction(submissionData, container, event) {
+				// configure logic for closing "view submission" window (clear content)
+				container.empty();
+
+				// instead of looping through submitted fields, loop through form fields and look in submission for answer
+				window.firebaseHelper.getUserForm(formHostID, formID, function (formData) {
+					var items = formData.items;
+					items.map(function (item, index) {
+						var labelContainer = document.createElement('div');
+						var valueContainer = document.createElement('div');
+						var type = item.inputType;
+
+						labelContainer.className = "submission-field-label";
+						labelContainer.innerHTML = item.label;
+						container.append(labelContainer);
+						container.append(valueContainer);
+
+						// get value for field from submission data
+						var value = "Input unavailable";
+						var keys = Object.keys(submissionData.fields);
+						valueContainer.innerHTML = "No answer provided";
+						for (var ii = 0; ii < keys.length; ii++) {
+							SubmissionUtils.appendFieldToValueContainer(type, keys, ii, submissionData, valueContainer, item, formHostID, formID);
+						}
+					});
+				});
+			};
+			viewFunction = viewFunction.bind(null, submissionData, viewSubmissionModalBody);
+			viewLink.addEventListener('click', viewFunction);
+			return viewLink;
+		}
+	}, {
 		key: 'startSubmissionLiveUpdaters',
 		value: function startSubmissionLiveUpdaters(container, formHostID, formID) {
 			var onSubmissionAdded = function onSubmissionAdded(submissionData) {
-
-				var getViewSubmissionLink = function getViewSubmissionLink(submissionData) {
-					var viewLink = document.createElement('a');
-					var viewSubmissionModalBody = $('#viewSubmissionModal .modal-body');
-					viewLink.setAttribute('data-toggle', "modal");
-					viewLink.setAttribute('data-target', '#viewSubmissionModal');
-					viewLink.innerHTML = 'View';
-					var viewFunction = function viewFunction(submissionData, container, event) {
-						// configure logic for closing "view submission" window (clear content)
-						container.empty();
-						// let onFieldAdded = (container, formHostID,  formID, fieldKeyAndData) => {
-						// debugger;
-						// // append field to container
-						// let fieldData = fieldKeyAndData.val();
-						// let inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
-						// let input = SubmissionUtils.appendSubmittedFieldForInputType(
-						// 	inputType, 
-						// 	formHostID,
-						// 	formID,
-						// 	fieldKeyAndData.key, // submission field ID
-						// 	fieldKeyAndData.val(),  // submission field value (what the client wrote or indicated)
-						// 	container,
-						// );
-						// };
-						// onFieldAdded = onFieldAdded.bind(null, container, submissionData.formHostID, submissionData.formID);
-						// window.firebaseHelper.setOnSubmissionFieldAdded(
-						// 	onFieldAdded, 
-						// 	submissionData.formHostID, 
-						// 	submissionData.formID, 
-						// 	submissionData.submissionID,
-						// );
-
-						// instead of looping through submitted fields, loop through form fields and look in submission for answer
-						window.firebaseHelper.getUserForm(formHostID, formID, function (formData) {
-							var items = formData.items;
-							items.map(function (item, index) {
-								var labelContainer = document.createElement('div');
-								var valueContainer = document.createElement('div');
-								var type = item.inputType;
-
-								labelContainer.className = "submission-field-label";
-								labelContainer.innerHTML = item.label;
-								container.append(labelContainer);
-								container.append(valueContainer);
-
-								// get value for field from submission data
-								var value = "Input unavailable";
-								var keys = Object.keys(submissionData.fields);
-								valueContainer.innerHTML = "No answer provided";
-								for (var ii = 0; ii < keys.length; ii++) {
-									SubmissionUtils.appendFieldToValueContainer(type, keys, ii, submissionData, valueContainer, item, formHostID, formID);
-								}
-							});
-						});
-					};
-					viewFunction = viewFunction.bind(null, submissionData, viewSubmissionModalBody);
-					viewLink.addEventListener('click', viewFunction);
-					return viewLink;
-				};
-
-				// configure view link
-				var viewSubmissionLink = getViewSubmissionLink(submissionData);
-				var viewTd = document.createElement('td');
-				viewTd.append(viewSubmissionLink);
 
 				// configure notes section
 				var notesRaw = submissionData.notes;
@@ -189,17 +164,32 @@ var SubmissionUtils = function () {
 				var submitDateString = submitTime.getMonth() + " / " + submitTime.getDay() + " / " + (submitTime.getYear() - 100 + 2000);
 
 				// append table data elements to row
-				var formTable = $('.applicant-submissions-table-body');
-				var tableRow = $(document.createElement('tr'));
-				tableRow.addClass('odd gradeX');
-				tableRow.addClass('submission-table-row-' + submissionData.id);
+				var formTable = $('#dataTables-submissions').DataTable();
+				// let tableRow = $(document.createElement('tr'));
+				// tableRow.addClass('odd gradeX');
+				// tableRow.addClass('submission-table-row-' + submissionData.id);
 
-				tableRow.append("<td>" + submitDateString + "</td>");
-				tableRow.append(notesTd);
-				tableRow.append(viewTd);
+				// tableRow.append("<td>" + submitDateString + "</td>");
+				// tableRow.append(notesTd);
+				// tableRow.append(viewTd);
 				// tableRow.append(markAsDoneLink);
-				formTable.append(tableRow);
+				// formTable.append(tableRow);	
+				var rowData = [submitDateString, notesRaw ? notesRaw : '', submissionData];
+				formTable.row.add(rowData).draw(false);
 			};
+			$('#dataTables-submissions').DataTable({
+				columnDefs: [{
+					targets: 2,
+					render: function render(data, type, row, meta) {
+						if (type === 'display') {
+							var _data = SubmissionUtils.getViewSubmissionLink(_data).innerHTML;
+						}
+
+						return data;
+					}
+				}]
+			});
+
 			onSubmissionAdded = onSubmissionAdded.bind(this);
 			window.firebaseHelper.setOnSubmissionAdded(onSubmissionAdded, formHostID, formID);
 		}

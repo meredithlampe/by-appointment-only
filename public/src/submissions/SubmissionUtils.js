@@ -97,10 +97,7 @@ export default class SubmissionUtils {
 		}	
 	}
 
-	static startSubmissionLiveUpdaters(container, formHostID, formID) {
-		let onSubmissionAdded = (submissionData) => {
-
-			let getViewSubmissionLink = (submissionData) => {
+	static getViewSubmissionLink(submissionData) {
 				let viewLink = document.createElement('a');
 				let viewSubmissionModalBody = $('#viewSubmissionModal .modal-body');
 				viewLink.setAttribute('data-toggle', "modal");
@@ -109,27 +106,7 @@ export default class SubmissionUtils {
 				let viewFunction = (submissionData, container, event) => {
 					// configure logic for closing "view submission" window (clear content)
 					container.empty();
-					// let onFieldAdded = (container, formHostID,  formID, fieldKeyAndData) => {
-						// debugger;
-						// // append field to container
-						// let fieldData = fieldKeyAndData.val();
-						// let inputType = SubmissionUtils.parseInputTypeFromSubmissionKey(fieldKeyAndData.key);
-						// let input = SubmissionUtils.appendSubmittedFieldForInputType(
-						// 	inputType, 
-						// 	formHostID,
-						// 	formID,
-						// 	fieldKeyAndData.key, // submission field ID
-						// 	fieldKeyAndData.val(),  // submission field value (what the client wrote or indicated)
-						// 	container,
-						// );
-					// };
-					// onFieldAdded = onFieldAdded.bind(null, container, submissionData.formHostID, submissionData.formID);
-					// window.firebaseHelper.setOnSubmissionFieldAdded(
-					// 	onFieldAdded, 
-					// 	submissionData.formHostID, 
-					// 	submissionData.formID, 
-					// 	submissionData.submissionID,
-					// );
+
 
 					// instead of looping through submitted fields, loop through form fields and look in submission for answer
 					window.firebaseHelper.getUserForm(formHostID, formID, (formData) => {
@@ -158,12 +135,10 @@ export default class SubmissionUtils {
 				viewFunction = viewFunction.bind(null, submissionData, viewSubmissionModalBody);
 				viewLink.addEventListener('click', viewFunction);
 				return viewLink;
-			}
+	}
 
-			// configure view link
-			let viewSubmissionLink = getViewSubmissionLink(submissionData);
-			let viewTd = document.createElement('td');
-			viewTd.append(viewSubmissionLink);
+	static startSubmissionLiveUpdaters(container, formHostID, formID) {
+		let onSubmissionAdded = (submissionData) => {
 
 			// configure notes section
 			let notesRaw = submissionData.notes;
@@ -182,17 +157,38 @@ export default class SubmissionUtils {
 			let submitDateString = submitTime.getMonth() + " / " + submitTime.getDay() + " / " + (submitTime.getYear() - 100 + 2000);
 
 			// append table data elements to row
-			let formTable = $('.applicant-submissions-table-body');
-			let tableRow = $(document.createElement('tr'));
-			tableRow.addClass('odd gradeX');
-			tableRow.addClass('submission-table-row-' + submissionData.id);
+			let formTable = $('#dataTables-submissions').DataTable();
+			// let tableRow = $(document.createElement('tr'));
+			// tableRow.addClass('odd gradeX');
+			// tableRow.addClass('submission-table-row-' + submissionData.id);
 
-			tableRow.append("<td>" + submitDateString + "</td>");
-			tableRow.append(notesTd);
-			tableRow.append(viewTd);
+			// tableRow.append("<td>" + submitDateString + "</td>");
+			// tableRow.append(notesTd);
+			// tableRow.append(viewTd);
 			// tableRow.append(markAsDoneLink);
-			formTable.append(tableRow);	
+			// formTable.append(tableRow);	
+			let rowData = [
+				submitDateString,
+				notesRaw ? notesRaw : '',
+				submissionData,
+			];
+			formTable.row.add(rowData).draw(false);
 		};
+		$('#dataTables-submissions').DataTable( {
+			columnDefs: [
+			        {
+			            targets: 2,
+			            render: function ( data, type, row, meta ) {
+			                if(type === 'display'){
+			                    let data = SubmissionUtils.getViewSubmissionLink(data).innerHTML;
+			                }
+
+			                return data;
+			            }
+			        }
+			    ]   
+    	});
+
 		onSubmissionAdded = onSubmissionAdded.bind(this);
 		window.firebaseHelper.setOnSubmissionAdded(
 			onSubmissionAdded,
