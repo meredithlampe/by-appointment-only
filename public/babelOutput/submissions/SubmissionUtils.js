@@ -18,6 +18,46 @@ var SubmissionUtils = function () {
 			// update header
 			$('.view-submissions-subheader').html('Submissions from <b>' + formName + '</b>');
 
+			// add submissions table
+			/*                           
+   	<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-submissions">
+               <thead>
+                   <tr>
+                       <th>Date Submitted</th>
+                       <th>Notes</th>
+                       <th id="dataTables-submissions-th-view">View</th>
+                   </tr>
+               </thead>
+               <tbody class="applicant-submissions-table-body">
+               </tbody>
+             </table> 
+         */
+
+			//      let tableContainer = $('.view-form-submissions .table-container');
+			//      let tableElement = $('<table>').attr("id", "dataTables-submissions");
+			//      let tableHead = $('<thead>');
+			//      let tableHeadRow = $('<tr>');
+			//      let tableHeadRowHeaderDate = $('<th>').html('Date Submitted');
+			//      let tableHeadRowHeaderNotes = $('<th>').html('Notes');
+			//      let tableHeadRowHeaderView = $('<th>').html('View').attr("id", "dataTables-submissions-th-view");
+
+			//    	tableHeadRow.append(tableHeadRowHeaderDate);
+			//    	tableHeadRow.append(tableHeadRowHeaderNotes);
+			//    	tableHeadRow.append(tableHeadRowHeaderView);
+
+			//    	tableHead.append(tableHeadRow);
+
+			//    	tableElement.append(tableHead);
+
+			//      tableContainer
+			//      	.append(tableElement)
+			// .addClass('table table-striped table-bordered table-hover')
+			// .attr("id", "dataTables-submissions");
+
+			//      $('#dataTables-submissions').append(
+			//      	$('<tbody>').addClass('applicant-submissions-table-body')
+			//      );
+
 			// populate table of submissions
 			SubmissionUtils.startSubmissionLiveUpdaters(container, formHostID, formID);
 		}
@@ -195,22 +235,6 @@ var SubmissionUtils = function () {
 			onSubmissionAdded = onSubmissionAdded.bind(this);
 			window.firebaseHelper.setOnSubmissionAdded(onSubmissionAdded, formHostID, formID);
 		}
-		// window.firebaseHelper.setOnFormRemoved(
-		// 	(formData) => {
-		// 		let tr = $('.form-table-row-' + formData.id);
-		// 		if (tr) {
-		// 			tr.remove();
-		// 		}
-		// 	},
-		// );
-		// window.firebaseHelper.setOnFormChanged(
-		// 	(formData) => {
-		// 		let tr = $('.form-table-row-' + formData.id);
-		// 		tr.remove();
-		// 		onFormAdded(formData);
-		// 	});
-		// }
-
 	}]);
 
 	return SubmissionUtils;

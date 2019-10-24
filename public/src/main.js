@@ -81,6 +81,9 @@ let cancelViewFormSubmission = $('.view-form-submissions-cancel').click(function
 	$('.home').removeClass('hidden');
 
 	// clear submissions page
+	// $('.view-form-submissions table-container').empty();
+	let formTable = $('#dataTables-submissions').DataTable();
+	formTable.destroy();
 	$('.applicant-submissions-table-body').empty();
 });
 
