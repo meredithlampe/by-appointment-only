@@ -240,8 +240,9 @@ export default class SubmissionUtils {
 			    ]   
     	});
 
-    	$('#dataTables-submissions tbody').on('click', 'tr', function () {
+    	$('#dataTables-submissions tbody').on('click', 'tr', function (a) {
 	        let data = table.row( this ).data();
+	        debugger;
 	        let submissionData = data[2]; 
 	        SubmissionUtils.viewSubmission(submissionData);
 	    } );

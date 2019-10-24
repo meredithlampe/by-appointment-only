@@ -24,6 +24,10 @@
 
   ## known bugs
 
+	newbies (10/25):
+	- view submissions of form, view single submission. nav back to main page. nav to new form, view submission.
+			see that data in view submission is from first form, not then new one you clicked on.
+
   - edit form while its published, save form. form is updated from admin view but old form remains published.
 		New form is unpublished and old form is still published at same URL.
   - delete form should delete from public database path

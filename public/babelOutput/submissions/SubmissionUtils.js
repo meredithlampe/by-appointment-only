@@ -240,8 +240,9 @@ var SubmissionUtils = function () {
 				}]
 			});
 
-			$('#dataTables-submissions tbody').on('click', 'tr', function () {
+			$('#dataTables-submissions tbody').on('click', 'tr', function (a) {
 				var data = table.row(this).data();
+				debugger;
 				var submissionData = data[2];
 				SubmissionUtils.viewSubmission(submissionData);
 			});
