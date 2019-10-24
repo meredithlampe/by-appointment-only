@@ -206,7 +206,7 @@ var SubmissionUtils = function () {
 
 				// configure time submitted
 				var submitTime = new Date(submissionData.time);
-				var submitDateString = submitTime.getMonth() + " / " + submitTime.getDay() + " / " + (submitTime.getYear() - 100 + 2000);
+				var submitDateString = submitTime.getMonth() + 1 + " / " + submitTime.getDate() + " / " + (submitTime.getYear() - 100 + 2000);
 
 				// append table data elements to row
 				var formTable = $('#dataTables-submissions').DataTable();

@@ -367,6 +367,14 @@ function startFormsLiveUpdaters() {
 		});
 }
 
+function renderForms() {
+	// create data table for form
+	// $('#dataTable-forms').DataTable();
+
+	// populate form
+	startFormsLiveUpdaters();
+}
+
 /**
  * Triggers every time there is a change in the Firebase auth state (i.e. user signed-in or user signed out).
  */
@@ -379,7 +387,7 @@ function onAuthStateChanged(user) {
 	if (user) {
 		currentUID = user.uid;
 	    // listen for create/delete to user's forms
-	    startFormsLiveUpdaters();
+	    renderForms();
 	    showUserInfo(user);
 	} else {
 		showLoggedOut();
