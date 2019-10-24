@@ -200,7 +200,7 @@ export default class SubmissionUtils {
 
 			// configure time submitted
 			let submitTime = new Date(submissionData.time);
-			let submitDateString = (submitTime.getMonth() + 1) + " / " + submitTime.getDate() + " / " + (submitTime.getYear() - 100 + 2000);
+			let submitDateString = (submitTime.getMonth() + 1) + "/" + submitTime.getDate() + "/" + (submitTime.getYear() - 100 + 2000);
 
 			// append table data elements to row
 			let formTable = $('#dataTables-submissions').DataTable();

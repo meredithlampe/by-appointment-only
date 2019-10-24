@@ -125,3 +125,13 @@ a {
 	margin-top: 10px;
 }
 
+// override bootstrap stuff that is breaking
+
+.custom-select {
+	background: none;
+}
+
+.page-item.active .page-link {
+	background-color: #e0e8ff;
+}
+
