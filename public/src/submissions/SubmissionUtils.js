@@ -22,33 +22,33 @@ export default class SubmissionUtils {
             </table> 
         */
 
-   //      let tableContainer = $('.view-form-submissions .table-container');
-   //      let tableElement = $('<table>').attr("id", "dataTables-submissions");
-   //      let tableHead = $('<thead>');
-   //      let tableHeadRow = $('<tr>');
-   //      let tableHeadRowHeaderDate = $('<th>').html('Date Submitted');
-   //      let tableHeadRowHeaderNotes = $('<th>').html('Notes');
-   //      let tableHeadRowHeaderView = $('<th>').html('View').attr("id", "dataTables-submissions-th-view");
+        let tableHeadRow = $('.dataTable-submissions-header-row');
+        let tableHeadRowHeaderDate = $('<th>').html('Date Submitted');
+        let tableHeadRowHeaderNotes = $('<th>').html('Notes');
+        let tableHeadRowHeaderView = $('<th>').html('View').attr("id", "dataTables-submissions-th-view");
 
-   //    	tableHeadRow.append(tableHeadRowHeaderDate);
-   //    	tableHeadRow.append(tableHeadRowHeaderNotes);
-   //    	tableHeadRow.append(tableHeadRowHeaderView);
+        tableHeadRow.append(tableHeadRowHeaderDate);
+        tableHeadRow.append(tableHeadRowHeaderNotes);
+        tableHeadRow.append(tableHeadRowHeaderView);
 
-   //    	tableHead.append(tableHeadRow);
+        // pull first couple of text fields from form and add to table
+        // to make it easier to differentiate between submissions in
+        // aggregate view
+        window.firebaseHelper.getUserForm(formHostID, formID, (formData) => {
+        	let items = formData.items;
+        	let textFields = [];
+        	for (let ii = 0; ii < items.length && textFields.length < 2; ii++) {
+        		let item = items[ii];
+        		if (item.inputType === "shortText" || item.inputType === "longText") {
+        			textFields[textFields.length] = item.id;
+        			let tableHeadRowHeaderTextField = $('<th>').html(item.label);
+        			tableHeadRow.append(tableHeadRowHeaderTextField);
+        		}
+        	}
 
-   //    	tableElement.append(tableHead);
-
-   //      tableContainer
-   //      	.append(tableElement)
-			// .addClass('table table-striped table-bordered table-hover')
-			// .attr("id", "dataTables-submissions");
-
-   //      $('#dataTables-submissions').append(
-   //      	$('<tbody>').addClass('applicant-submissions-table-body')
-   //      );
-
-		// populate table of submissions
-		SubmissionUtils.startSubmissionLiveUpdaters(container, formHostID, formID);
+			// populate table of submissions
+			SubmissionUtils.renderSubmissionRows(container, formHostID, formID, textFields);
+        });
 	}
 
 	static renderFormMetadata(container, formHostID, formID) {
@@ -183,7 +183,7 @@ export default class SubmissionUtils {
 		});
 	}
 
-	static startSubmissionLiveUpdaters(container, formHostID, formID) {
+	static renderSubmissionRows(container, formHostID, formID, textFields) {
 		let onSubmissionAdded = (submissionData) => {
 
 			// configure notes section
@@ -209,6 +209,20 @@ export default class SubmissionUtils {
 				notesRaw ? notesRaw : '',
 				submissionData,
 			];
+
+			// append extra text fields to row
+			let fields = submissionData.fields;
+			for(let ii = 0; ii < textFields.length; ii++) {
+				// debugger;
+				// find data for this field
+				let textFieldId = textFields[ii];
+				for (let fieldId in fields) {
+					if (SubmissionUtils.parseInputIDFromSubmissionKey(fieldId) === textFieldId) {
+						rowData[rowData.length] = fields[fieldId];
+					}
+				}
+			}
+
 			formTable.row.add(rowData).draw(false);
 		};
 		let table = $('#dataTables-submissions').DataTable( {

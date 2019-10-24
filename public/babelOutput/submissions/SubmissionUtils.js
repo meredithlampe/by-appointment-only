@@ -33,33 +33,33 @@ var SubmissionUtils = function () {
              </table> 
          */
 
-			//      let tableContainer = $('.view-form-submissions .table-container');
-			//      let tableElement = $('<table>').attr("id", "dataTables-submissions");
-			//      let tableHead = $('<thead>');
-			//      let tableHeadRow = $('<tr>');
-			//      let tableHeadRowHeaderDate = $('<th>').html('Date Submitted');
-			//      let tableHeadRowHeaderNotes = $('<th>').html('Notes');
-			//      let tableHeadRowHeaderView = $('<th>').html('View').attr("id", "dataTables-submissions-th-view");
+			var tableHeadRow = $('.dataTable-submissions-header-row');
+			var tableHeadRowHeaderDate = $('<th>').html('Date Submitted');
+			var tableHeadRowHeaderNotes = $('<th>').html('Notes');
+			var tableHeadRowHeaderView = $('<th>').html('View').attr("id", "dataTables-submissions-th-view");
 
-			//    	tableHeadRow.append(tableHeadRowHeaderDate);
-			//    	tableHeadRow.append(tableHeadRowHeaderNotes);
-			//    	tableHeadRow.append(tableHeadRowHeaderView);
+			tableHeadRow.append(tableHeadRowHeaderDate);
+			tableHeadRow.append(tableHeadRowHeaderNotes);
+			tableHeadRow.append(tableHeadRowHeaderView);
 
-			//    	tableHead.append(tableHeadRow);
+			// pull first couple of text fields from form and add to table
+			// to make it easier to differentiate between submissions in
+			// aggregate view
+			window.firebaseHelper.getUserForm(formHostID, formID, function (formData) {
+				var items = formData.items;
+				var textFields = [];
+				for (var ii = 0; ii < items.length && textFields.length < 2; ii++) {
+					var item = items[ii];
+					if (item.inputType === "shortText" || item.inputType === "longText") {
+						textFields[textFields.length] = item.id;
+						var tableHeadRowHeaderTextField = $('<th>').html(item.label);
+						tableHeadRow.append(tableHeadRowHeaderTextField);
+					}
+				}
 
-			//    	tableElement.append(tableHead);
-
-			//      tableContainer
-			//      	.append(tableElement)
-			// .addClass('table table-striped table-bordered table-hover')
-			// .attr("id", "dataTables-submissions");
-
-			//      $('#dataTables-submissions').append(
-			//      	$('<tbody>').addClass('applicant-submissions-table-body')
-			//      );
-
-			// populate table of submissions
-			SubmissionUtils.startSubmissionLiveUpdaters(container, formHostID, formID);
+				// populate table of submissions
+				SubmissionUtils.renderSubmissionRows(container, formHostID, formID, textFields);
+			});
 		}
 	}, {
 		key: 'renderFormMetadata',
@@ -188,8 +188,8 @@ var SubmissionUtils = function () {
 			});
 		}
 	}, {
-		key: 'startSubmissionLiveUpdaters',
-		value: function startSubmissionLiveUpdaters(container, formHostID, formID) {
+		key: 'renderSubmissionRows',
+		value: function renderSubmissionRows(container, formHostID, formID, textFields) {
 			var onSubmissionAdded = function onSubmissionAdded(submissionData) {
 
 				// configure notes section
@@ -211,6 +211,20 @@ var SubmissionUtils = function () {
 				// append table data elements to row
 				var formTable = $('#dataTables-submissions').DataTable();
 				var rowData = [submitDateString, notesRaw ? notesRaw : '', submissionData];
+
+				// append extra text fields to row
+				var fields = submissionData.fields;
+				for (var ii = 0; ii < textFields.length; ii++) {
+					// debugger;
+					// find data for this field
+					var textFieldId = textFields[ii];
+					for (var fieldId in fields) {
+						if (SubmissionUtils.parseInputIDFromSubmissionKey(fieldId) === textFieldId) {
+							rowData[rowData.length] = fields[fieldId];
+						}
+					}
+				}
+
 				formTable.row.add(rowData).draw(false);
 			};
 			var table = $('#dataTables-submissions').DataTable({
