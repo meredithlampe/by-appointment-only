@@ -84,7 +84,8 @@ let cancelViewFormSubmission = $('.view-form-submissions-cancel').click(function
 	// $('.view-form-submissions table-container').empty();
 	let formTable = $('#dataTables-submissions').DataTable();
 	formTable.destroy();
-	$('.applicant-submissions-table-body').empty();
+	$('.applicant-submissions-table-body').empty(); 
+	$('.dataTable-submissions-header-row').empty();
 });
 
 /**
