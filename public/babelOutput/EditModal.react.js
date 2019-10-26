@@ -23,21 +23,6 @@ var EditModal = function (_React$Component) {
 
     _this.props = props;
     _this.state = {};
-
-    // let onCloseFunction = function (props, e) {
-    //   console.log("in on close");
-    //   debugger;
-    //   props.onClose();
-    // };
-    // onCloseFunction = onCloseFunction.bind(null, props);
-    // $('#editFormComponentModal').on('hidden.bs.modal', function() {console.log("in close")});
-    // $('#editFormComponentModal').find('modal-dialog').on('hidden.bs.modal', function() {console.log("in close")});
-
-    // $(document).on('hide.bs.modal', '#editFormComponentModal', function() {
-    //     console.log("in on close");
-    //     debugger;
-    //     props.onClose();
-    // });
     return _this;
   }
 

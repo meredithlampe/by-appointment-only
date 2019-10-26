@@ -101,9 +101,10 @@ export class DragAndDropForm extends React.Component {
 				let inputType = inputTypeMatch[1];
 				let componentNeedsOptions = inputType === 'checkboxes' || inputType === 'selects';
 				let componentNeedsContent = inputType === 'checkboxes' || inputType=== 'selects' || inputType === 'staticText';
+				let newId = this.state.lastUnusedId;
 	    		let newFormItem = {
-	    			id: this.state.lastUnusedId,
-	    			idCopy: this.state.lastUnusedId,
+	    			id: newId,
+	    			idCopy: newId,
 	    			label: 'New Input',
 	    			placeholder: 'Placeholder',
 	    			inputType: inputType,
@@ -111,7 +112,11 @@ export class DragAndDropForm extends React.Component {
 	    			content: componentNeedsContent ? 'Description of this field' : null,
 	    		};
 	    		let newItems = this.insert(this.state.items, newFormItem, result.destination.index);				
-	    		this.setState({items: newItems, lastUnusedId: this.state.lastUnusedId + 1,})
+	    		this.setState({items: newItems, lastUnusedId: this.state.lastUnusedId + 1,});
+
+	    		// auto-open edit modal when new field is added
+	    		$("#editFormComponentModal").modal('show');
+	    		this.openModalEditComponent(newId);
 			} else {
 				//show error
 			}
