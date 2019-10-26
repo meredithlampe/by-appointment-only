@@ -84,8 +84,9 @@ var cancelViewFormSubmission = $('.view-form-submissions-cancel').click(function
 	// $('.view-form-submissions table-container').empty();
 	var formTable = $('#dataTables-submissions').DataTable();
 	formTable.destroy();
-	$('.applicant-submissions-table-body').empty();
-	$('.dataTable-submissions-header-row').empty();
+	// $('.applicant-submissions-table-body').empty(); 
+	// $('.dataTable-submissions-header-row').empty();
+	$('.submissions-table-container').empty();
 });
 
 /**

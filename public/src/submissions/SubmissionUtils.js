@@ -22,7 +22,7 @@ export default class SubmissionUtils {
             </table> 
         */
 
-        let tableHeadRow = $('.dataTable-submissions-header-row');
+        let tableHeadRow = $('<tr>').attr("class", "dataTable-submissions-header-row");
         let tableHeadRowHeaderDate = $('<th>').html('Date Submitted');
         let tableHeadRowHeaderNotes = $('<th>').html('Notes');
         let tableHeadRowHeaderView = $('<th>').html('View').attr("id", "dataTables-submissions-th-view");
@@ -45,6 +45,20 @@ export default class SubmissionUtils {
         			tableHeadRow.append(tableHeadRowHeaderTextField);
         		}
         	}
+
+        	let table = $('<table>')
+        		.attr("class", "table table-striped table-bordered table-hover")
+        		.attr("id", "dataTables-submissions")
+        		.attr("width", "100%");
+        	let tableHead = $('<thead>');
+        	let tableBody = $('<tbody>');
+
+        	tableHead.append(tableHeadRow);
+
+        	table.append(tableHead);
+        	table.append(tableBody);
+
+        	$('.submissions-table-container').append(table);
 
 			// populate table of submissions
 			SubmissionUtils.renderSubmissionRows(container, formHostID, formID, textFields);
@@ -231,7 +245,9 @@ export default class SubmissionUtils {
 			            targets: 2,
 			            render: function ( data, type, row, meta ) {
 			                if(type === 'display'){
-			                    return SubmissionUtils.getViewSubmissionLink(data).outerHTML;
+			                	debugger;
+			                	let viewLink = SubmissionUtils.getViewSubmissionLink(data).outerHTML;
+			                    return viewLink;
 			                }
 
 			                return data;
@@ -245,7 +261,7 @@ export default class SubmissionUtils {
 	        debugger;
 	        let submissionData = data[2]; 
 	        SubmissionUtils.viewSubmission(submissionData);
-	    } );
+	    });
 
 		onSubmissionAdded = onSubmissionAdded.bind(this);
 		window.firebaseHelper.setOnSubmissionAdded(

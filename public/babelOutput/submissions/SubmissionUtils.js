@@ -33,7 +33,7 @@ var SubmissionUtils = function () {
              </table> 
          */
 
-			var tableHeadRow = $('.dataTable-submissions-header-row');
+			var tableHeadRow = $('<tr>').attr("class", "dataTable-submissions-header-row");
 			var tableHeadRowHeaderDate = $('<th>').html('Date Submitted');
 			var tableHeadRowHeaderNotes = $('<th>').html('Notes');
 			var tableHeadRowHeaderView = $('<th>').html('View').attr("id", "dataTables-submissions-th-view");
@@ -56,6 +56,17 @@ var SubmissionUtils = function () {
 						tableHeadRow.append(tableHeadRowHeaderTextField);
 					}
 				}
+
+				var table = $('<table>').attr("class", "table table-striped table-bordered table-hover").attr("id", "dataTables-submissions").attr("width", "100%");
+				var tableHead = $('<thead>');
+				var tableBody = $('<tbody>');
+
+				tableHead.append(tableHeadRow);
+
+				table.append(tableHead);
+				table.append(tableBody);
+
+				$('.submissions-table-container').append(table);
 
 				// populate table of submissions
 				SubmissionUtils.renderSubmissionRows(container, formHostID, formID, textFields);
@@ -232,7 +243,9 @@ var SubmissionUtils = function () {
 					targets: 2,
 					render: function render(data, type, row, meta) {
 						if (type === 'display') {
-							return SubmissionUtils.getViewSubmissionLink(data).outerHTML;
+							debugger;
+							var viewLink = SubmissionUtils.getViewSubmissionLink(data).outerHTML;
+							return viewLink;
 						}
 
 						return data;
