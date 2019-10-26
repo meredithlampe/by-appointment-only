@@ -19,23 +19,40 @@ var EditModal = function (_React$Component) {
   function EditModal(props) {
     _classCallCheck(this, EditModal);
 
+    console.log("in constructor");
+
     var _this = _possibleConstructorReturn(this, (EditModal.__proto__ || Object.getPrototypeOf(EditModal)).call(this, props));
 
     var item = props.item;
     _this.props = props;
     _this.state = {
-      item: props.item
+      item: props.item,
+      itemID: props.itemID
     };
 
-    var onCloseFunction = function onCloseFunction(props, e) {
-      props.onClose();
-    };
-    onCloseFunction = onCloseFunction.bind(null, props);
-    $('#editFormComponentModal').on('hidden.bs.modal', onCloseFunction);
+    // let onCloseFunction = function (props, e) {
+    //   console.log("in on close");
+    //   debugger;
+    //   props.onClose();
+    // };
+    // onCloseFunction = onCloseFunction.bind(null, props);
+    // $('#editFormComponentModal').on('hidden.bs.modal', function() {console.log("in close")});
+    // $('#editFormComponentModal').find('modal-dialog').on('hidden.bs.modal', function() {console.log("in close")});
+
+    // $(document).on('hide.bs.modal', '#editFormComponentModal', function() {
+    //     console.log("in on close");
+    //     debugger;
+    //     props.onClose();
+    // });
     return _this;
   }
 
   _createClass(EditModal, [{
+    key: 'setItem',
+    value: function setItem(item) {
+      this.setState({ item: item });
+    }
+  }, {
     key: 'getHelpTextForField',
     value: function getHelpTextForField(field) {
       if (field === 'options') {
@@ -57,7 +74,16 @@ var EditModal = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      if (this.props.item.id !== this.state.item.id) {
+        // opened modal to edit new field but haven't updated state
+        // bc constructor wasn't hit
+        this.setState({ item: this.props.item });
+      }
       var editingItem = this.state.item;
+      if (!editingItem) {
+        return null;
+      }
+      console.log(editingItem);
       return React.createElement(
         'div',
         { className: 'edit-modal-input-preview' },

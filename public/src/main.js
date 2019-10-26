@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function() {
   } catch (e) {
     console.error(e);
   }
-
 });
 
 // authentication - sign out button

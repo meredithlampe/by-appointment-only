@@ -67,7 +67,7 @@ var RenameFormModal = function (_React$Component) {
           ),
           React.createElement(
             'div',
-            { id: 'rename-modal-save-button', 'class': 'btn btn-primary', 'data-dismiss': 'modal', onClick: this.onSave },
+            { id: 'rename-modal-save-button', className: 'btn btn-primary', 'data-dismiss': 'modal', onClick: this.onSave },
             'Save Changes'
           )
         )

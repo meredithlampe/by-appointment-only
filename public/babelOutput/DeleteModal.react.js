@@ -19,13 +19,7 @@ var DeleteModal = function (_React$Component) {
   function DeleteModal(props) {
     _classCallCheck(this, DeleteModal);
 
-    var _this = _possibleConstructorReturn(this, (DeleteModal.__proto__ || Object.getPrototypeOf(DeleteModal)).call(this, props));
-
-    var item = props.item;
-    _this.state = {
-      item: props.item
-    };
-    return _this;
+    return _possibleConstructorReturn(this, (DeleteModal.__proto__ || Object.getPrototypeOf(DeleteModal)).call(this, props));
   }
 
   _createClass(DeleteModal, [{
@@ -33,9 +27,7 @@ var DeleteModal = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      var item = this.state.item;
-      console.log("item");
-      console.log(item);
+      var item = this.props.item;
       return React.createElement(
         'div',
         null,

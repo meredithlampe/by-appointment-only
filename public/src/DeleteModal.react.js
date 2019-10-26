@@ -8,16 +8,10 @@ import Button from 'react-bootstrap/lib/Button';
 class DeleteModal extends React.Component {
   constructor(props) {
     super(props);
-    let item = props.item;
-    this.state = {
-      item: props.item,
-    };
   }
 
   render() {
-    let item = this.state.item;
-    console.log("item");
-    console.log(item);
+    let item = this.props.item;
     return (
       <div>
         <div className="modal-body">

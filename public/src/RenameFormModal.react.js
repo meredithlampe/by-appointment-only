@@ -34,7 +34,7 @@ class RenameFormModal extends React.Component {
           </div>
         <div className="modal-footer">
             <button className="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <div id="rename-modal-save-button" class="btn btn-primary" data-dismiss="modal" onClick={this.onSave}>Save Changes</div>
+            <div id="rename-modal-save-button" className="btn btn-primary" data-dismiss="modal" onClick={this.onSave}>Save Changes</div>
         </div>
       </div>
     );

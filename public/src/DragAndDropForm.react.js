@@ -45,6 +45,8 @@ export class DragAndDropForm extends React.Component {
     this.setFormName = this.setFormName.bind(this);
     this.saveForm = this.saveForm.bind(this);
 
+    this.editModal = React.createRef();
+
     // get items in form from databae
     if (!props.newForm) {
 	    this.firebaseHelper.getCurrentUserForm(props.databaseID, (formData) => {
@@ -63,6 +65,9 @@ export class DragAndDropForm extends React.Component {
     	this.state.name = 'My New Form';
     	this.state.lastUnusedId = 0;
     }
+
+    // prepate edit modal
+
   }
 
   componentDidMount() {
@@ -154,18 +159,18 @@ export class DragAndDropForm extends React.Component {
 		let id = itemId.match(/edit-(.*)/);
 		let editingItem = this.getItemForId(parseInt(id[1]));
 		this.setState({showModalEditComponent: true, editingItem: editingItem});
-		const editModal = document.querySelector('.edit-form-component-react-container');
-		ReactDOM.render(React.createElement(EditModal, {
-			show: this.state.showModalEditComponent,
-			item: editingItem,
-			onClose: this.hideModalEditComponent,
-			onSave: (newItem) => {
-				let removeResult = this.remove(this.state.items, this.state.editingItem);
-				let index = removeResult[0];
-				let result = removeResult[1];
-				this.setState({items: this.insert(result, newItem, index), showModalEditComponent: false});
-			},
-		}), editModal);
+		// const editModal = document.querySelector('.edit-form-component-react-container');
+		// ReactDOM.render(React.createElement(EditModal, {
+		// 	show: this.state.showModalEditComponent,
+		// 	item: editingItem,
+		// 	onClose: this.hideModalEditComponent,
+		// 	onSave: (newItem) => {
+		// 		let removeResult = this.remove(this.state.items, this.state.editingItem);
+		// 		let index = removeResult[0];
+		// 		let result = removeResult[1];
+		// 		this.setState({items: this.insert(result, newItem, index), showModalEditComponent: false});
+		// 	},
+		// }), editModal);
 	}
 
 	hideModalEditComponent() {
@@ -289,7 +294,35 @@ export class DragAndDropForm extends React.Component {
 	});	
 
     return (
-    	<div style={{display: "flex", margin: "auto"}}>
+		<div style={{display: "flex", margin: "auto"}}>
+    		<div className="modal" id="editFormComponentModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal-dialog" role="document">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title" id="exampleModalLabel">Edit</h5>
+          <button className="close dismiss-edit-modal" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div className="modal-body edit-form-component-react-container">
+        	{this.state.editingItem ? 
+        		<EditModal 
+		    		item={this.state.editingItem}
+		    		onClose={this.hideModalEditComponent}
+		    		onSave={(newItem) => {
+						let removeResult = this.remove(this.state.items, this.state.editingItem);
+						let index = removeResult[0];
+						let result = removeResult[1];
+						this.setState({items: this.insert(result, newItem, index), showModalEditComponent: false});
+					}}
+					show={this.state.showModalEditComponent}
+		    	/> 
+		    : null}
+        </div>
+      </div>
+    </div>
+  </div>
+	    
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">
     	  {(provided, snapshot) => (
