@@ -53,9 +53,9 @@ var EditModal = function (_React$Component) {
       this.setState({ item: item });
     }
   }, {
-    key: 'getHelpTextForField',
-    value: function getHelpTextForField(field) {
-      if (field === 'options') {
+    key: 'getHelpTextForInputType',
+    value: function getHelpTextForInputType(inputType, editableField) {
+      if (editableField === 'options' && (inputType === 'checkboxes' || inputType === 'selects')) {
         return 'Input options as comma-separated list. Ex: \'Monday, Tuesday, Wednesday\'';
       }
       return null;
@@ -83,7 +83,6 @@ var EditModal = function (_React$Component) {
       if (!editingItem) {
         return null;
       }
-      console.log(editingItem);
       return React.createElement(
         'div',
         { className: 'edit-modal-input-preview' },
@@ -107,7 +106,7 @@ var EditModal = function (_React$Component) {
             'Change the fields below to see how the form element will look above.'
           ),
           editingItem ? DragAndDropFormUtils.getEditableFieldsForInputType(editingItem.inputType).map(function (editableField) {
-            var helpText = _this2.getHelpTextForField(editableField);
+            var helpText = _this2.getHelpTextForInputType(editingItem.inputType, editableField);
             var onInputChange = function onInputChange(event) {
               var newValue = event.nativeEvent.target.value;
               var newItem = JSON.parse(JSON.stringify(_this2.state.item));
@@ -126,7 +125,12 @@ var EditModal = function (_React$Component) {
               React.createElement('input', {
                 className: 'form-control',
                 value: editingItem[editableField],
-                onChange: onInputChange })
+                onChange: onInputChange }),
+              React.createElement(
+                'p',
+                { className: 'text-muted', style: { fontSize: "14px" } },
+                helpText
+              )
             );
           }) : null
         ),

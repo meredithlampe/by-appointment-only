@@ -306,7 +306,7 @@ export class DragAndDropForm extends React.Component {
         </div>
         <div className="modal-body edit-form-component-react-container">
         	{this.state.editingItem ? 
-        		<EditModal 
+        		<EditModal
 		    		item={this.state.editingItem}
 		    		onClose={this.hideModalEditComponent}
 		    		onSave={(newItem) => {

@@ -26,7 +26,7 @@ class DeleteModal extends React.Component {
         </div>
         <div className="modal-footer">
           <Button onClick={this.props.onClose}>Close</Button>
-          <Button onClick={() => {this.props.onDelete(this.state.item)}} data-dismiss="modal" bsStyle="primary">Delete</Button>
+          <Button onClick={() => {this.props.onDelete(item)}} data-dismiss="modal" bsStyle="primary">Delete</Button>
         </div>
       </div>
     );

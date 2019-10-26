@@ -66,7 +66,7 @@ var DeleteModal = function (_React$Component) {
           React.createElement(
             Button,
             { onClick: function onClick() {
-                _this2.props.onDelete(_this2.state.item);
+                _this2.props.onDelete(item);
               }, 'data-dismiss': 'modal', bsStyle: 'primary' },
             'Delete'
           )
