@@ -22,7 +22,7 @@ export default [
 				label: 'Static Text',
 				placeholder: '',
 				content: 'Sample text containing instructions for filling out the form, disclaimer, etc.',
-				editable: ['content', 'label'],
+				editable: ['label'],
 			},
 			{
 				inputType: 'checkboxes',
