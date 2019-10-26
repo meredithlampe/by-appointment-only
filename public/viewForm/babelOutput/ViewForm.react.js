@@ -18,34 +18,15 @@ export var ViewForm = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (ViewForm.__proto__ || Object.getPrototypeOf(ViewForm)).call(this, props));
 
+    _this.props = props;
     _this.firebaseHelper = props.firebaseHelper;
     _this.formID = props.id;
     _this.submissionID = props.submissionID;
     _this.formHostId = props.formHostId;
     _this.state = {
+      loading: true,
       items: []
     };
-
-    // get items in form from databsae
-    _this.firebaseHelper.getPublicUserForm(props.formHostId, props.id, function (formData) {
-      if (formData) {
-        _this.setState({
-          items: formData.items
-        });
-      } else {
-        // form not found. possibly because form hasn't been published.
-        // check if viewer is form host
-        _this.firebaseHelper.getCurrentUserForm(props.id, function (formData) {
-          if (formData) {
-            _this.setState({
-              items: formData.items
-            });
-          } else {
-            // show error message
-          }
-        });
-      }
-    });
 
     // bind handlers
     _this.handleFileUpload = _this.handleFileUpload.bind(_this);
@@ -53,13 +34,41 @@ export var ViewForm = function (_React$Component) {
   }
 
   _createClass(ViewForm, [{
+    key: 'fetchFormItems',
+    value: function fetchFormItems() {
+      var _this2 = this;
+
+      debugger;
+      var props = this.props;
+      // get items in form from databsae
+      this.firebaseHelper.getPublicUserForm(props.formHostId, props.id, function (formData) {
+        if (formData) {
+          _this2.setState({
+            items: formData.items,
+            loading: false
+          });
+        } else {
+          // form not found. possibly because form hasn't been published.
+          // check if viewer is form host
+          _this2.firebaseHelper.getCurrentUserForm(props.id, function (formData) {
+            if (formData) {
+              _this2.setState({
+                items: formData.items,
+                loading: false
+              });
+            } else {
+              // show error message
+            }
+          });
+        }
+      });
+    }
+  }, {
     key: 'handleFileUpload',
     value: function handleFileUpload(event) {
       var file = event.target.files[0];
       var id = event.target.id;
 
-      console.log("submission ID used in react handleFileUpload:" + this.submissionID);
-      debugger;
       this.firebaseHelper.uploadFileForForm(this.formHostId, this.formID, this.submissionID, "fileInput" + id, file, function (snapshot) {
         debugger;
       });
@@ -67,15 +76,23 @@ export var ViewForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
+      if (this.state.loading) {
+        this.fetchFormItems();
+        return React.createElement(
+          'div',
+          { className: 'text-center' },
+          'Loading...'
+        );
+      }
       return React.createElement(
         'div',
         null,
         this.state.items.map(function (item, index) {
           var input = null;
           var id = "-id-" + item.id;
-          input = DragAndDropFormUtils.getInputElementForType(item, id, false, false, _this2.handleFileUpload, "view-form");
+          input = DragAndDropFormUtils.getInputElementForType(item, id, false, false, _this3.handleFileUpload, "view-form");
           return React.createElement(
             'div',
             { className: 'form-group' },

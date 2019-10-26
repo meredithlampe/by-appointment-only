@@ -5,19 +5,29 @@ import DragAndDropFormUtils from '../../babelOutput/DragAndDropFormUtils.js';
 export class ViewForm extends React.Component {
   constructor(props) {
     super(props);
+    this.props = props;
     this.firebaseHelper = props.firebaseHelper;
     this.formID = props.id;
     this.submissionID = props.submissionID;
     this.formHostId = props.formHostId;
     this.state = { 
+        loading: true, 
     		items: [],
     	};
 
+     // bind handlers
+     this.handleFileUpload = this.handleFileUpload.bind(this);
+  }
+
+  fetchFormItems() {
+    debugger;
+      let props = this.props;
      // get items in form from databsae
      this.firebaseHelper.getPublicUserForm(props.formHostId, props.id, (formData) => {
       if (formData) {
         this.setState({
           items: formData.items,
+          loading: false,
         });
       } else {
          // form not found. possibly because form hasn't been published.
@@ -26,6 +36,7 @@ export class ViewForm extends React.Component {
             if (formData) {
               this.setState({
                 items: formData.items,
+                loading: false,
               });                  
             } else {
                 // show error message
@@ -33,17 +44,12 @@ export class ViewForm extends React.Component {
         });
       }
      });
-
-     // bind handlers
-     this.handleFileUpload = this.handleFileUpload.bind(this);
   }
 
   handleFileUpload(event) {
     let file = event.target.files[0];
     let id = event.target.id;
 
-    console.log("submission ID used in react handleFileUpload:" + this.submissionID);
-    debugger;
     this.firebaseHelper.uploadFileForForm(
       this.formHostId, 
       this.formID, 
@@ -56,6 +62,10 @@ export class ViewForm extends React.Component {
   }
 
   render() {
+    if (this.state.loading) {
+      this.fetchFormItems();
+      return (<div className="text-center">Loading...</div>);
+    }
     return (<div>
 	              {this.state.items.map((item, index) => {
 	              	let input = null;
