@@ -338,47 +338,17 @@ export var DragAndDropForm = function (_React$Component) {
 				React.createElement(
 					'div',
 					{ className: 'modal', id: 'editFormComponentModal', tabIndex: '-1', role: 'dialog', 'aria-labelledby': 'exampleModalLabel', 'aria-hidden': 'true' },
-					React.createElement(
-						'div',
-						{ className: 'modal-dialog', role: 'document' },
-						React.createElement(
-							'div',
-							{ className: 'modal-content' },
-							React.createElement(
-								'div',
-								{ className: 'modal-header' },
-								React.createElement(
-									'h5',
-									{ className: 'modal-title', id: 'exampleModalLabel' },
-									'Edit'
-								),
-								React.createElement(
-									'button',
-									{ className: 'close dismiss-edit-modal', type: 'button', 'data-dismiss': 'modal', 'aria-label': 'Close' },
-									React.createElement(
-										'span',
-										{ 'aria-hidden': 'true' },
-										'\xD7'
-									)
-								)
-							),
-							React.createElement(
-								'div',
-								{ className: 'modal-body edit-form-component-react-container' },
-								this.state.editingItem ? React.createElement(EditModal, {
-									item: this.state.editingItem,
-									onClose: this.hideModalEditComponent,
-									onSave: function onSave(newItem) {
-										var removeResult = _this3.remove(_this3.state.items, _this3.state.editingItem);
-										var index = removeResult[0];
-										var result = removeResult[1];
-										_this3.setState({ items: _this3.insert(result, newItem, index), showModalEditComponent: false });
-									},
-									show: this.state.showModalEditComponent
-								}) : null
-							)
-						)
-					)
+					React.createElement(EditModal, {
+						item: this.state.editingItem,
+						onClose: this.hideModalEditComponent,
+						onSave: function onSave(newItem) {
+							var removeResult = _this3.remove(_this3.state.items, _this3.state.editingItem);
+							var index = removeResult[0];
+							var result = removeResult[1];
+							_this3.setState({ items: _this3.insert(result, newItem, index), showModalEditComponent: false });
+						},
+						show: this.state.showModalEditComponent
+					})
 				),
 				React.createElement(
 					DragDropContext,

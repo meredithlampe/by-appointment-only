@@ -296,32 +296,18 @@ export class DragAndDropForm extends React.Component {
     return (
 		<div style={{display: "flex", margin: "auto"}}>
     		<div className="modal" id="editFormComponentModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div className="modal-dialog" role="document">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title" id="exampleModalLabel">Edit</h5>
-          <button className="close dismiss-edit-modal" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div className="modal-body edit-form-component-react-container">
-        	{this.state.editingItem ? 
-        		<EditModal
-		    		item={this.state.editingItem}
-		    		onClose={this.hideModalEditComponent}
-		    		onSave={(newItem) => {
-						let removeResult = this.remove(this.state.items, this.state.editingItem);
-						let index = removeResult[0];
-						let result = removeResult[1];
-						this.setState({items: this.insert(result, newItem, index), showModalEditComponent: false});
-					}}
-					show={this.state.showModalEditComponent}
-		    	/> 
-		    : null}
-        </div>
-      </div>
-    </div>
-  </div>
+	        		<EditModal
+			    		item={this.state.editingItem}
+			    		onClose={this.hideModalEditComponent}
+			    		onSave={(newItem) => {
+							let removeResult = this.remove(this.state.items, this.state.editingItem);
+							let index = removeResult[0];
+							let result = removeResult[1];
+							this.setState({items: this.insert(result, newItem, index), showModalEditComponent: false});
+						}}
+						show={this.state.showModalEditComponent}
+			    	/> 
+		  	</div>
 	    
     	<DragDropContext onDragEnd={this.onDragEnd}>
     	  <Droppable droppableId="component-library">

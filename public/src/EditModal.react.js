@@ -7,14 +7,9 @@ import Button from 'react-bootstrap/lib/Button';
 
 class EditModal extends React.Component {
   constructor(props) {
-    console.log("in constructor");
     super(props);
-    let item = props.item;
     this.props = props;
-    this.state = { 
-      item: props.item, 
-      itemID: props.itemID,
-    };
+    this.state = {};
 
     // let onCloseFunction = function (props, e) {
     //   console.log("in on close");
@@ -52,7 +47,9 @@ class EditModal extends React.Component {
   }
 
   render() {
-    if (this.props.item.id !== this.state.item.id) {
+    if (!this.props.item) {
+      return null;
+    } else if (this.props.item && !this.state.item || (this.props.item.id !== this.state.item.id)) {
       // opened modal to edit new field but haven't updated state
       // bc constructor wasn't hit
       this.setState({item: this.props.item});
@@ -62,11 +59,20 @@ class EditModal extends React.Component {
       return null;
     }
     return (
+      <div className="modal-dialog" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="exampleModalLabel">Edit</h5>
+            <button className="close dismiss-edit-modal" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div className="modal-body edit-form-component-react-container"> 
             <div className="edit-modal-input-preview">
-                <div style={{margin: 20}}>
-                  <label className="form-component-label">{editingItem ? editingItem.label : null}</label>
-                  {editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem, 100) : null}
-                </div>
+              <div style={{margin: 20}}>
+                <label className="form-component-label">{editingItem ? editingItem.label : null}</label>
+                {editingItem ? DragAndDropFormUtils.getInputElementForType(editingItem, 100) : null}
+              </div>
               <hr/>
               <div style={{margin: 20}}>
                 <p className="text-muted" style={{fontSize: "14px"}}>Change the fields below to see how the form element will look above.</p>
@@ -91,9 +97,12 @@ class EditModal extends React.Component {
                     );
                 }) : null}
               </div>
-        <div className="modal-footer">
-          <Button data-dismiss="modal">Close</Button>
-          <Button data-dismiss="modal" onClick={() => {this.props.onSave(this.state.item)}} bsStyle="primary">Save changes</Button>
+            <div className="modal-footer">
+              <Button data-dismiss="modal">Close</Button>
+              <Button data-dismiss="modal" onClick={() => {this.props.onSave(this.state.item)}} bsStyle="primary">Save changes</Button>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     );
@@ -113,7 +122,6 @@ EditModal.propTypes = {
         options: PropTypes.array,
         editable: PropTypes.array,
   }),
-  itemID: PropTypes.string,
 };
 
 export default EditModal;
