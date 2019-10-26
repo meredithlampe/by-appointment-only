@@ -37,6 +37,7 @@ export class DragAndDropForm extends React.Component {
     };
     this.onDragEnd = this.onDragEnd.bind(this);
     this.openModalEditComponent = this.openModalEditComponent.bind(this);
+    this.openModalEditComponentForHTMLID = this.openModalEditComponentForHTMLID.bind(this);
     this.hideModalEditComponent = this.hideModalEditComponent.bind(this);
     this.openModalRenameForm = this.openModalRenameForm.bind(this);
     this.hideModalRenameForm = this.hideModalRenameForm.bind(this);
@@ -112,11 +113,15 @@ export class DragAndDropForm extends React.Component {
 	    			content: componentNeedsContent ? 'Description of this field' : null,
 	    		};
 	    		let newItems = this.insert(this.state.items, newFormItem, result.destination.index);				
-	    		this.setState({items: newItems, lastUnusedId: this.state.lastUnusedId + 1,});
 
-	    		// auto-open edit modal when new field is added
-	    		$("#editFormComponentModal").modal('show');
-	    		this.openModalEditComponent(newId);
+	    		this.setState(
+	    			{items: newItems, lastUnusedId: this.state.lastUnusedId + 1,}, 	   
+		    		() => {
+			    		// auto-open edit modal when new field is added
+			    		$("#editFormComponentModal").modal('show');
+		    			this.openModalEditComponent(newId);	
+		    		},
+		    	); 		
 			} else {
 				//show error
 			}
@@ -160,22 +165,16 @@ export class DragAndDropForm extends React.Component {
 	  return result;
 	};
 
-	openModalEditComponent(itemId) {
+	// itemId, ex: "edit-5"
+	openModalEditComponentForHTMLID(itemId) {
 		let id = itemId.match(/edit-(.*)/);
-		let editingItem = this.getItemForId(parseInt(id[1]));
+		this.openModalEditComponent(parseInt(id[1]));
+	}
+
+	// ex: 5
+	openModalEditComponent(numericId) {
+		let editingItem = this.getItemForId(numericId);
 		this.setState({showModalEditComponent: true, editingItem: editingItem});
-		// const editModal = document.querySelector('.edit-form-component-react-container');
-		// ReactDOM.render(React.createElement(EditModal, {
-		// 	show: this.state.showModalEditComponent,
-		// 	item: editingItem,
-		// 	onClose: this.hideModalEditComponent,
-		// 	onSave: (newItem) => {
-		// 		let removeResult = this.remove(this.state.items, this.state.editingItem);
-		// 		let index = removeResult[0];
-		// 		let result = removeResult[1];
-		// 		this.setState({items: this.insert(result, newItem, index), showModalEditComponent: false});
-		// 	},
-		// }), editModal);
 	}
 
 	hideModalEditComponent() {
@@ -428,7 +427,7 @@ export class DragAndDropForm extends React.Component {
 								     	data-toggle="modal" 
 								     	data-target="#editFormComponentModal" 
 								     	onClick={(target) => {
-								     		this.openModalEditComponent(target.nativeEvent.target.id);
+								     		this.openModalEditComponentForHTMLID(target.nativeEvent.target.id);
 								     	}} 
 								     	style={{display: "inline", marginLeft: 10}}><a id={'edit-' + item.id}>Edit</a></div>
 								   	<div 
