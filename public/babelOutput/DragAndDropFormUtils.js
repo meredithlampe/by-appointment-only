@@ -133,7 +133,6 @@ var DragAndDropFormUtils = function () {
 			var found = COMPONENT_LIBRARY.find(function (item) {
 				return item.inputType === inputType;
 			});
-			console.log(found.editable);
 			return found.editable;
 		}
 	}, {

@@ -226,13 +226,18 @@ var SubmissionUtils = function () {
 				// append extra text fields to row
 				var fields = submissionData.fields;
 				for (var ii = 0; ii < textFields.length; ii++) {
-					// debugger;
 					// find data for this field
 					var textFieldId = textFields[ii];
+					var found = false;
 					for (var fieldId in fields) {
 						if (SubmissionUtils.parseInputIDFromSubmissionKey(fieldId) === textFieldId) {
 							rowData[rowData.length] = fields[fieldId];
+							found = true;
+							break;
 						}
+					}
+					if (!found) {
+						rowData[rowData.length] = "No data found";
 					}
 				}
 
@@ -243,7 +248,6 @@ var SubmissionUtils = function () {
 					targets: 2,
 					render: function render(data, type, row, meta) {
 						if (type === 'display') {
-							debugger;
 							var viewLink = SubmissionUtils.getViewSubmissionLink(data).outerHTML;
 							return viewLink;
 						}

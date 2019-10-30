@@ -206,6 +206,18 @@ var FirebaseHelper = function () {
         callback(url);
       }, errorHandler);
     }
+  }, {
+    key: 'cloneForm',
+    value: function cloneForm(formHostId, formId, callback) {
+      this.getUserForm(formHostId, formId, function (oldFormData) {
+        firebaseHelper.saveForm({
+          id: firebaseHelper.generateFormID(),
+          name: oldFormData.name + ' (1)',
+          items: oldFormData.items,
+          lastEdited: DragAndDropFormUtils.getTodaysDate()
+        }, callback);
+      });
+    }
   }]);
 
   return FirebaseHelper;

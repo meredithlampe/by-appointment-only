@@ -263,6 +263,30 @@ function startFormsLiveUpdaters() {
 		return deleteLink;
 	};
 
+	// get clone form link
+	var getCloneFormLink = function getCloneFormLink(formData) {
+		var cloneLink = document.createElement('a');
+		cloneLink.setAttribute('data-toggle', "modal");
+		cloneLink.setAttribute('data-target', '#cloneFormModal');
+		cloneLink.innerHTML = 'Clone';
+		var cloneFunction = function cloneFunction(formHostId, id, name, event) {
+			// set body of modal
+			var modal = $('#cloneFormModal');
+			var body = modal.find('.modal-body');
+			body.html('Are you sure you want to clone <b>' + name + '</b>?');
+			var cloneButton = modal.find('.clone-form-button');
+			var cloneFormFunction = function cloneFormFunction(formHostId, formId) {
+				firebaseHelper.cloneForm(formHostId, formId);
+			};
+
+			cloneFormFunction = cloneFormFunction.bind(null, formHostId, id);
+			cloneButton.click(cloneFormFunction);
+		};
+		var cloneFunctionWithParams = cloneFunction.bind(null, currentUID, formData.id, formData.name);
+		cloneLink.addEventListener('click', cloneFunctionWithParams);
+		return cloneLink;
+	};
+
 	var getViewFormSubmissionLink = function getViewFormSubmissionLink(formData) {
 		var link = document.createElement('a');
 		link.setAttribute('id', 'view-form-submissions-link-' + formData.id);
@@ -333,6 +357,10 @@ function startFormsLiveUpdaters() {
 			publishTd.append(getPublishFormLink(formData));
 		}
 
+		// configure clone link
+		var cloneTd = document.createElement('td');
+		cloneTd.append(getCloneFormLink(formData));
+
 		// remove loading indicator (might already be removed)
 		$('.loading-forms').empty();
 
@@ -347,6 +375,7 @@ function startFormsLiveUpdaters() {
 		tableRow.append(editTd);
 		tableRow.append(deleteTd);
 		tableRow.append(publishTd);
+		tableRow.append(cloneTd);
 		formTable.append(tableRow);
 	};
 	onFormAdded = onFormAdded.bind(this);

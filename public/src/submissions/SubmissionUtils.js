@@ -227,13 +227,18 @@ export default class SubmissionUtils {
 			// append extra text fields to row
 			let fields = submissionData.fields;
 			for(let ii = 0; ii < textFields.length; ii++) {
-				// debugger;
 				// find data for this field
 				let textFieldId = textFields[ii];
+				let found = false;
 				for (let fieldId in fields) {
 					if (SubmissionUtils.parseInputIDFromSubmissionKey(fieldId) === textFieldId) {
 						rowData[rowData.length] = fields[fieldId];
+						found = true;
+						break;
 					}
+				}
+				if (!found) {
+					rowData[rowData.length] = "No data found";
 				}
 			}
 
@@ -245,7 +250,6 @@ export default class SubmissionUtils {
 			            targets: 2,
 			            render: function ( data, type, row, meta ) {
 			                if(type === 'display'){
-			                	debugger;
 			                	let viewLink = SubmissionUtils.getViewSubmissionLink(data).outerHTML;
 			                    return viewLink;
 			                }

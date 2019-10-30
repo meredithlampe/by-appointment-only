@@ -102,10 +102,10 @@ export default class FirebaseHelper {
     // add form to list of publish forms
     let setPublicForm = function(onFinish, snapshot) {
       this.database.ref('public/' + formPath).set(snapshot.val());
-      onFinish(snapshot.val());  
+      onFinish(snapshot.val());
     };
     setPublicForm = setPublicForm.bind(this, callback);
-    formRef.once('value').then(setPublicForm);     
+    formRef.once('value').then(setPublicForm);   
   }
 
   unpublishForm(id, onFinish) {
@@ -176,6 +176,19 @@ export default class FirebaseHelper {
     const storageRef = firebase.storage().ref();
     const fileRef = storageRef.child(formHostId + "/" + formID + "/" + submissionID + "/" + inputId);
     fileRef.getDownloadURL().then((url) => {callback(url); }, errorHandler);
+  }
+
+  cloneForm(formHostId, formId, callback) {
+     this.getUserForm(formHostId, formId, (oldFormData) => {
+        firebaseHelper.saveForm({
+            id: firebaseHelper.generateFormID(),
+            name: oldFormData.name + ' (1)',
+            items: oldFormData.items,
+            lastEdited: DragAndDropFormUtils.getTodaysDate(),
+          }, 
+          callback,
+        );
+     }); 
   }
   
 }

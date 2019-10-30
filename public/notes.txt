@@ -24,26 +24,22 @@
 
   ## known bugs
 
-	newbies (oct 26 '19)
-	- edit field modal doesn't update w new content
-	- rename form modal doesn't update w new content
-	- 
-
   - edit form while its published, save form. form is updated from admin view but old form remains published.
 		New form is unpublished and old form is still published at same URL.
   - delete form should delete from public database path
   - unpublished forms still visible at public url?
-	- edit invidividual fields, modal doesn't update properly when editing one field after the other
 	- in 'view form' let host view form no matter if its published or not?
 	- "please save before you preview"
-	- spinner on view form page while form loads
 	- spinner after submitting form
-	- "are you  sure you want to go back? you'll lose your changes" from drag and drop editor
 	- selector doesn't update in form field editor
 	- select submit doesn't work
+	- "are you  sure you want to go back? you'll lose your changes" from drag and drop editor
 
-## known bugs (10/12)
+	# features
 
+	- clone form
+	- form component library floats with page scroll?
+	- allow admin to set required fields
 
 
 ## copy of firebase rules
