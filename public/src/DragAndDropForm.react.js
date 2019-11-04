@@ -78,9 +78,6 @@ export class DragAndDropForm extends React.Component {
     	this.state.name = 'My New Form';
     	this.state.lastUnusedId = 0;
     }
-
-    // prepate edit modal
-
   }
 
   close() {
@@ -323,9 +320,9 @@ export class DragAndDropForm extends React.Component {
     	<div>
     	<div className="row">
         	<div className="col-2">
-               <div className="create-form-cancel" style={{textAlign: "right"}} onClick={this.maybeClose}>
+               <div className="create-form-cancel" style={{textAlign: "right", cursor: "pointer"}} onClick={this.maybeClose}>
                     <h4>
-                    	Back
+                    	<i style={{marginLeft: 5}} className="fa fa-arrow-left fa-fw"></i> Back
                     </h4>
                 </div>
               </div>

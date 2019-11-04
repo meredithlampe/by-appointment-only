@@ -98,9 +98,6 @@ export var DragAndDropForm = function (_React$Component) {
 			_this.state.name = 'My New Form';
 			_this.state.lastUnusedId = 0;
 		}
-
-		// prepate edit modal
-
 		return _this;
 	}
 
@@ -374,11 +371,12 @@ export var DragAndDropForm = function (_React$Component) {
 						{ className: 'col-2' },
 						React.createElement(
 							'div',
-							{ className: 'create-form-cancel', style: { textAlign: "right" }, onClick: this.maybeClose },
+							{ className: 'create-form-cancel', style: { textAlign: "right", cursor: "pointer" }, onClick: this.maybeClose },
 							React.createElement(
 								'h4',
 								null,
-								'Back'
+								React.createElement('i', { style: { marginLeft: 5 }, className: 'fa fa-arrow-left fa-fw' }),
+								' Back'
 							)
 						)
 					),
