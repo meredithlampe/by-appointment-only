@@ -460,9 +460,9 @@ export class DragAndDropForm extends React.Component {
 		                      )}
 		                    >
 		                    <div style={{display: "flex", flexDirection: "row"}}>
-								<label className="form-component-label" htmlFor={id}>{item.label}</label>
+		                    	<label className="form-component-label" htmlFor={id}>{item.label}</label>
 							    <div style={{flexGrow: 1}} />
-							    <div className="form-component-edit-delete-move-icons-container">
+							    <div style={{minWidth: 130}} className="form-component-edit-delete-move-icons-container">
 							    	<div 
 								     	className="form-component-link" 
 								     	data-toggle="modal" 

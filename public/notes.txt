@@ -24,6 +24,9 @@
 
   ## known bugs
 
+	11/2
+	- Create form is broken
+		
   - edit form while its published, save form. form is updated from admin view but old form remains published.
 		New form is unpublished and old form is still published at same URL.
   - delete form should delete from public database path
@@ -39,6 +42,11 @@
 
 	- form component library floats with page scroll?
 	- allow admin to set required fields
+	- admin settings
+		+ notification settings for submitted forms
+		+ user receives confirmation email on form submission
+		+ user can edit form that they've already filled out
+		+ 
 
 
 ## copy of firebase rules

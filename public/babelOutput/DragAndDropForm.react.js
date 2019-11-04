@@ -574,7 +574,7 @@ export var DragAndDropForm = function (_React$Component) {
 																		React.createElement('div', { style: { flexGrow: 1 } }),
 																		React.createElement(
 																			'div',
-																			{ className: 'form-component-edit-delete-move-icons-container' },
+																			{ style: { minWidth: 130 }, className: 'form-component-edit-delete-move-icons-container' },
 																			React.createElement(
 																				'div',
 																				{

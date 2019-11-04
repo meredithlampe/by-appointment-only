@@ -18,7 +18,6 @@ class RenameFormModal extends React.Component {
     this.props.onSave(this.state.name);
   }
 
-
   render() {
     return (
       <div>

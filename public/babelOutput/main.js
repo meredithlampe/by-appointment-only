@@ -57,7 +57,7 @@ newFormButton.click(function () {
 		firebaseHelper: firebaseHelper,
 		newForm: true
 	};
-	var formInputArea = document.querySelector('.create-form-column');
+	var formInputArea = document.querySelector('.create-form');
 	ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
 	$('.home').addClass('hidden');
 	$('.create-form').removeClass('hidden');
