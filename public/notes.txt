@@ -37,7 +37,6 @@
 
 	# features
 
-	- clone form
 	- form component library floats with page scroll?
 	- allow admin to set required fields
 

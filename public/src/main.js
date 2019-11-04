@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	let firebaseHelper = new FirebaseHelper(firebase);
 	window.firebaseHelper = firebaseHelper;
 	firebaseHelper.setOnAuthStateChanged(onAuthStateChanged);
-
   try {
     let app = firebase.app();
     let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
@@ -61,17 +60,6 @@ newFormButton.click(function() {
 	ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
 	$('.home').addClass('hidden');
 	$('.create-form').removeClass('hidden');
-});
-
-// cancel create new form
-let cancelNewForm = $('.create-form-cancel').click(function() {
-	// navigate back to main screen
-	$('.create-form').addClass('hidden');
-	$('.home').removeClass('hidden');
-
-	// clear new form page
-	const formInputArea = document.querySelector('.create-form-column');
-	ReactDOM.unmountComponentAtNode(formInputArea);
 });
 
 let cancelViewFormSubmission = $('.view-form-submissions-cancel').click(function() {
@@ -105,7 +93,7 @@ function startFormsLiveUpdaters() {
 				lastUnusedId: 4, // ???? lol TODO
 				firebaseHelper: firebaseHelper,
 			};
-		   const formInputArea = document.querySelector('.create-form-column');
+		   const formInputArea = document.querySelector('.create-form');
 			ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
 			$('.home').addClass('hidden');
 			$('.create-form').removeClass('hidden');
@@ -275,7 +263,7 @@ function startFormsLiveUpdaters() {
 			body.html('Are you sure you want to clone <b>' + name + '</b>?');
 			let cloneButton = modal.find('.clone-form-button');
 			let cloneFormFunction = (formHostId, formId) => {
-				firebaseHelper.cloneForm(formHostId, formId;
+					firebaseHelper.cloneForm(formHostId, formId);
 			};
 
 			cloneFormFunction = cloneFormFunction.bind(null, formHostId, id);

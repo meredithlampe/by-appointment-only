@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	var firebaseHelper = new FirebaseHelper(firebase);
 	window.firebaseHelper = firebaseHelper;
 	firebaseHelper.setOnAuthStateChanged(onAuthStateChanged);
-
 	try {
 		var app = firebase.app();
 		var features = ['auth', 'database', 'messaging', 'storage'].filter(function (feature) {
@@ -64,17 +63,6 @@ newFormButton.click(function () {
 	$('.create-form').removeClass('hidden');
 });
 
-// cancel create new form
-var cancelNewForm = $('.create-form-cancel').click(function () {
-	// navigate back to main screen
-	$('.create-form').addClass('hidden');
-	$('.home').removeClass('hidden');
-
-	// clear new form page
-	var formInputArea = document.querySelector('.create-form-column');
-	ReactDOM.unmountComponentAtNode(formInputArea);
-});
-
 var cancelViewFormSubmission = $('.view-form-submissions-cancel').click(function () {
 	// navigate back to main screen
 	$('.view-form-submissions').addClass('hidden');
@@ -106,7 +94,7 @@ function startFormsLiveUpdaters() {
 				lastUnusedId: 4, // ???? lol TODO
 				firebaseHelper: firebaseHelper
 			};
-			var formInputArea = document.querySelector('.create-form-column');
+			var formInputArea = document.querySelector('.create-form');
 			ReactDOM.render(React.createElement(DragAndDropForm, props), formInputArea);
 			$('.home').addClass('hidden');
 			$('.create-form').removeClass('hidden');

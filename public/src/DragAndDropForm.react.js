@@ -4,6 +4,7 @@ var ReactDOM = require('react-dom');
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import EditModal from './EditModal.react.js';
 import RenameFormModal from './RenameFormModal.react.js';
+import ConfirmCloseModal from './ConfirmCloseModal.react.js';
 import DeleteModal from './DeleteModal.react.js';
 import DragAndDropFormUtils from './DragAndDropFormUtils.js';
 import FormPreview from './FormPreview.react.js';
@@ -48,6 +49,17 @@ export class DragAndDropForm extends React.Component {
 
     this.editModal = React.createRef();
 
+    let maybeClose = function() {
+		if (this.formHasPendingChanges()) {
+		 	// show 'are you sure' dialog
+		 	$("#confirmCloseEditModal").modal("show");
+		 	return;
+		}
+		this.close();
+	};
+	maybeClose = maybeClose.bind(this);
+	this.maybeClose = maybeClose;
+
     // get items in form from databae
     if (!props.newForm) {
 	    this.firebaseHelper.getCurrentUserForm(props.databaseID, (formData) => {
@@ -69,6 +81,16 @@ export class DragAndDropForm extends React.Component {
 
     // prepate edit modal
 
+  }
+
+  close() {
+	// navigate back to main screen
+	$('.create-form').addClass('hidden');
+	$('.home').removeClass('hidden');
+
+	// clear new form page
+	const formInputArea = document.querySelector('.create-form');
+	ReactDOM.unmountComponentAtNode(formInputArea);
   }
 
   componentDidMount() {
@@ -298,6 +320,24 @@ export class DragAndDropForm extends React.Component {
 	});	
 
     return (
+    	<div>
+    	<div className="row">
+        	<div className="col-2">
+               <div className="create-form-cancel" style={{textAlign: "right"}} onClick={this.maybeClose}>
+                    <h4>
+                    	Back
+                    </h4>
+                </div>
+              </div>
+              <div className="col-sm-6 mb-4">
+                Drag elements from the form component library on the left to your form on the right.
+                You many also rearrange components within your form by dragging them.
+              </div>
+             <div class="col-sm-4"></div>
+           </div>
+    	<div className="row create-form-input-area">
+        	<div className="col-sm-1"></div>
+             <div class="col-sm-10 create-form-column">
 		<div style={{display: "flex", margin: "auto"}}>
     		<div className="modal" id="editFormComponentModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	        		<EditModal
@@ -311,6 +351,10 @@ export class DragAndDropForm extends React.Component {
 						}}
 						show={this.state.showModalEditComponent}
 			    	/> 
+		  	</div>
+
+		  	 <div className="modal" id="confirmCloseEditModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  	 	<ConfirmCloseModal confirm={this.close} />
 		  	</div>
 	    
     	<DragDropContext onDragEnd={this.onDragEnd}>
@@ -456,6 +500,10 @@ export class DragAndDropForm extends React.Component {
           )}
         </Droppable>
         </DragDropContext>
+        </div>
+        </div>
+        <div className="col-sm-1"></div>
+        </div>
         </div>
     );
 
